@@ -1,0 +1,6 @@
+# Ignorer le fichier .env qui contient les identifiants
+.env
+
+# Fichiers système et logs
+.DS_Store
+*.log
