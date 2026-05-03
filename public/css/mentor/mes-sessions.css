@@ -1,0 +1,313 @@
+/* ==================== BASE ==================== */
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fadeInUp {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-slideInRight {
+    animation: slideInRight 0.4s ease-out forwards;
+}
+
+/* ==================== FILTER BUTTONS ==================== */
+.filter-btn {
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border: 1px solid #E2E8F0;
+    background: #fff;
+    color: #64748B;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-btn:hover {
+    border-color: #5B4FE8;
+    color: #5B4FE8;
+}
+
+.filter-btn.active {
+    background: #5B4FE8;
+    border-color: #5B4FE8;
+    color: #fff;
+}
+
+/* ==================== SESSION CARD ==================== */
+.session-card {
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid #E2E8F0;
+    padding: 20px;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.session-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border-color: #5B4FE8;
+}
+
+.session-date-box {
+    background: #F8FAFC;
+    border-radius: 16px;
+    padding: 12px 16px;
+    text-align: center;
+    min-width: 80px;
+}
+
+/* ==================== BADGES ==================== */
+.badge-pending {
+    background: #FEF3C7;
+    color: #D97706;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-confirmed {
+    background: #E8F5E9;
+    color: #2E7D32;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-completed {
+    background: #E3F2FD;
+    color: #1565C0;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-cancelled {
+    background: #FFEBEE;
+    color: #C62828;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.role-badge {
+    background: #F1F5F9;
+    color: #64748B;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ==================== BUTTONS ==================== */
+.btn-evaluate {
+    background: linear-gradient(135deg, #5B4FE8, #7C3AED);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-evaluate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 79, 232, 0.3);
+}
+
+.btn-cancel {
+    background: #FEF2F2;
+    color: #EF4444;
+    border: 1px solid #FEE2E2;
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-cancel:hover {
+    background: #FEE2E2;
+    transform: translateY(-2px);
+}
+
+.btn-message {
+    background: #F1F5F9;
+    color: #64748B;
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+}
+
+.btn-message:hover {
+    background: #E2E8F0;
+    color: #1E293B;
+    transform: translateY(-2px);
+}
+
+/* ==================== EMPTY STATE ==================== */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: #fff;
+    border-radius: 24px;
+    border: 1px solid #E2E8F0;
+}
+
+.empty-icon {
+    width: 80px;
+    height: 80px;
+    background: #F1F5F9;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+/* ==================== MODAL ==================== */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(6px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.modal.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-box {
+    background: #fff;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 440px;
+    margin: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transform: translateY(12px) scale(0.98);
+    transition: transform 0.2s ease;
+    overflow: hidden;
+}
+
+.open .modal-box {
+    transform: translateY(0) scale(1);
+}
+
+.form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.form-textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid #E2E8F0;
+    font-size: 14px;
+    transition: all 0.2s;
+    resize: vertical;
+    font-family: 'Inter', sans-serif;
+}
+
+.form-textarea:focus {
+    outline: none;
+    border-color: #5B4FE8;
+    box-shadow: 0 0 0 3px rgba(91, 79, 232, 0.1);
+}
+
+/* ==================== FLASH MESSAGES ==================== */
+.flash-success {
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    color: #166534;
+    padding: 14px 18px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.flash-error {
+    background: #FEF2F2;
+    border: 1px solid #FEE2E2;
+    color: #991B1B;
+    padding: 14px 18px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

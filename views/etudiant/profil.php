@@ -13,222 +13,18 @@ $page_active = 'profil';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon profil — <?= APP_NAME ?></title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Ressources locales -->
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/tailwind.css">
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/etudiant/profil.css">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <?php require_once BASE_PATH . '/views/layouts/footer.php'; ?>
-    <style>
-        * { font-family: 'Inter', sans-serif; }
-        
-        /* ==================== ANIMATIONS ==================== */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        .animate-fadeInUp { animation: fadeInUp 0.5s ease-out forwards; }
-        .animate-slideInRight { animation: slideInRight 0.4s ease-out forwards; }
-        
-        /* ==================== FORM STYLES ==================== */
-        .profile-card {
-            background: #fff;
-            border-radius: 24px;
-            border: 1px solid #E2E8F0;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .profile-card:hover {
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
-            color: #64748B;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 14px;
-            border: 1px solid #E2E8F0;
-            font-size: 14px;
-            transition: all 0.2s;
-            background: #fff;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: #5B4FE8;
-            box-shadow: 0 0 0 3px rgba(91,79,232,0.1);
-        }
-        
-        .form-input:disabled {
-            background: #F8FAFC;
-            color: #94A3B8;
-            cursor: not-allowed;
-        }
-        
-        /* ==================== TABS ==================== */
-        .tabs-container {
-            display: flex;
-            gap: 0;
-            border-bottom: 2px solid #F1F5F9;
-            margin-bottom: 28px;
-        }
-        
-        .tab-btn {
-            padding: 12px 24px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            color: #64748B;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-            transition: all 0.2s;
-        }
-        
-        .tab-btn:hover {
-            color: #5B4FE8;
-        }
-        
-        .tab-btn.active {
-            color: #5B4FE8;
-            border-bottom-color: #5B4FE8;
-        }
-        
-        /* ==================== CHIPS ==================== */
-        .chip {
-            display: inline-flex;
-            align-items: center;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
-            border: 1px solid #E2E8F0;
-            background: #fff;
-            color: #64748B;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .chip:hover {
-            border-color: #5B4FE8;
-            color: #5B4FE8;
-            transform: translateY(-1px);
-        }
-        
-        .chip-active {
-            background: #5B4FE8;
-            color: #fff;
-            border-color: #5B4FE8;
-        }
-        
-        /* ==================== BUTTONS ==================== */
-        .btn-save {
-            background: linear-gradient(135deg, #5B4FE8, #7C3AED);
-            color: #fff;
-            padding: 12px 28px;
-            border-radius: 14px;
-            font-size: 14px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .btn-save:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(91,79,232,0.3);
-        }
-        
-        .btn-mentor {
-            background: #5B4FE8;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-mentor:hover {
-            background: #3B2BC8;
-            transform: translateY(-2px);
-        }
-        
-        /* ==================== STATUS BADGES ==================== */
-        .status-warning {
-            background: #FEF9C3;
-            border: 1px solid #FDE68A;
-            border-radius: 14px;
-            padding: 14px 18px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .status-success {
-            background: #F0FDF4;
-            border: 1px solid #BBF7D0;
-            border-radius: 14px;
-            padding: 14px 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-        
-        .avatar-large {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .avatar-initial {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #5B4FE8, #7C3AED);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 32px;
-            font-weight: 700;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        /* Divider */
-        .divider {
-            height: 1px;
-            background: #F1F5F9;
-            margin: 24px 0;
-        }
-    </style>
 </head>
 <body>
 
@@ -236,15 +32,15 @@ $page_active = 'profil';
 <?php require_once BASE_PATH . '/views/layouts/navbar_etudiant.php'; ?>
 
 <!-- ==================== CONTENU PRINCIPAL ==================== -->
-<main style="padding: 32px; max-width: 900px; width: 100%;">
+<main class="flex-1 p-8 max-w-[900px] w-full mx-auto">
     
     <!-- Header -->
-    <div class="animate-fadeInUp" style="margin-bottom: 28px;">
-        <h1 style="font-size: 28px; font-weight: 800; color: #0F172A; margin-bottom: 8px;">
+    <div class="animate-fadeInUp mb-7">
+        <h1 class="text-3xl font-extrabold text-gray-900 mb-2">
             <i class="fa-regular fa-user" style="color: #5B4FE8; margin-right: 12px;"></i>
             Mon profil
         </h1>
-        <p style="color: #64748B; font-size: 14px;">
+        <p class="text-gray-500 text-sm">
             Gérez vos informations personnelles et vos préférences
         </p>
     </div>
@@ -268,12 +64,12 @@ $page_active = 'profil';
     <!-- ==================== TAB 1 : INFORMATIONS ==================== -->
     <div id="tab-infos" class="animate-slideInRight">
         <div class="profile-card">
-            <form method="POST" action="<?= APP_URL ?>/?url=profil" enctype="multipart/form-data" style="padding: 28px;">
+            <form method="POST" action="<?= APP_URL ?>/?url=profil" enctype="multipart/form-data" class="p-7">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="update_infos">
                 
                 <!-- Photo de profil -->
-                <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 28px;">
+                <div class="flex items-center gap-6 mb-7">
                     <?php if (!empty($utilisateur['photo'])): ?>
                         <img src="<?= APP_URL ?>/uploads/avatars/<?= e($utilisateur['photo']) ?>" 
                              class="avatar-large" alt="Photo de profil">
@@ -283,19 +79,19 @@ $page_active = 'profil';
                         </div>
                     <?php endif; ?>
                     <div>
-                        <p style="font-size: 14px; font-weight: 600; color: #0F172A; margin-bottom: 6px;">
+                        <p class="text-sm font-semibold text-gray-900 mb-1.5">
                             Photo de profil
                         </p>
                         <input type="file" name="photo" accept="image/*"
-                               style="font-size: 13px; color: #64748B; margin-bottom: 6px;">
-                        <p style="font-size: 12px; color: #94A3B8;">
+                               class="text-sm text-gray-500 mb-1.5">
+                        <p class="text-xs text-gray-400">
                             <i class="fa-regular fa-image"></i> JPG, PNG, WEBP — max 2 Mo
                         </p>
                     </div>
                 </div>
                 
                 <!-- Prénom et Nom -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                     <div class="form-group">
                         <label class="form-label">
                             <i class="fa-regular fa-user" style="margin-right: 6px;"></i> Prénom
@@ -319,14 +115,14 @@ $page_active = 'profil';
                     </label>
                     <input type="email" value="<?= e($utilisateur['email'] ?? '') ?>" 
                            class="form-input" disabled>
-                    <p style="font-size: 12px; color: #94A3B8; margin-top: 6px;">
+                    <p class="text-xs text-gray-400 mt-1.5">
                         <i class="fa-regular fa-info-circle"></i> L'adresse email ne peut pas être modifiée
                     </p>
                 </div>
                 
                 <div class="divider"></div>
                 
-                <div style="display: flex; justify-content: flex-end;">
+                <div class="flex justify-end">
                     <button type="submit" class="btn-save">
                         <i class="fa-regular fa-floppy-disk"></i> Enregistrer les modifications
                     </button>
@@ -334,18 +130,18 @@ $page_active = 'profil';
             </form>
             
             <!-- ===== BLOC DEVENIR MENTOR ===== -->
-            <div style="padding: 0 28px 28px 28px;">
+            <div class="px-7 pb-7">
                 <div class="divider"></div>
                 
                 <?php if (empty($utilisateur['est_mentor'])): ?>
                 <!-- Pas encore mentor -->
-                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                <div class="flex items-center justify-between flex-wrap gap-4">
                     <div>
-                        <p style="font-size: 15px; font-weight: 600; color: #0F172A; margin-bottom: 4px;">
+                        <p class="text-sm font-semibold text-gray-900 mb-1">
                             <i class="fa-solid fa-graduation-cap" style="color: #F59E0B; margin-right: 8px;"></i>
                             Tu veux partager tes compétences ?
                         </p>
-                        <p style="font-size: 13px; color: #64748B;">
+                        <p class="text-sm text-gray-500">
                             Deviens mentor et aide tes camarades à réussir
                         </p>
                     </div>
@@ -358,7 +154,7 @@ $page_active = 'profil';
                 <!-- Demande en attente -->
                 <div class="status-warning">
                     <i class="fa-regular fa-clock" style="color: #D97706; font-size: 20px;"></i>
-                    <p style="font-size: 13px; color: #92400E; margin: 0; flex: 1;">
+                    <p class="text-sm text-amber-800 m-0 flex-1">
                         ⏳ Votre demande de mentorat est en cours d'examen par l'administrateur.
                     </p>
                 </div>
@@ -366,13 +162,13 @@ $page_active = 'profil';
                 <?php else: ?>
                 <!-- Mentor validé -->
                 <div class="status-success">
-                    <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="flex items-center gap-3">
                         <i class="fa-solid fa-check-circle" style="color: #166534; font-size: 20px;"></i>
-                        <p style="font-size: 13px; color: #166534; margin: 0; font-weight: 500;">
+                        <p class="text-sm text-green-800 m-0 font-semibold">
                             ✓ Vous êtes mentor validé sur PeerLearn
                         </p>
                     </div>
-                    <a href="<?= APP_URL ?>/?url=mentor" style="font-size: 13px; color: #166534; text-decoration: none; font-weight: 500;">
+                    <a href="<?= APP_URL ?>/?url=mentor" class="text-sm text-green-800 no-underline font-semibold">
                         Espace mentor <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>
@@ -384,26 +180,26 @@ $page_active = 'profil';
     <!-- ==================== TAB 2 : MATIÈRES ==================== -->
     <div id="tab-matieres" style="display: none;" class="animate-slideInRight">
         <div class="profile-card">
-            <form method="POST" action="<?= APP_URL ?>/?url=profil" style="padding: 28px;">
+            <form method="POST" action="<?= APP_URL ?>/?url=profil" class="p-7">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="update_matieres">
                 
-                <div style="margin-bottom: 24px;">
-                    <p style="font-size: 14px; color: #64748B; margin-bottom: 20px;">
+                <div class="mb-6">
+                    <p class="text-sm text-gray-500 mb-5">
                         <i class="fa-regular fa-circle-info"></i> Sélectionne les matières dans lesquelles tu souhaites recevoir de l'aide
                     </p>
                     
                     <?php foreach ($toutes_matieres as $categorie => $mats): ?>
-                    <div style="margin-bottom: 24px;">
-                        <p style="font-size: 11px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">
+                    <div class="mb-6">
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">
                             <?= e($categorie) ?>
                         </p>
-                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <div class="flex flex-wrap gap-2.5">
                             <?php foreach ($mats as $mat): ?>
-                            <label style="cursor: pointer;">
+                            <label class="cursor-pointer">
                                 <input type="checkbox" name="matieres[]" value="<?= $mat['id'] ?>"
                                        <?= in_array($mat['id'], $ids_etudiant) ? 'checked' : '' ?>
-                                       style="display: none;"
+                                       class="hidden"
                                        onchange="toggleChip(this)">
                                 <span class="chip <?= in_array($mat['id'], $ids_etudiant) ? 'chip-active' : '' ?>">
                                     <?= e($mat['nom']) ?>
@@ -417,7 +213,7 @@ $page_active = 'profil';
                 
                 <div class="divider"></div>
                 
-                <div style="display: flex; justify-content: flex-end;">
+                <div class="flex justify-end">
                     <button type="submit" class="btn-save">
                         <i class="fa-regular fa-floppy-disk"></i> Enregistrer mes matières
                     </button>
@@ -429,7 +225,7 @@ $page_active = 'profil';
     <!-- ==================== TAB 3 : SÉCURITÉ ==================== -->
     <div id="tab-securite" style="display: none;" class="animate-slideInRight">
         <div class="profile-card">
-            <form method="POST" action="<?= APP_URL ?>/?url=profil" style="padding: 28px;">
+            <form method="POST" action="<?= APP_URL ?>/?url=profil" class="p-7">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="update_mdp">
                 
@@ -440,7 +236,7 @@ $page_active = 'profil';
                     <input type="password" name="ancien_mdp" class="form-input" required>
                 </div>
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div class="form-group">
                         <label class="form-label">
                             <i class="fa-solid fa-lock" style="margin-right: 6px;"></i> Nouveau mot de passe
@@ -457,7 +253,7 @@ $page_active = 'profil';
                 
                 <div class="divider"></div>
                 
-                <div style="display: flex; justify-content: flex-end;">
+                <div class="flex justify-end">
                     <button type="submit" class="btn-save">
                         <i class="fa-solid fa-shield-haltered"></i> Modifier le mot de passe
                     </button>
@@ -467,8 +263,6 @@ $page_active = 'profil';
     </div>
     
 </main>
-
-</div><!-- ferme main-content-wrapper -->
 
 <script>
 // ==================== TAB MANAGEMENT ====================

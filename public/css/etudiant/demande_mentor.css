@@ -1,0 +1,128 @@
+/* ==================== FONTS ==================== */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:wght@400;500&display=swap');
+
+.font-syne {
+    font-family: 'Syne', sans-serif;
+}
+
+.font-dmsans {
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* ==================== FORMULAIRES ==================== */
+.input-field {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: #111827;
+    resize: vertical;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.input-field:focus {
+    border-color: #5B4FE8;
+}
+
+.btn-primary {
+    background: #5B4FE8;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background: #4B3EE0;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: #fff;
+    color: #6B7280;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: 1px solid #E5E7EB;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background: #F9FAFB;
+    border-color: #5B4FE8;
+    color: #5B4FE8;
+}
+
+/* ==================== CARDS ==================== */
+.card {
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid #E2E8F0;
+    overflow: hidden;
+    padding: 24px;
+}
+
+/* ==================== CHIPS / PILLS ==================== */
+.chip {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1px solid #E5E7EB;
+    color: #6B7280;
+    transition: all 0.15s;
+    user-select: none;
+    cursor: pointer;
+}
+
+.chip:hover {
+    border-color: #5B4FE8;
+    color: #5B4FE8;
+}
+
+.chip-active {
+    background: #5B4FE8;
+    color: #fff;
+    border-color: #5B4FE8;
+}
+
+/* ==================== BANDEAUX / ALERTS ==================== */
+.alert-warning {
+    background: #FEF9C3;
+    border: 1px solid #FDE68A;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.alert-info {
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 24px;
+}

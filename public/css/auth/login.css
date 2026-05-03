@@ -1,0 +1,91 @@
+/* ==================== FONTS ==================== */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:wght@400;500&display=swap');
+
+/* ==================== BASE ==================== */
+.font-syne {
+    font-family: 'Syne', sans-serif;
+}
+
+.font-dmsans {
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* ==================== FORMULAIRE ==================== */
+.input-field {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.input-field:focus {
+    border-color: #5B4FE8;
+    box-shadow: 0 0 0 3px rgba(91, 79, 232, 0.1);
+}
+
+.btn-primary {
+    background: #5B4FE8;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary:hover {
+    background: #4B3EE0;
+    transform: translateY(-1px);
+}
+
+/* ==================== LAYOUT ==================== */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    background-color: #F9FAFB;
+}
+
+/* Panneau gauche */
+.auth-left {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 48px;
+    background: #0D0D14;
+}
+
+@media (min-width: 1024px) {
+    .auth-left {
+        display: flex;
+        width: 50%;
+    }
+}
+
+/* Panneau droit */
+.auth-right {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+@media (min-width: 1024px) {
+    .auth-right {
+        width: 50%;
+    }
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 400px;
+}

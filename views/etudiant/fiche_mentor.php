@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($mentor['prenom']) ?> <?= e($mentor['nom']) ?> — <?= APP_NAME ?></title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Ressources locales -->
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/tailwind.css">
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/etudiant/fiche_mentor.css">
+    
     <?php require_once BASE_PATH . '/views/layouts/footer.php'; ?>
 </head>
 <body class="bg-gray-50 min-h-screen flex">
@@ -13,12 +17,12 @@
 <?php require_once BASE_PATH . '/views/layouts/navbar_etudiant.php'; ?>
 
 <!-- CONTENU PRINCIPAL -->
-<main class="flex-1 p-8 max-w-5xl">
+<main class="flex-1 p-8 max-w-5xl mx-auto">
 
     <!-- Fil d'ariane -->
     <div class="flex items-center gap-2 text-sm text-gray-400 mb-6">
         <a href="<?= APP_URL ?>/?url=recherche" class="hover:text-violet transition-colors">
-            ← Retour a la recherche
+            ← Retour à la recherche
         </a>
     </div>
 
@@ -35,8 +39,7 @@
                     <img src="<?= APP_URL ?>/uploads/avatars/<?= e($mentor['photo']) ?>"
                          class="w-24 h-24 rounded-2xl object-cover mx-auto mb-4" alt="">
                 <?php else: ?>
-                    <div class="w-24 h-24 rounded-2xl bg-violet flex items-center justify-center
-                                text-white font-bold text-3xl mx-auto mb-4">
+                    <div class="avatar-placeholder">
                         <?= strtoupper(substr($mentor['prenom'], 0, 1)) ?>
                     </div>
                 <?php endif; ?>
@@ -77,7 +80,6 @@
 
                 <!-- ── BOUTONS ACTION ──────────────────────── -->
                 <div class="flex gap-2 mt-5">
-                    <!-- Envoyer un message -->
                     <a href="<?= APP_URL ?>/?url=conversation&avec=<?= $mentor['id'] ?>"
                        class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5
                               rounded-xl border border-gray-200 hover:border-violet-300
@@ -95,16 +97,15 @@
                     <!-- Statut dispo -->
                     <?php
                     $statut_cfg = [
-                        'disponible' => ['label' => '● Disponible', 'class' => 'text-teal-600 bg-teal-50 border-teal-200'],
-                        'occupe'     => ['label' => '● Occupé',      'class' => 'text-amber-600 bg-amber-50 border-amber-200'],
-                        'inactif'    => ['label' => '● Inactif',     'class' => 'text-gray-500 bg-gray-100 border-gray-200'],
+                        'disponible' => ['label' => '● Disponible', 'class' => 'statut-dispo statut-dispo-available'],
+                        'occupe'     => ['label' => '● Occupé',      'class' => 'statut-dispo statut-dispo-busy'],
+                        'inactif'    => ['label' => '● Inactif',     'class' => 'statut-dispo statut-dispo-inactive'],
                     ];
                     $cfg = $statut_cfg[$mentor['statut_dispo'] ?? 'inactif'] ?? $statut_cfg['inactif'];
                     ?>
-                    <span class="flex-1 flex items-center justify-center px-3 py-2.5 rounded-xl
-                                 border text-xs font-semibold <?= $cfg['class'] ?>">
+                    <div class="flex-1 <?= $cfg['class'] ?>">
                         <?= $cfg['label'] ?>
-                    </span>
+                    </div>
                 </div>
 
                 <!-- Bio -->
@@ -117,7 +118,7 @@
                 <!-- Expérience -->
                 <?php if (!empty($mentor['experience'])): ?>
                 <div class="mt-4 p-3 bg-teal-50 rounded-xl text-left">
-                    <p class="text-xs font-medium text-teal-700 uppercase tracking-wide mb-1">Experience</p>
+                    <p class="text-xs font-medium text-teal-700 uppercase tracking-wide mb-1">Expérience</p>
                     <p class="text-sm text-teal-800 leading-relaxed">
                         <?= nl2br(e($mentor['experience'])) ?>
                     </p>
@@ -129,7 +130,7 @@
             <?php if (!empty($matieres)): ?>
             <div class="card p-5">
                 <h2 class="font-syne font-bold text-gray-900 text-sm uppercase tracking-wide mb-3">
-                    Matieres enseignees
+                    Matières enseignées
                 </h2>
                 <?php
                 $par_cat = [];
@@ -142,8 +143,7 @@
                     <p class="text-xs text-gray-400 mb-1.5"><?= e($cat) ?></p>
                     <div class="flex flex-wrap gap-1.5">
                         <?php foreach ($noms as $nom): ?>
-                        <span class="px-2.5 py-1 bg-violet-50 text-violet-700 text-xs
-                                     font-medium rounded-lg">
+                        <span class="matiere-tag">
                             <?= e($nom) ?>
                         </span>
                         <?php endforeach; ?>
@@ -163,7 +163,7 @@
             <!-- Créneaux disponibles -->
             <div class="card p-6">
                 <h2 class="font-syne text-lg font-bold text-gray-900 mb-4">
-                    Creneaux disponibles
+                    Créneaux disponibles
                 </h2>
 
                 <?php if (empty($disponibilites)): ?>
@@ -177,9 +177,8 @@
                         </svg>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">
-                        Aucun creneau disponible pour le moment.
+                        Aucun créneau disponible pour le moment.
                     </p>
-                    <!-- Proposer d'envoyer un message si pas de créneau -->
                     <a href="<?= APP_URL ?>/?url=conversation&avec=<?= $mentor['id'] ?>"
                        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl
                               bg-violet-600 hover:bg-violet-700 text-white text-sm
@@ -204,10 +203,10 @@
                 $jours_fr = ['Monday'=>'Lundi','Tuesday'=>'Mardi','Wednesday'=>'Mercredi',
                              'Thursday'=>'Jeudi','Friday'=>'Vendredi',
                              'Saturday'=>'Samedi','Sunday'=>'Dimanche'];
-                $mois_fr  = ['January'=>'jan','February'=>'fev','March'=>'mars',
+                $mois_fr  = ['January'=>'jan','February'=>'fév','March'=>'mars',
                              'April'=>'avr','May'=>'mai','June'=>'juin','July'=>'juil',
-                             'August'=>'aout','September'=>'sep','October'=>'oct',
-                             'November'=>'nov','December'=>'dec'];
+                             'August'=>'août','September'=>'sep','October'=>'oct',
+                             'November'=>'nov','December'=>'déc'];
                 ?>
 
                 <div class="space-y-4">
@@ -224,9 +223,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             <?php foreach ($creneaux as $d): ?>
                             <a href="<?= APP_URL ?>/?url=reserver&dispo_id=<?= $d['id'] ?>&mentor_id=<?= $mentor['id'] ?>"
-                               class="flex items-center justify-between p-3 rounded-xl border
-                                      border-gray-200 hover:border-violet-400 hover:bg-violet-50
-                                      transition-all group cursor-pointer">
+                               class="creneau-card">
                                 <div>
                                     <p class="font-medium text-gray-900 text-sm">
                                         <?= date('H:i', strtotime($d['heure_debut'])) ?>
@@ -241,11 +238,9 @@
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <?php if ($d['mode_session'] === 'en_ligne'): ?>
-                                    <span class="px-2 py-0.5 bg-teal-50 text-teal-700 text-xs
-                                                 font-medium rounded-md">En ligne</span>
+                                    <span class="badge-online">En ligne</span>
                                     <?php else: ?>
-                                    <span class="px-2 py-0.5 bg-blue-50 text-blue-700 text-xs
-                                                 font-medium rounded-md">Presentiel</span>
+                                    <span class="badge-presentiel">Présentiel</span>
                                     <?php endif; ?>
                                     <svg class="w-4 h-4 text-gray-300 group-hover:text-violet
                                                 transition-colors"
@@ -319,7 +314,7 @@
                         <?php endif; ?>
                         <?php if (!empty($ev['reponse_mentor'])): ?>
                         <div class="mt-3 pl-3 border-l-2 border-teal-300">
-                            <p class="text-xs font-medium text-teal-700 mb-1">Reponse du mentor</p>
+                            <p class="text-xs font-medium text-teal-700 mb-1">Réponse du mentor</p>
                             <p class="text-sm text-gray-600">
                                 <?= nl2br(e($ev['reponse_mentor'])) ?>
                             </p>
@@ -334,7 +329,6 @@
         </div>
     </div>
 </main>
-</div>
 
 </body>
 </html>

@@ -1,0 +1,356 @@
+/* ==================== BASE ==================== */
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fadeInUp {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-slideInRight {
+    animation: slideInRight 0.4s ease-out forwards;
+}
+
+/* ==================== STAT CARDS ==================== */
+.stat-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px 24px;
+    transition: all 0.3s ease;
+    border: 1px solid #E2E8F0;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #0FC4A7, #0D9488);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card:hover::before {
+    transform: scaleX(1);
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: #0F172A;
+    margin-top: 12px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #64748B;
+    font-weight: 500;
+}
+
+/* ==================== GRIDS ==================== */
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+/* ==================== CARDS ==================== */
+.card {
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid #E2E8F0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #F1F5F9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0F172A;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-link {
+    font-size: 13px;
+    color: #0FC4A7;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.card-link:hover {
+    color: #0D9488;
+}
+
+/* ==================== DEMANDE ITEM ==================== */
+.demand-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 24px;
+    border-bottom: 1px solid #F1F5F9;
+    transition: background 0.2s;
+}
+
+.demand-item:hover {
+    background: #F8FAFC;
+}
+
+.demand-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+    color: #fff;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+}
+
+.btn-view-demand {
+    background: #0FC4A7;
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-view-demand:hover {
+    background: #0D9488;
+    transform: translateY(-1px);
+}
+
+/* ==================== SESSION ITEM ==================== */
+.session-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    border-bottom: 1px solid #F1F5F9;
+    transition: background 0.2s;
+}
+
+.session-item:hover {
+    background: #F8FAFC;
+}
+
+.session-date {
+    background: #F8FAFC;
+    border-radius: 16px;
+    padding: 10px 16px;
+    text-align: center;
+    min-width: 80px;
+}
+
+.badge-success {
+    background: #E8F5E9;
+    color: #2E7D32;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-warning {
+    background: #FFF3E0;
+    color: #E65100;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ==================== STATUS SELECTOR ==================== */
+.status-selector {
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 4px;
+    display: inline-flex;
+    gap: 8px;
+}
+
+.status-option {
+    padding: 8px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    border: none;
+}
+
+.status-option.active {
+    background: #0FC4A7;
+    color: #fff;
+}
+
+.status-option[data-status="disponible"]:hover {
+    background: #E8F5E9;
+    color: #2E7D32;
+}
+
+.status-option[data-status="occupe"]:hover {
+    background: #FFF3E0;
+    color: #E65100;
+}
+
+.status-option[data-status="inactif"]:hover {
+    background: #FFEBEE;
+    color: #C62828;
+}
+
+/* ==================== BUTTONS ==================== */
+.btn-add-slot {
+    background: linear-gradient(135deg, #0FC4A7, #0D9488);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.btn-add-slot:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 196, 167, 0.3);
+}
+
+/* ==================== EMPTY STATE ==================== */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-icon {
+    width: 80px;
+    height: 80px;
+    background: #F1F5F9;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+    .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==================== SCROLLBAR ==================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #F1F5F9;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94A3B8;
+}

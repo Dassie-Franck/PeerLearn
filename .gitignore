@@ -1,6 +1,22 @@
-# Ignorer le fichier .env qui contient les identifiants
+# ============================================================
+#  PeerLearn - Fichiers à ignorer
+# ============================================================
+
+# Node.js (NE PAS pousser sur GitHub)
+node_modules/
+package-lock.json
+package.json
+tailwindcss.exe
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environnement (identifiants)
 .env
 
-# Fichiers système et logs
-.DS_Store
-*.log
+# Dossier vendor (si vous avez Composer)
+vendor/

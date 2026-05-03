@@ -1,0 +1,144 @@
+/* ==================== FONTS ==================== */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:wght@400;500&display=swap');
+
+.font-syne {
+    font-family: 'Syne', sans-serif;
+}
+
+/* ==================== CARDS ==================== */
+.card {
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid #E2E8F0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* ==================== COULEURS PERSONNALISEES ==================== */
+.bg-violet {
+    background: #5B4FE8;
+}
+
+.bg-violet-50 {
+    background: rgba(91, 79, 232, 0.05);
+}
+
+.text-violet {
+    color: #5B4FE8;
+}
+
+.text-violet-700 {
+    color: #5B4FE8;
+}
+
+.hover\:border-violet-300:hover {
+    border-color: #5B4FE8;
+}
+
+.hover\:bg-violet-50:hover {
+    background: rgba(91, 79, 232, 0.05);
+}
+
+.group:hover .group-hover\:text-violet {
+    color: #5B4FE8;
+}
+
+/* Bouton violet */
+.bg-violet-600 {
+    background: #5B4FE8;
+}
+
+.hover\:bg-violet-700:hover {
+    background: #4B3EE0;
+}
+
+/* ==================== AVATAR ==================== */
+.avatar-placeholder {
+    width: 96px;
+    height: 96px;
+    border-radius: 16px;
+    background: #5B4FE8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 2rem;
+    margin: 0 auto 1rem;
+}
+
+/* ==================== ETAT DISPONIBILITE ==================== */
+.statut-dispo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.statut-dispo-available {
+    background: #E0F2F1;
+    color: #00695C;
+    border: 1px solid #B2DFDB;
+}
+
+.statut-dispo-busy {
+    background: #FFF3E0;
+    color: #E65100;
+    border: 1px solid #FFE0B2;
+}
+
+.statut-dispo-inactive {
+    background: #F5F5F5;
+    color: #616161;
+    border: 1px solid #E0E0E0;
+}
+
+/* ==================== ETIQUETTES MATIERES ==================== */
+.matiere-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(91, 79, 232, 0.05);
+    color: #5B4FE8;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+/* ==================== CRENEAUX DISPONIBLES ==================== */
+.creneau-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    transition: all 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.creneau-card:hover {
+    border-color: #5B4FE8;
+    background: rgba(91, 79, 232, 0.05);
+}
+
+.badge-online {
+    padding: 2px 8px;
+    background: #E0F2F1;
+    color: #00695C;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 6px;
+}
+
+.badge-presentiel {
+    padding: 2px 8px;
+    background: #E3F2FD;
+    color: #1565C0;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 6px;
+}

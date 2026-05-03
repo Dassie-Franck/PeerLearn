@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion — <?= APP_NAME ?></title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Ressources locales -->
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/tailwind.css">
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/auth/login.css">
+    
     <?php require_once BASE_PATH . '/views/layouts/footer.php'; ?>
 </head>
-<body class="min-h-screen flex bg-gray-50">
+<body class="auth-container">
 
 <?php require_once BASE_PATH . '/views/layouts/toast.php'; ?>
 
 <!-- Panneau gauche -->
-<div class="hidden lg:flex lg:w-1/2 flex-col justify-between p-12" style="background:#0D0D14">
+<div class="auth-left">
     <a href="<?= APP_URL ?>/?url=login">
         <span class="font-syne text-2xl font-bold text-white">Peer<span style="color:#5B4FE8">Learn</span></span>
     </a>
@@ -22,7 +25,7 @@
             Apprends mieux,<br>ensemble.
         </h1>
         <p class="text-gray-400 text-lg leading-relaxed">
-            Connecte-toi avec des etudiants-mentors prets a t accompagner dans tes matieres.
+            Connecte-toi avec des étudiants-mentors prêts à t'accompagner dans tes matières.
         </p>
         <div class="flex gap-10 mt-10">
             <div>
@@ -31,7 +34,7 @@
             </div>
             <div>
                 <p class="font-syne text-3xl font-bold text-white">1 200+</p>
-                <p class="text-gray-500 text-sm mt-1">Sessions realisees</p>
+                <p class="text-gray-500 text-sm mt-1">Sessions réalisées</p>
             </div>
             <div>
                 <p class="font-syne text-3xl font-bold text-white">4.8/5</p>
@@ -43,8 +46,8 @@
 </div>
 
 <!-- Panneau droit : formulaire -->
-<div class="w-full lg:w-1/2 flex items-center justify-center p-6">
-    <div class="w-full max-w-md">
+<div class="auth-right">
+    <div class="auth-card">
 
         <div class="lg:hidden text-center mb-8">
             <span class="font-syne text-2xl font-bold" style="color:#0D0D14">
@@ -53,7 +56,7 @@
         </div>
 
         <h2 class="font-syne text-2xl font-bold text-gray-900 mb-2">Bon retour !</h2>
-        <p class="text-gray-500 text-sm mb-8">Connecte-toi pour acceder a ta plateforme.</p>
+        <p class="text-gray-500 text-sm mb-8">Connecte-toi pour accéder à ta plateforme.</p>
 
         <form method="POST" action="<?= APP_URL ?>/?url=login" novalidate>
             <?= csrf_field() ?>
@@ -86,7 +89,7 @@
 
             <div class="text-right mb-6">
                 <a href="<?= APP_URL ?>/?url=forgot" class="text-sm" style="color:#5B4FE8">
-                    Mot de passe oublie ?
+                    Mot de passe oublié ?
                 </a>
             </div>
 
@@ -96,7 +99,7 @@
         <p class="text-center text-sm text-gray-500 mt-6">
             Pas encore de compte ?
             <a href="<?= APP_URL ?>/?url=register" class="font-medium" style="color:#5B4FE8">
-                Creer un compte
+                Créer un compte
             </a>
         </p>
 

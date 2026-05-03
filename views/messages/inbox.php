@@ -4,90 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messages — <?= APP_NAME ?></title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <style>
-        * { font-family: 'Inter', sans-serif; }
-        
-        /* ==================== LAYOUT ==================== */
-        .messages-container {
-            display: flex;
-            min-height: 100vh;
-            background: #F8FAFC;
-        }
-        
-        .messages-main-content {
-            flex: 1;
-            padding: 24px 32px;
-        }
-        
-        /* ==================== CARD ==================== */
-        .card {
-            background: #fff;
-            border-radius: 20px;
-            border: 1px solid #E2E8F0;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        /* ==================== MODAL ==================== */
-        #modal-nouvelle-conv {
-            position: fixed; inset: 0;
-            background: rgba(17, 24, 39, 0.45);
-            backdrop-filter: blur(4px);
-            z-index: 50;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none;
-            transition: opacity .2s ease;
-        }
-        #modal-nouvelle-conv.open { opacity: 1; pointer-events: all; }
-        #modal-nouvelle-conv-box {
-            background: #fff; border-radius: 20px;
-            width: 100%; max-width: 480px; margin: 16px;
-            box-shadow: 0 24px 64px rgba(0,0,0,.15);
-            transform: translateY(12px) scale(.98);
-            transition: transform .2s ease; overflow: hidden;
-        }
-        #modal-nouvelle-conv.open #modal-nouvelle-conv-box { transform: translateY(0) scale(1); }
-
-        /* ==================== RECHERCHE UTILISATEUR ==================== */
-        .user-result {
-            display: flex; align-items: center;
-            gap: 12px;
-            padding: 10px 14px; border-radius: 10px;
-            cursor: pointer; transition: background .15s;
-            text-decoration: none;
-        }
-        .user-result:hover { background: #F5F3FF; }
-        
-        /* ==================== BOUTONS ==================== */
-        .btn-primary {
-            background: linear-gradient(135deg, #5B4FE8, #7C3AED);
-            color: #fff;
-            padding: 10px 24px;
-            border-radius: 14px;
-            font-size: 13px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(91,79,232,0.3);
-        }
-        
-        /* ==================== RESPONSIVE ==================== */
-        @media (max-width: 768px) {
-            .messages-main-content { padding: 16px; }
-        }
-    </style>
+    <!-- Ressources locales -->
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/tailwind.css">
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/messages/inbox.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -107,7 +33,7 @@
         <!-- En-tête -->
         <div class="flex items-center justify-between mb-8">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">
+                <h1 class="text-3xl font-extrabold text-gray-900">
                     <i class="fa-regular fa-message" style="color: #5B4FE8; margin-right: 12px;"></i>
                     Messages
                 </h1>
@@ -116,8 +42,7 @@
 
             <div class="flex items-center gap-3">
                 <?php if (($total_non_lus ?? 0) > 0): ?>
-                <span class="px-3 py-1.5 rounded-full bg-violet-100 text-violet-700
-                             text-sm font-semibold border border-violet-200">
+                <span class="px-3 py-1.5 rounded-full bg-violet-100 text-violet-700 text-sm font-semibold border border-violet-200">
                     <i class="fa-regular fa-envelope mr-1"></i>
                     <?= $total_non_lus ?> non lu<?= $total_non_lus > 1 ? 's' : '' ?>
                 </span>
@@ -135,8 +60,8 @@
         </div>
 
         <!-- ══ MODAL NOUVELLE CONVERSATION ════════════════════════ -->
-        <div id="modal-nouvelle-conv" onclick="closeModalConvOutside(event)">
-            <div id="modal-nouvelle-conv-box">
+        <div id="modal-nouvelle-conv" class="modal-conv" onclick="closeModalConvOutside(event)">
+            <div id="modal-nouvelle-conv-box" class="modal-conv-box">
 
                 <!-- Header -->
                 <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
@@ -159,7 +84,7 @@
                                placeholder="Nom, prénom..."
                                class="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200
                                       rounded-xl text-sm text-gray-900 outline-none
-                                      focus:border-violet-400 focus:bg-white transition-colors"
+                                      focus:border-violet-500 focus:bg-white transition-colors"
                                oninput="rechercherUtilisateur(this.value)">
                     </div>
                 </div>
@@ -262,7 +187,7 @@
                     <?php endif; ?>
                     <?php if ((int)$conv['non_lus'] > 0): ?>
                     <span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-violet-600
-                                 text-white text-xs flex items-center justify-center font-bold">
+                                 text-white text-xs flex items-center justify-center font-bold shadow-sm">
                         <?= min((int)$conv['non_lus'], 9) ?><?= (int)$conv['non_lus'] > 9 ? '+' : '' ?>
                     </span>
                     <?php endif; ?>
@@ -272,7 +197,7 @@
                 <div class="flex-1 min-w-0">
                     <div class="flex items-center justify-between gap-2">
                         <p class="font-semibold text-sm truncate
-                                   <?= (int)$conv['non_lus'] > 0 ? 'text-gray-900' : 'text-gray-700' ?>">
+                                   <?= (int)$conv['non_lus'] > 0 ? 'text-gray-900 font-bold' : 'text-gray-700' ?>">
                             <?= htmlspecialchars($conv['nom_complet']) ?>
                             <?php if (($conv['est_mentor'] ?? false) && ($conv['mentor_valide'] ?? false)): ?>
                             <span class="ml-1 px-1.5 py-0.5 rounded text-xs bg-teal-50

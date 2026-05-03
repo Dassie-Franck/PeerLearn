@@ -4,63 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil mentor — <?= APP_NAME ?></title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Ressources locales -->
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/tailwind.css">
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/mentor/profil-public.css">
+    
     <?php require_once BASE_PATH . '/views/layouts/footer.php'; ?>
 </head>
-<body style="background:#F9FAFB;display:flex;min-height:100vh">
+<body>
 
 <?php require_once BASE_PATH . '/views/layouts/toast.php'; ?>
 <?php require_once BASE_PATH . '/views/layouts/navbar_mentor.php'; ?>
 
-<main style="flex:1;padding:32px;max-width:800px;width:100%">
+<main class="flex-1 py-8 px-4 max-w-2xl mx-auto w-full">
 
-    <h1 class="font-syne" style="font-size:24px;font-weight:700;color:#111827;margin:0 0 8px">
-        Mon profil mentor
-    </h1>
-    <p style="color:#6B7280;font-size:14px;margin:0 0 32px">
-        Ces informations sont visibles par les etudiants sur ta fiche publique.
+    <h1 class="font-syne text-2xl font-bold text-gray-900 mb-2">Mon profil mentor</h1>
+    <p class="text-gray-500 text-sm mb-8">
+        Ces informations sont visibles par les étudiants sur ta fiche publique.
     </p>
 
     <!-- ONGLETS -->
-    <div style="display:flex;gap:0;border-bottom:2px solid #F3F4F6;margin-bottom:32px">
-        <?php foreach (['bio' => 'Bio & Experience', 'matieres' => 'Matieres', 'disponibilite' => 'Disponibilite'] as $k => $l): ?>
-        <button onclick="showTab('<?= $k ?>')" id="tab-<?= $k ?>"
-                style="padding:10px 20px;background:none;border:none;cursor:pointer;
-                       font-size:14px;font-family:'DM Sans',sans-serif;color:#6B7280;
-                       border-bottom:2px solid transparent;margin-bottom:-2px">
-            <?= $l ?>
-        </button>
-        <?php endforeach; ?>
+    <div class="tabs-container">
+        <button class="tab-btn" data-tab="bio">Bio & Expérience</button>
+        <button class="tab-btn" data-tab="matieres">Matières</button>
+        <button class="tab-btn" data-tab="disponibilite">Disponibilité</button>
     </div>
 
     <!-- ===== BIO & EXPERIENCE ===== -->
-    <div id="panel-bio">
+    <div id="panel-bio" class="tab-panel">
         <div class="card">
             <form method="POST" action="<?= APP_URL ?>/?url=mentor-profil">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="update_profil">
 
-                <div style="margin-bottom:20px">
-                    <label style="display:block;font-size:13px;font-weight:500;
-                                  color:#374151;margin-bottom:6px">Bio</label>
+                <div class="mb-5">
+                    <label class="form-label">Bio</label>
                     <textarea name="bio" rows="4" required
-                        style="width:100%;padding:12px 16px;border:1px solid #E5E7EB;
-                               border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;
-                               color:#111827;resize:vertical;outline:none;
-                               box-sizing:border-box;transition:border-color .2s"
+                        class="form-textarea"
                         onfocus="this.style.borderColor='#0FC4A7'"
                         onblur="this.style.borderColor='#E5E7EB'"><?= e($profil_mentor['bio'] ?? '') ?></textarea>
                 </div>
 
-                <div style="margin-bottom:24px">
-                    <label style="display:block;font-size:13px;font-weight:500;
-                                  color:#374151;margin-bottom:6px">Experience</label>
+                <div class="mb-6">
+                    <label class="form-label">Expérience</label>
                     <textarea name="experience" rows="4" required
-                        style="width:100%;padding:12px 16px;border:1px solid #E5E7EB;
-                               border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;
-                               color:#111827;resize:vertical;outline:none;
-                               box-sizing:border-box;transition:border-color .2s"
+                        class="form-textarea"
                         onfocus="this.style.borderColor='#0FC4A7'"
                         onblur="this.style.borderColor='#E5E7EB'"><?= e($profil_mentor['experience'] ?? '') ?></textarea>
                 </div>
@@ -73,28 +61,27 @@
     </div>
 
     <!-- ===== MATIERES ===== -->
-    <div id="panel-matieres" style="display:none">
+    <div id="panel-matieres" class="tab-panel" style="display: none;">
         <div class="card">
-            <p style="font-size:14px;color:#6B7280;margin:0 0 20px">
-                Selectionne les matieres que tu enseignes.
+            <p class="text-sm text-gray-500 mb-5">
+                Sélectionne les matières que tu enseignes.
             </p>
             <form method="POST" action="<?= APP_URL ?>/?url=mentor-profil">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="update_matieres">
 
                 <?php foreach ($toutes_matieres as $categorie => $mats): ?>
-                <div style="margin-bottom:20px">
-                    <p style="font-size:11px;font-weight:600;color:#9CA3AF;
-                               text-transform:uppercase;letter-spacing:.08em;margin:0 0 10px">
+                <div class="mb-5">
+                    <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wide mb-2.5">
                         <?= e($categorie) ?>
                     </p>
-                    <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <div class="flex flex-wrap gap-2">
                         <?php foreach ($mats as $mat): ?>
-                        <label style="cursor:pointer">
+                        <label class="cursor-pointer">
                             <input type="checkbox" name="matieres[]"
                                    value="<?= $mat['id'] ?>"
                                    <?= in_array($mat['id'], $ids_mentor) ? 'checked' : '' ?>
-                                   style="display:none"
+                                   class="hidden"
                                    onchange="toggleChip(this)">
                             <span class="chip <?= in_array($mat['id'], $ids_mentor) ? 'chip-active' : '' ?>">
                                 <?= e($mat['nom']) ?>
@@ -105,7 +92,7 @@
                 </div>
                 <?php endforeach; ?>
 
-                <button type="submit" class="btn-primary" style="margin-top:8px">
+                <button type="submit" class="btn-primary mt-2">
                     Enregistrer
                 </button>
             </form>
@@ -113,10 +100,10 @@
     </div>
 
     <!-- ===== DISPONIBILITE ===== -->
-    <div id="panel-disponibilite" style="display:none">
+    <div id="panel-disponibilite" class="tab-panel" style="display: none;">
         <div class="card">
-            <p style="font-size:14px;color:#6B7280;margin:0 0 20px">
-                Indique ton statut de disponibilite general.
+            <p class="text-sm text-gray-500 mb-5">
+                Indique ton statut de disponibilité général.
             </p>
             <form method="POST" action="<?= APP_URL ?>/?url=mentor-profil">
                 <?= csrf_field() ?>
@@ -124,29 +111,25 @@
 
                 <?php
                 $statuts = [
-                    'disponible' => ['label' => 'Disponible',  'color' => '#166534', 'bg' => '#F0FDF4', 'border' => '#BBF7D0', 'dot' => '#22C55E'],
-                    'occupe'     => ['label' => 'Occupe',       'color' => '#92400E', 'bg' => '#FFFBEB', 'border' => '#FDE68A', 'dot' => '#F59E0B'],
-                    'inactif'    => ['label' => 'Inactif',      'color' => '#991B1B', 'bg' => '#FFF1F2', 'border' => '#FECDD3', 'dot' => '#EF4444'],
+                    'disponible' => ['label' => 'Disponible', 'dot' => 'disponible', 'bg' => '#F0FDF4', 'border' => '#BBF7D0', 'color' => '#166534'],
+                    'occupe'     => ['label' => 'Occupé',     'dot' => 'occupe',     'bg' => '#FFFBEB', 'border' => '#FDE68A', 'color' => '#92400E'],
+                    'inactif'    => ['label' => 'Inactif',    'dot' => 'inactif',    'bg' => '#FFF1F2', 'border' => '#FECDD3', 'color' => '#991B1B'],
                 ];
                 foreach ($statuts as $val => $s):
                     $actif = ($profil_mentor['statut_dispo'] ?? 'disponible') === $val;
                 ?>
-                <label style="display:flex;align-items:center;gap:12px;padding:14px 16px;
-                              border-radius:12px;border:2px solid <?= $actif ? $s['border'] : '#E5E7EB' ?>;
-                              background:<?= $actif ? $s['bg'] : '#fff' ?>;
-                              cursor:pointer;margin-bottom:10px;transition:all .15s">
+                <label class="statut-option <?= $actif ? 'active' : '' ?>" data-statut="<?= $val ?>">
                     <input type="radio" name="statut_dispo" value="<?= $val ?>"
                            <?= $actif ? 'checked' : '' ?>
-                           style="width:16px;height:16px;accent-color:<?= $s['dot'] ?>">
-                    <span style="width:10px;height:10px;border-radius:50%;
-                                 background:<?= $s['dot'] ?>;flex-shrink:0"></span>
-                    <span style="font-size:14px;font-weight:500;color:<?= $actif ? $s['color'] : '#374151' ?>">
+                           class="w-4 h-4 accent-teal-500 hidden">
+                    <span class="statut-dot <?= $s['dot'] ?>"></span>
+                    <span class="statut-label <?= $actif ? 'text-green-800' : 'text-gray-700' ?>">
                         <?= $s['label'] ?>
                     </span>
                 </label>
                 <?php endforeach; ?>
 
-                <button type="submit" class="btn-primary" style="margin-top:8px">
+                <button type="submit" class="btn-primary mt-2">
                     Enregistrer
                 </button>
             </form>
@@ -154,26 +137,74 @@
     </div>
 
 </main>
-</div>
-
-<style>
-.chip        { display:inline-block;padding:6px 14px;border-radius:20px;font-size:13px;border:1px solid #E5E7EB;color:#6B7280;transition:all .15s;user-select:none; }
-.chip:hover  { border-color:#0FC4A7;color:#0FC4A7; }
-.chip-active { background:#0FC4A7;color:#fff;border-color:#0FC4A7; }
-.tab-active  { color:#0FC4A7 !important;border-bottom-color:#0FC4A7 !important; }
-</style>
 
 <script>
-function showTab(name) {
-    ['bio','matieres','disponibilite'].forEach(p => {
-        document.getElementById('panel-' + p).style.display = p === name ? 'block' : 'none';
-        document.getElementById('tab-' + p).classList.toggle('tab-active', p === name);
+// ==================== GESTION DES ONGLETS ====================
+function showTab(tabName) {
+    // Cacher tous les panneaux
+    document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.style.display = 'none';
+    });
+    
+    // Afficher le panneau sélectionné
+    const panel = document.getElementById('panel-' + tabName);
+    if (panel) panel.style.display = 'block';
+    
+    // Mettre à jour les classes des boutons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-tab') === tabName) {
+            btn.classList.add('active');
+        }
     });
 }
-function toggleChip(cb) {
-    cb.nextElementSibling.classList.toggle('chip-active', cb.checked);
+
+// ==================== CHIP TOGGLE ====================
+function toggleChip(checkbox) {
+    const chip = checkbox.nextElementSibling;
+    if (checkbox.checked) {
+        chip.classList.add('chip-active');
+    } else {
+        chip.classList.remove('chip-active');
+    }
 }
-showTab('bio');
+
+// ==================== INITIALISATION ====================
+document.addEventListener('DOMContentLoaded', function() {
+    // Ajouter les data-tab aux boutons
+    const tabs = ['bio', 'matieres', 'disponibilite'];
+    const buttons = document.querySelectorAll('.tab-btn');
+    buttons.forEach((btn, index) => {
+        btn.setAttribute('data-tab', tabs[index]);
+        btn.addEventListener('click', () => showTab(tabs[index]));
+    });
+    
+    // Afficher l'onglet bio par défaut
+    showTab('bio');
+    
+    // Ajouter l'effet de sélection sur les options de statut
+    document.querySelectorAll('.statut-option').forEach(opt => {
+        const radio = opt.querySelector('input[type="radio"]');
+        if (radio) {
+            opt.addEventListener('click', () => {
+                radio.checked = true;
+                document.querySelectorAll('.statut-option').forEach(o => o.classList.remove('active'));
+                opt.classList.add('active');
+                const label = opt.querySelector('.statut-label');
+                if (label) {
+                    const colors = { 'disponible': 'text-green-800', 'occupe': 'text-amber-800', 'inactif': 'text-red-800' };
+                    const val = radio.value;
+                    document.querySelectorAll('.statut-label').forEach(l => {
+                        l.classList.remove('text-green-800', 'text-amber-800', 'text-red-800');
+                        l.classList.add('text-gray-700');
+                    });
+                    label.classList.remove('text-gray-700');
+                    label.classList.add(colors[val] || 'text-gray-700');
+                }
+            });
+        }
+    });
+});
 </script>
 
 </body>

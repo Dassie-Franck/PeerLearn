@@ -4,95 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Conversation avec <?= e($interlocuteur['prenom']) ?> — PeerLearn</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ressources locales -->
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/tailwind.css">
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/messages/conversation.css">
+    
     <?php require_once BASE_PATH . '/views/layouts/footer.php'; ?>
-    <style>
-        * { font-family: 'Inter', sans-serif; }
-        
-        /* Animations */
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        
-        .msg-mine { animation: slideInRight 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
-        .msg-theirs { animation: slideInLeft 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
-        .date-separator { animation: fadeIn 0.2s ease; }
-        
-        /* Scrollbar personnalisée */
-        #chat-messages::-webkit-scrollbar { width: 6px; }
-        #chat-messages::-webkit-scrollbar-track { background: transparent; }
-        #chat-messages::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        #chat-messages::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        
-        /* Dark mode scrollbar */
-        .dark #chat-messages::-webkit-scrollbar-thumb { background: #475569; }
-        .dark #chat-messages::-webkit-scrollbar-thumb:hover { background: #64748b; }
-        
-        /* Input auto-resize */
-        .message-input {
-            max-height: 120px;
-            overflow-y: auto;
-            line-height: 1.5;
-        }
-        .message-input::-webkit-scrollbar { width: 4px; }
-        
-        /* Effet de bulle au survol */
-        .message-bubble {
-            transition: transform 0.1s ease;
-        }
-        .message-bubble:hover {
-            transform: scale(1.01);
-        }
-        
-        /* Menu contextuel */
-        .context-menu {
-            position: fixed;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            z-index: 1000;
-            min-width: 160px;
-            overflow: hidden;
-            animation: fadeIn 0.1s ease;
-        }
-        .dark .context-menu {
-            background: #1e293b;
-            border: 1px solid #334155;
-        }
-        .context-menu-item {
-            padding: 10px 16px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background 0.1s;
-        }
-        .context-menu-item:hover {
-            background: #f1f5f9;
-        }
-        .dark .context-menu-item:hover {
-            background: #334155;
-        }
-        .context-menu-item.danger {
-            color: #ef4444;
-        }
-        .context-menu-divider {
-            height: 1px;
-            background: #e2e8f0;
-            margin: 4px 0;
-        }
-        .dark .context-menu-divider {
-            background: #334155;
-        }
-    </style>
 </head>
 <body class="bg-white dark:bg-gray-900 min-h-screen flex">
 
@@ -106,51 +23,50 @@
     let LAST_MESSAGE_ID = <?= !empty($messages) ? end($messages)['id'] : 0 ?>;
 </script>
 
-<main class="flex-1 flex flex-col bg-gray-50 dark:bg-gray-900" style="height:100vh; overflow:hidden;">
+<main class="flex-1 flex flex-col bg-gray-50 dark:bg-gray-900 h-screen overflow-hidden">
 
     <!-- ==================== HEADER ==================== -->
-    <!-- ==================== HEADER ==================== -->
-<div class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 px-4 py-3 flex items-center gap-3 flex-shrink-0 shadow-sm">
-    <a href="<?= APP_URL ?>/?url=messages" 
-       class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center transition">
-        <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-        </svg>
-    </a>
-    
-    <div class="flex items-center gap-3 flex-1">
-        <div class="relative">
-            <?php if (!empty($interlocuteur['photo'])): ?>
-                <img src="<?= APP_URL ?>/uploads/avatars/<?= e($interlocuteur['photo']) ?>" 
-                     class="w-11 h-11 rounded-full object-cover">
-            <?php else: ?>
-                <div class="w-11 h-11 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white font-bold text-lg shadow-sm">
-                    <?= strtoupper(substr($interlocuteur['prenom'], 0, 1)) ?>
-                </div>
-            <?php endif; ?>
-            <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"></div>
-        </div>
-        <div>
-            <p class="font-semibold text-gray-900 dark:text-white text-base">
-                <?= e($interlocuteur['prenom'] . ' ' . $interlocuteur['nom']) ?>
-                <?php if (!empty($interlocuteur['est_mentor'])): ?>
-                    <span class="ml-1 text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1.5 py-0.5 rounded-full">Mentor</span>
+    <div class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 px-4 py-3 flex items-center gap-3 flex-shrink-0 shadow-sm">
+        <a href="<?= APP_URL ?>/?url=messages" 
+           class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center transition">
+            <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+        </a>
+        
+        <div class="flex items-center gap-3 flex-1">
+            <div class="relative">
+                <?php if (!empty($interlocuteur['photo'])): ?>
+                    <img src="<?= APP_URL ?>/uploads/avatars/<?= e($interlocuteur['photo']) ?>" 
+                         class="w-11 h-11 rounded-full object-cover">
+                <?php else: ?>
+                    <div class="w-11 h-11 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white font-bold text-lg shadow-sm">
+                        <?= strtoupper(substr($interlocuteur['prenom'], 0, 1)) ?>
+                    </div>
                 <?php endif; ?>
-            </p>
-            <p id="online-status" class="text-xs text-green-500 flex items-center gap-1">
-                <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
-                En ligne
-            </p>
+                <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"></div>
+            </div>
+            <div>
+                <p class="font-semibold text-gray-900 dark:text-white text-base">
+                    <?= e($interlocuteur['prenom'] . ' ' . $interlocuteur['nom']) ?>
+                    <?php if (!empty($interlocuteur['est_mentor'])): ?>
+                        <span class="ml-1 text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1.5 py-0.5 rounded-full">Mentor</span>
+                    <?php endif; ?>
+                </p>
+                <p id="online-status" class="text-xs text-green-500 flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                    En ligne
+                </p>
+            </div>
         </div>
+        
+        <button id="theme-toggle" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center transition">
+            <!-- Icône sera mise à jour par JS -->
+            <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+        </button>
     </div>
-    
-    <button id="theme-toggle" class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center transition">
-        <!-- Icône sera mise à jour par JS -->
-        <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
-        </svg>
-    </button>
-</div>
 
     <!-- ==================== MESSAGES ZONE ==================== -->
     <div id="chat-messages" class="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
@@ -174,7 +90,6 @@
                     $msg_date = date('Y-m-d', strtotime($msg['date_envoi']));
                     $is_system = isset($msg['est_systeme']) && $msg['est_systeme'] == 1;
                     
-                    // Afficher le séparateur de date
                     if ($msg_date != $last_date):
                         $last_date = $msg_date;
                         $today = date('Y-m-d');
@@ -416,7 +331,7 @@ function addMessageToUI(msg, isMine) {
         
         const avatarHtml = !isMine ? `
             <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 mr-2 mt-1 shadow-sm">
-                ${msg.envoyeur_prenom ? msg.envoyeur_prenom.charAt(0).toUpperCase() : '?'}
+                ${msg.envoyeur_prenon ? msg.envoyeur_prenom.charAt(0).toUpperCase() : '?'}
             </div>
         ` : '';
         
@@ -614,16 +529,10 @@ async function deleteMessage(messageId, isMine) {
 }
 
 // ==================== Thème ====================
-// ==================== Thème ====================
 function toggleTheme() {
-    // Ajouter/enlever la classe dark sur body
     document.body.classList.toggle('dark');
-    
-    // Sauvegarder la préférence
     const isDark = document.body.classList.contains('dark');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    
-    // Optionnel: Mettre à jour l'icône du bouton
     updateThemeIcon(isDark);
 }
 
@@ -636,13 +545,12 @@ function updateThemeIcon(isDark) {
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
     </svg>`;
     
-    const themeBtn = document.querySelector('button[onclick="toggleTheme()"]');
+    const themeBtn = document.getElementById('theme-toggle');
     if (themeBtn) {
         themeBtn.innerHTML = isDark ? sunIcon : moonIcon;
     }
 }
 
-// Initialiser le thème au chargement de la page
 function initTheme() {
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -656,7 +564,6 @@ function initTheme() {
     }
 }
 
-// Appeler initTheme() au chargement de la page
 initTheme();
 
 // ==================== Nettoyage ====================

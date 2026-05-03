@@ -1,0 +1,105 @@
+/* ==================== BASE ==================== */
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+/* ==================== LAYOUT ==================== */
+.messages-container {
+    display: flex;
+    min-height: 100vh;
+    background: #F8FAFC;
+}
+
+.messages-main-content {
+    flex: 1;
+    padding: 24px 32px;
+}
+
+/* ==================== CARD ==================== */
+.card {
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid #E2E8F0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* ==================== MODAL ==================== */
+.modal-conv {
+    position: fixed;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.45);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.modal-conv.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-conv-box {
+    background: #fff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 480px;
+    margin: 16px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15);
+    transform: translateY(12px) scale(0.98);
+    transition: transform 0.2s ease;
+    overflow: hidden;
+}
+
+.modal-conv.open .modal-conv-box {
+    transform: translateY(0) scale(1);
+}
+
+/* ==================== RECHERCHE UTILISATEUR ==================== */
+.user-result {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s;
+    text-decoration: none;
+}
+
+.user-result:hover {
+    background: #F5F3FF;
+}
+
+/* ==================== BOUTONS ==================== */
+.btn-primary {
+    background: linear-gradient(135deg, #5B4FE8, #7C3AED);
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 79, 232, 0.3);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    .messages-main-content {
+        padding: 16px;
+    }
+}

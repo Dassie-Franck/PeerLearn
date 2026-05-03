@@ -1,0 +1,222 @@
+/* ==================== BASE ==================== */
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fadeInUp {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-slideInRight {
+    animation: slideInRight 0.4s ease-out forwards;
+}
+
+/* ==================== FORM CARD ==================== */
+.form-card {
+    background: #fff;
+    border-radius: 24px;
+    border: 1px solid #E2E8F0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.form-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+
+.form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid #E2E8F0;
+    font-size: 14px;
+    transition: all 0.2s;
+    background: #fff;
+    outline: none;
+}
+
+.form-input:focus,
+.form-select:focus {
+    border-color: #0FC4A7;
+    box-shadow: 0 0 0 3px rgba(15, 196, 167, 0.1);
+}
+
+/* ==================== RADIO OPTIONS ==================== */
+.radio-option {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.radio-option:hover {
+    border-color: #0FC4A7;
+    background: rgba(15, 196, 167, 0.05);
+}
+
+.radio-option.active {
+    border-color: #0FC4A7;
+    background: rgba(15, 196, 167, 0.1);
+}
+
+/* ==================== SLOT CARD ==================== */
+.slot-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 16px;
+    border: 1px solid #E2E8F0;
+    transition: all 0.3s ease;
+}
+
+.slot-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.slot-card-free {
+    background: #fff;
+    border-left: 4px solid #0FC4A7;
+}
+
+.slot-card-booked {
+    background: #FEFCE8;
+    border-left: 4px solid #EAB308;
+}
+
+.slot-time {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0F172A;
+}
+
+.btn-delete {
+    background: transparent;
+    border: none;
+    color: #94A3B8;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 10px;
+    transition: all 0.2s;
+}
+
+.btn-delete:hover {
+    background: #FEF2F2;
+    color: #EF4444;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, #0FC4A7, #0D9488);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 196, 167, 0.3);
+}
+
+/* ==================== EMPTY STATE ==================== */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-icon {
+    width: 80px;
+    height: 80px;
+    background: #F1F5F9;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+/* ==================== ALERT MESSAGES ==================== */
+.alert-success {
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    color: #166534;
+    padding: 14px 18px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.alert-error {
+    background: #FEF2F2;
+    border: 1px solid #FEE2E2;
+    color: #991B1B;
+    padding: 14px 18px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+/* ==================== DATE GROUP ==================== */
+.date-group {
+    margin-bottom: 24px;
+}
+
+.date-header {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0FC4A7;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #E2E8F0;
+}

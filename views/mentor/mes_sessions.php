@@ -14,265 +14,38 @@ $filtre_actif = $_GET['statut'] ?? '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes sessions — <?= APP_NAME ?></title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Ressources locales -->
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/tailwind.css">
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/mentor/mes-sessions.css">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <?php require_once BASE_PATH . '/views/layouts/footer.php'; ?>
-    <style>
-        * { font-family: 'Inter', sans-serif; }
-        
-        /* ==================== ANIMATIONS ==================== */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        .animate-fadeInUp { animation: fadeInUp 0.5s ease-out forwards; }
-        .animate-slideInRight { animation: slideInRight 0.4s ease-out forwards; }
-        
-        /* ==================== FILTER BUTTONS ==================== */
-        .filter-btn {
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.2s;
-            border: 1px solid #E2E8F0;
-            background: #fff;
-            color: #64748B;
-        }
-        
-        .filter-btn:hover {
-            border-color: #5B4FE8;
-            color: #5B4FE8;
-        }
-        
-        .filter-btn.active {
-            background: #5B4FE8;
-            border-color: #5B4FE8;
-            color: #fff;
-        }
-        
-        /* ==================== SESSION CARD ==================== */
-        .session-card {
-            background: #fff;
-            border-radius: 20px;
-            border: 1px solid #E2E8F0;
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .session-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border-color: #5B4FE8;
-        }
-        
-        .session-date-box {
-            background: #F8FAFC;
-            border-radius: 16px;
-            padding: 12px 16px;
-            text-align: center;
-            min-width: 80px;
-        }
-        
-        .badge-pending {
-            background: #FEF3C7;
-            color: #D97706;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .badge-confirmed {
-            background: #E8F5E9;
-            color: #2E7D32;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .badge-completed {
-            background: #E3F2FD;
-            color: #1565C0;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .badge-cancelled {
-            background: #FFEBEE;
-            color: #C62828;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .btn-evaluate {
-            background: linear-gradient(135deg, #5B4FE8, #7C3AED);
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.2s;
-            text-align: center;
-        }
-        
-        .btn-evaluate:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(91,79,232,0.3);
-        }
-        
-        .btn-cancel {
-            background: #FEF2F2;
-            color: #EF4444;
-            border: 1px solid #FEE2E2;
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-        
-        .btn-cancel:hover {
-            background: #FEE2E2;
-            transform: translateY(-2px);
-        }
-        
-        .btn-message {
-            background: #F1F5F9;
-            color: #64748B;
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.2s;
-            text-align: center;
-        }
-        
-        .btn-message:hover {
-            background: #E2E8F0;
-            color: #1E293B;
-            transform: translateY(-2px);
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            background: #fff;
-            border-radius: 24px;
-            border: 1px solid #E2E8F0;
-        }
-        
-        .empty-icon {
-            width: 80px;
-            height: 80px;
-            background: #F1F5F9;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-        }
-        
-        .role-badge {
-            background: #F1F5F9;
-            color: #64748B;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 500;
-        }
-        
-        /* Modal */
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(6px);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-        }
-        
-        .modal.open {
-            opacity: 1;
-            pointer-events: all;
-        }
-        
-        .modal-box {
-            background: #fff;
-            border-radius: 24px;
-            width: 100%;
-            max-width: 440px;
-            margin: 16px;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-            transform: translateY(12px) scale(0.98);
-            transition: transform 0.2s ease;
-            overflow: hidden;
-        }
-        
-        .open .modal-box {
-            transform: translateY(0) scale(1);
-        }
-        
-        .form-label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 6px;
-        }
-        
-        .form-textarea {
-            width: 100%;
-            padding: 12px;
-            border-radius: 14px;
-            border: 1px solid #E2E8F0;
-            font-size: 14px;
-            transition: all 0.2s;
-            resize: vertical;
-        }
-        
-        .form-textarea:focus {
-            outline: none;
-            border-color: #5B4FE8;
-            box-shadow: 0 0 0 3px rgba(91,79,232,0.1);
-        }
-    </style>
 </head>
 <body>
 
 <?php require_once BASE_PATH . '/views/layouts/toast.php'; ?>
-<?php require_once BASE_PATH . '/views/layouts/sidebar_etudiant.php'; ?>
+<?php require_once BASE_PATH . '/views/layouts/navbar_mentor.php'; ?>
 
 <!-- ==================== CONTENU PRINCIPAL ==================== -->
-<main style="padding: 32px;">
+<main class="flex-1 p-8">
     
     <!-- En-tête -->
-    <div class="animate-fadeInUp" style="margin-bottom: 28px;">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+    <div class="animate-fadeInUp mb-7">
+        <div class="flex items-center justify-between flex-wrap gap-4">
             <div>
-                <h1 style="font-size: 28px; font-weight: 800; color: #0F172A; margin-bottom: 8px;">
+                <h1 class="text-3xl font-extrabold text-gray-900 mb-2">
                     <i class="fa-solid fa-calendar-days" style="color: #5B4FE8; margin-right: 12px;"></i>
                     Mes sessions
                 </h1>
-                <p style="color: #64748B; font-size: 14px;">Consultez et gérez toutes vos sessions de mentorat.</p>
+                <p class="text-gray-500 text-sm">Consultez et gérez toutes vos sessions de mentorat.</p>
             </div>
-            <a href="<?= APP_URL ?>/?url=recherche" class="btn-evaluate" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px;">
+            <a href="<?= APP_URL ?>/?url=recherche" class="btn-evaluate inline-flex items-center gap-2 px-6 py-2.5">
                 <i class="fa-solid fa-plus"></i> Réserver une session
             </a>
         </div>
@@ -280,21 +53,21 @@ $filtre_actif = $_GET['statut'] ?? '';
     
     <!-- Messages flash -->
     <?php if (!empty($succes)): ?>
-    <div class="animate-fadeInUp" style="background: #F0FDF4; border: 1px solid #BBF7D0; color: #166534; padding: 14px 18px; border-radius: 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+    <div class="animate-fadeInUp flash-success">
         <i class="fa-solid fa-check-circle"></i>
-        <p style="margin: 0; font-size: 14px;"><?= e($succes) ?></p>
+        <p class="m-0 text-sm"><?= e($succes) ?></p>
     </div>
     <?php endif; ?>
     
     <?php if (!empty($erreur)): ?>
-    <div class="animate-fadeInUp" style="background: #FEF2F2; border: 1px solid #FEE2E2; color: #991B1B; padding: 14px 18px; border-radius: 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+    <div class="animate-fadeInUp flash-error">
         <i class="fa-solid fa-circle-exclamation"></i>
-        <p style="margin: 0; font-size: 14px;"><?= e($erreur) ?></p>
+        <p class="m-0 text-sm"><?= e($erreur) ?></p>
     </div>
     <?php endif; ?>
     
     <!-- Filtres par statut -->
-    <div class="animate-fadeInUp" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px;">
+    <div class="animate-fadeInUp flex flex-wrap gap-2.5 mb-6">
         <?php
         $filtres = [
             ''          => ['label' => 'Toutes', 'icon' => 'fa-list'],
@@ -318,15 +91,15 @@ $filtre_actif = $_GET['statut'] ?? '';
         <div class="empty-icon">
             <i class="fa-regular fa-calendar-xmark text-3xl text-gray-400"></i>
         </div>
-        <p style="font-size: 16px; font-weight: 600; color: #0F172A; margin-bottom: 8px;">Aucune session trouvée</p>
-        <p style="color: #64748B; font-size: 14px; margin-bottom: 24px;">Réservez votre première session avec un mentor.</p>
-        <a href="<?= APP_URL ?>/?url=recherche" class="btn-evaluate" style="display: inline-flex; align-items: center; gap: 8px;">
+        <p class="text-base font-semibold text-gray-900 mb-2">Aucune session trouvée</p>
+        <p class="text-gray-500 text-sm mb-6">Réservez votre première session avec un mentor.</p>
+        <a href="<?= APP_URL ?>/?url=recherche" class="btn-evaluate inline-flex items-center gap-2">
             <i class="fa-solid fa-magnifying-glass"></i> Trouver un mentor
         </a>
     </div>
     
     <?php else: ?>
-    <div class="animate-slideInRight" style="display: flex; flex-direction: column; gap: 16px;">
+    <div class="flex flex-col gap-4">
         <?php foreach ($sessions as $s):
             $user_id = $_SESSION['user_id'];
             $est_mentor = ($s['mentor_id'] == $user_id);
@@ -342,24 +115,24 @@ $filtre_actif = $_GET['statut'] ?? '';
             };
         ?>
         <div class="session-card">
-            <div style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+            <div class="flex items-start gap-5 flex-wrap">
                 <!-- Date bloc -->
                 <div class="session-date-box">
-                    <p style="font-size: 11px; font-weight: 600; color: #5B4FE8; text-transform: uppercase; margin-bottom: 4px;">
+                    <p class="text-xs font-semibold text-violet uppercase mb-1">
                         <?= strtoupper(date('M', strtotime($s['date_session']))) ?>
                     </p>
-                    <p style="font-size: 28px; font-weight: 800; color: #0F172A;">
+                    <p class="text-3xl font-extrabold text-gray-900">
                         <?= date('d', strtotime($s['date_session'])) ?>
                     </p>
-                    <p style="font-size: 10px; color: #94A3B8;">
+                    <p class="text-[10px] text-gray-400">
                         <?= date('Y', strtotime($s['date_session'])) ?>
                     </p>
                 </div>
                 
                 <!-- Infos session -->
-                <div style="flex: 1;">
-                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px;">
-                        <h3 style="font-size: 16px; font-weight: 700; color: #0F172A;">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2.5 flex-wrap mb-2">
+                        <h3 class="text-base font-bold text-gray-900">
                             <?= e($s['matiere_nom']) ?>
                         </h3>
                         <span class="<?= $badge['class'] ?>">
@@ -370,17 +143,17 @@ $filtre_actif = $_GET['statut'] ?? '';
                         </span>
                     </div>
                     
-                    <p style="font-size: 14px; color: #64748B; margin-bottom: 6px;">
+                    <p class="text-sm text-gray-500 mb-1.5">
                         <?= $est_mentor ? 'Apprenant :' : 'Mentor :' ?>
-                        <span style="font-weight: 600; color: #0F172A;"><?= e($autre_nom) ?></span>
+                        <span class="font-semibold text-gray-900"><?= e($autre_nom) ?></span>
                     </p>
                     
-                    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-                        <p style="font-size: 13px; color: #64748B;">
+                    <div class="flex items-center gap-4 flex-wrap">
+                        <p class="text-sm text-gray-500">
                             <i class="fa-regular fa-clock"></i>
                             <?= date('H:i', strtotime($s['heure_debut'])) ?> — <?= date('H:i', strtotime($s['heure_fin'])) ?>
                         </p>
-                        <p style="font-size: 13px; color: <?= $s['mode_session'] === 'en_ligne' ? '#0FC4A7' : '#F59E0B' ?>;">
+                        <p class="text-sm <?= $s['mode_session'] === 'en_ligne' ? 'text-teal-600' : 'text-amber-600' ?>">
                             <i class="fa-solid fa-<?= $s['mode_session'] === 'en_ligne' ? 'video' : 'building' ?>"></i>
                             <?= $s['mode_session'] === 'en_ligne' ? 'En ligne' : 'Présentiel' ?>
                         </p>
@@ -388,17 +161,17 @@ $filtre_actif = $_GET['statut'] ?? '';
                     
                     <!-- Lien visio si confirmée en ligne -->
                     <?php if ($s['statut'] === 'confirmee' && $s['mode_session'] === 'en_ligne' && !empty($s['lien_session'])): ?>
-                    <a href="<?= e($s['lien_session']) ?>" target="_blank" style="margin-top: 10px; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #0FC4A7; text-decoration: none;">
+                    <a href="<?= e($s['lien_session']) ?>" target="_blank" class="inline-flex items-center gap-1.5 mt-3 text-sm text-teal-600 hover:text-teal-700 no-underline">
                         <i class="fa-solid fa-link"></i> Rejoindre la session
                     </a>
                     <?php endif; ?>
                 </div>
                 
                 <!-- Actions -->
-                <div style="display: flex; flex-direction: column; gap: 8px; min-width: 100px;">
+                <div class="flex flex-col gap-2 min-w-[100px]">
                     <!-- Évaluer (session terminée, étudiant, pas encore évalué) -->
                     <?php if ($s['statut'] === 'terminee' && !$est_mentor && empty($s['deja_evalue'])): ?>
-                    <a href="<?= APP_URL ?>/?url=evaluation/formulaire&session_id=<?= $s['id'] ?>" class="btn-evaluate" style="text-align: center;">
+                    <a href="<?= APP_URL ?>/?url=evaluation/formulaire&session_id=<?= $s['id'] ?>" class="btn-evaluate text-center">
                         <i class="fa-regular fa-star"></i> Évaluer
                     </a>
                     <?php endif; ?>
@@ -422,8 +195,6 @@ $filtre_actif = $_GET['statut'] ?? '';
     <?php endif; ?>
     
 </main>
-
-</div><!-- ferme main-content-wrapper -->
 
 <!-- MODAL ANNULATION -->
 <div id="modal-annulation" class="modal">
@@ -489,9 +260,6 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 document.querySelectorAll('.session-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'all 0.5s ease';
     observer.observe(el);
 });
 </script>

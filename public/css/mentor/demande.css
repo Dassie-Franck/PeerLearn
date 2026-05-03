@@ -1,0 +1,275 @@
+/* ==================== BASE ==================== */
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fadeInUp {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-slideInRight {
+    animation: slideInRight 0.4s ease-out forwards;
+}
+
+/* ==================== MODALS ==================== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(6px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-box {
+    background: #fff;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 440px;
+    margin: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transform: translateY(12px) scale(0.98);
+    transition: transform 0.2s ease;
+    overflow: hidden;
+}
+
+.open .modal-box {
+    transform: translateY(0) scale(1);
+}
+
+/* ==================== CARDS ==================== */
+.demand-card {
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid #E2E8F0;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.demand-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.demand-card-pending {
+    background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+    border-color: #FDE68A;
+}
+
+/* ==================== BADGES ==================== */
+.badge-pending {
+    background: #FEF3C7;
+    color: #D97706;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-confirmed {
+    background: #E8F5E9;
+    color: #2E7D32;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-rejected {
+    background: #FFEBEE;
+    color: #C62828;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-cancelled {
+    background: #F5F5F5;
+    color: #616161;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ==================== BUTTONS ==================== */
+.btn-confirm {
+    background: linear-gradient(135deg, #0FC4A7, #0D9488);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 196, 167, 0.3);
+}
+
+.btn-reject {
+    background: #FEF2F2;
+    color: #EF4444;
+    border: 1px solid #FEE2E2;
+    padding: 8px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-reject:hover {
+    background: #FEE2E2;
+    transform: translateY(-2px);
+}
+
+.btn-message {
+    background: rgba(15, 196, 167, 0.1);
+    color: #0FC4A7;
+    padding: 8px;
+    border-radius: 12px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.btn-message:hover {
+    background: #0FC4A7;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* ==================== STAT COUNTERS ==================== */
+.stat-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* ==================== FORMULAIRE ==================== */
+.form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid #E2E8F0;
+    font-size: 14px;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.input-field:focus {
+    border-color: #0FC4A7;
+    box-shadow: 0 0 0 3px rgba(15, 196, 167, 0.1);
+}
+
+/* ==================== EMPTY STATE ==================== */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: #fff;
+    border-radius: 24px;
+    border: 1px solid #E2E8F0;
+}
+
+.empty-icon {
+    width: 80px;
+    height: 80px;
+    background: #F1F5F9;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+/* ==================== TOOLTIP ==================== */
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    background-color: #1E293B;
+    color: #fff;
+    text-align: center;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    position: absolute;
+    z-index: 10;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}

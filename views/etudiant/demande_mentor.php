@@ -4,64 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Devenir mentor — <?= APP_NAME ?></title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Ressources locales -->
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/tailwind.css">
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/etudiant/demande_mentor.css">
+    
     <?php require_once BASE_PATH . '/views/layouts/footer.php'; ?>
 </head>
-<body style="background:#F9FAFB;display:flex;min-height:100vh">
+<body class="bg-gray-50 min-h-screen flex">
 
 <?php require_once BASE_PATH . '/views/layouts/toast.php'; ?>
 <?php require_once BASE_PATH . '/views/layouts/navbar_etudiant.php'; ?>
 
-<main style="flex:1;padding:32px;max-width:800px;width:100%">
+<main class="flex-1 py-8 px-4 max-w-2xl mx-auto w-full">
 
-    <!-- En-tete -->
-    <div style="margin-bottom:32px">
+    <!-- En-tête -->
+    <div class="mb-8">
         <a href="<?= APP_URL ?>/?url=profil"
-           style="font-size:13px;color:#6B7280;text-decoration:none;
-                  display:inline-flex;align-items:center;gap:6px;margin-bottom:16px">
+           class="text-gray-500 text-sm inline-flex items-center gap-1.5 mb-4 hover:text-gray-700 transition">
             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
             Retour au profil
         </a>
-        <h1 class="font-syne" style="font-size:24px;font-weight:700;color:#111827;margin:0 0 8px">
-            Devenir mentor
-        </h1>
-        <p style="color:#6B7280;font-size:14px;margin:0">
-            Partage tes competences et aide tes camarades.
-            Ta demande sera examinee par un administrateur.
+        <h1 class="font-syne text-2xl font-bold text-gray-900 mb-2">Devenir mentor</h1>
+        <p class="text-gray-500 text-sm">
+            Partage tes compétences et aide tes camarades.
+            Ta demande sera examinée par un administrateur.
         </p>
     </div>
 
     <!-- Bandeau demande en cours -->
     <?php if (!empty($_SESSION['est_mentor']) && !is_mentor()): ?>
-    <div style="background:#FEF9C3;border:1px solid #FDE68A;border-radius:12px;
-                padding:16px 20px;margin-bottom:24px;
-                display:flex;align-items:center;gap:12px">
-        <svg width="20" height="20" fill="none" stroke="#92400E" viewBox="0 0 24 24">
+    <div class="alert-warning">
+        <svg width="20" height="20" fill="none" stroke="#92400E" viewBox="0 0 24 24" class="flex-shrink-0">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        <p style="font-size:14px;color:#92400E;margin:0">
-            Ta demande est en cours d examen. Tu seras notifie des que possible.
+        <p class="text-sm text-yellow-800 m-0">
+            Ta demande est en cours d'examen. Tu seras notifié dès que possible.
         </p>
     </div>
     <?php endif; ?>
 
     <!-- Info -->
-    <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;
-                padding:16px 20px;margin-bottom:24px;
-                display:flex;align-items:flex-start;gap:12px">
-        <svg width="20" height="20" fill="none" stroke="#1D4ED8" viewBox="0 0 24 24"
-             style="flex-shrink:0;margin-top:2px">
+    <div class="alert-info">
+        <svg width="20" height="20" fill="none" stroke="#1D4ED8" viewBox="0 0 24 24" class="flex-shrink-0 mt-0.5">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        <p style="font-size:13px;color:#1E40AF;margin:0;line-height:1.6">
-            <strong>Comment ca fonctionne ?</strong><br>
-            Remplis ce formulaire → L admin valide ton profil → Tu peux publier tes
-            disponibilites et recevoir des demandes de session.
+        <p class="text-sm text-blue-800 m-0 leading-relaxed">
+            <strong>Comment ça fonctionne ?</strong><br>
+            Remplis ce formulaire → L'admin valide ton profil → Tu peux publier tes
+            disponibilités et recevoir des demandes de session.
         </p>
     </div>
 
@@ -71,55 +66,41 @@
             <?= csrf_field() ?>
 
             <!-- Bio -->
-            <div style="margin-bottom:20px">
-                <label style="display:block;font-size:13px;font-weight:500;
-                              color:#374151;margin-bottom:6px">
-                    Presentation / Bio <span style="color:#EF4444">*</span>
+            <div class="mb-5">
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                    Présentation / Bio <span class="text-red-500">*</span>
                 </label>
                 <textarea name="bio" rows="4" required
-                    placeholder="Decris-toi : ton parcours, tes points forts, pourquoi tu veux devenir mentor..."
-                    style="width:100%;padding:12px 16px;border:1px solid #E5E7EB;
-                           border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;
-                           color:#111827;resize:vertical;outline:none;
-                           box-sizing:border-box;transition:border-color .2s"
-                    onfocus="this.style.borderColor='#5B4FE8'"
-                    onblur="this.style.borderColor='#E5E7EB'"></textarea>
+                    placeholder="Décris-toi : ton parcours, tes points forts, pourquoi tu veux devenir mentor..."
+                    class="input-field"></textarea>
             </div>
 
-            <!-- Experience -->
-            <div style="margin-bottom:24px">
-                <label style="display:block;font-size:13px;font-weight:500;
-                              color:#374151;margin-bottom:6px">
-                    Ton experience <span style="color:#EF4444">*</span>
+            <!-- Expérience -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                    Ton expérience <span class="text-red-500">*</span>
                 </label>
                 <textarea name="experience" rows="4" required
-                    placeholder="Ex : 17/20 en Maths en terminale, j ai aide plusieurs camarades..."
-                    style="width:100%;padding:12px 16px;border:1px solid #E5E7EB;
-                           border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;
-                           color:#111827;resize:vertical;outline:none;
-                           box-sizing:border-box;transition:border-color .2s"
-                    onfocus="this.style.borderColor='#5B4FE8'"
-                    onblur="this.style.borderColor='#E5E7EB'"></textarea>
+                    placeholder="Ex : 17/20 en Maths en terminale, j'ai aidé plusieurs camarades..."
+                    class="input-field"></textarea>
             </div>
 
-            <!-- Matieres -->
-            <div style="margin-bottom:28px">
-                <label style="display:block;font-size:13px;font-weight:500;
-                              color:#374151;margin-bottom:12px">
-                    Matieres a enseigner <span style="color:#EF4444">*</span>
+            <!-- Matières -->
+            <div class="mb-7">
+                <label class="block text-sm font-medium text-gray-700 mb-3">
+                    Matières à enseigner <span class="text-red-500">*</span>
                 </label>
                 <?php foreach ($toutes_matieres as $categorie => $mats): ?>
-                <div style="margin-bottom:16px">
-                    <p style="font-size:11px;font-weight:600;color:#9CA3AF;
-                               text-transform:uppercase;letter-spacing:.08em;margin:0 0 8px">
+                <div class="mb-4">
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
                         <?= e($categorie) ?>
                     </p>
-                    <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <div class="flex flex-wrap gap-2">
                         <?php foreach ($mats as $mat): ?>
-                        <label style="cursor:pointer">
+                        <label class="cursor-pointer">
                             <input type="checkbox" name="matieres[]"
                                    value="<?= $mat['id'] ?>"
-                                   style="display:none"
+                                   class="hidden"
                                    onchange="toggleChip(this)">
                             <span class="chip"><?= e($mat['nom']) ?></span>
                         </label>
@@ -130,7 +111,7 @@
             </div>
 
             <!-- Boutons -->
-            <div style="display:flex;gap:12px">
+            <div class="flex gap-3">
                 <button type="submit" class="btn-primary">
                     Envoyer ma demande
                 </button>
@@ -142,18 +123,18 @@
     </div>
 
 </main>
-</div>
-
-<style>
-.chip { display:inline-block;padding:6px 14px;border-radius:20px;font-size:13px;border:1px solid #E5E7EB;color:#6B7280;transition:all .15s;user-select:none; }
-.chip:hover  { border-color:#5B4FE8;color:#5B4FE8; }
-.chip-active { background:#5B4FE8;color:#fff;border-color:#5B4FE8; }
-</style>
 
 <script>
 function toggleChip(cb) {
     cb.nextElementSibling.classList.toggle('chip-active', cb.checked);
 }
+
+// Initialisation : si la page est rechargée avec des erreurs, restaurer les chips actives
+document.querySelectorAll('input[type="checkbox"][name="matieres[]"]').forEach(cb => {
+    if (cb.checked) {
+        cb.nextElementSibling.classList.add('chip-active');
+    }
+});
 </script>
 
 </body>

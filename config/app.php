@@ -4,7 +4,7 @@
 // ============================================================
 
 define('APP_NAME',  'PeerLearn');
-define('APP_URL', 'https://peerlearn.3il32026.com/public');
+define('APP_URL',   'http://localhost/peerlearn/public');
 define('BASE_PATH', dirname(__DIR__));
 define('UPLOAD_DIR', BASE_PATH . '/public/uploads/');
 

@@ -1,0 +1,233 @@
+/* ==================== BASE ==================== */
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fadeInUp {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-slideInRight {
+    animation: slideInRight 0.4s ease-out forwards;
+}
+
+/* ==================== CARTES ==================== */
+.profile-card {
+    background: #fff;
+    border-radius: 24px;
+    border: 1px solid #E2E8F0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.profile-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+
+/* ==================== FORMULAIRES ==================== */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid #E2E8F0;
+    font-size: 14px;
+    transition: all 0.2s;
+    background: #fff;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #5B4FE8;
+    box-shadow: 0 0 0 3px rgba(91, 79, 232, 0.1);
+}
+
+.form-input:disabled {
+    background: #F8FAFC;
+    color: #94A3B8;
+    cursor: not-allowed;
+}
+
+/* ==================== TABS ==================== */
+.tabs-container {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid #F1F5F9;
+    margin-bottom: 28px;
+}
+
+.tab-btn {
+    padding: 12px 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: #64748B;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    color: #5B4FE8;
+}
+
+.tab-btn.active {
+    color: #5B4FE8;
+    border-bottom-color: #5B4FE8;
+}
+
+/* ==================== CHIPS / PILLS ==================== */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid #E2E8F0;
+    background: #fff;
+    color: #64748B;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.chip:hover {
+    border-color: #5B4FE8;
+    color: #5B4FE8;
+    transform: translateY(-1px);
+}
+
+.chip-active {
+    background: #5B4FE8;
+    color: #fff;
+    border-color: #5B4FE8;
+}
+
+/* ==================== BOUTONS ==================== */
+.btn-save {
+    background: linear-gradient(135deg, #5B4FE8, #7C3AED);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(91, 79, 232, 0.3);
+}
+
+.btn-mentor {
+    background: #5B4FE8;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-mentor:hover {
+    background: #3B2BC8;
+    transform: translateY(-2px);
+}
+
+/* ==================== STATUS BADGES ==================== */
+.status-warning {
+    background: #FEF9C3;
+    border: 1px solid #FDE68A;
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.status-success {
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+/* ==================== AVATARS ==================== */
+.avatar-large {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-initial {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5B4FE8, #7C3AED);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 32px;
+    font-weight: 700;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ==================== DIVIDER ==================== */
+.divider {
+    height: 1px;
+    background: #F1F5F9;
+    margin: 24px 0;
+}

@@ -1,0 +1,178 @@
+/* ==================== BASE ==================== */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:wght@400;500&display=swap');
+
+body {
+    background: #F9FAFB;
+    display: flex;
+    min-height: 100vh;
+}
+
+.font-syne {
+    font-family: 'Syne', sans-serif;
+}
+
+.font-dmsans {
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* ==================== CARTES ==================== */
+.card {
+    background: #fff;
+    border-radius: 24px;
+    border: 1px solid #E2E8F0;
+    padding: 24px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+
+/* ==================== FORMULAIRES ==================== */
+.form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: #111827;
+    resize: vertical;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.form-textarea:focus {
+    border-color: #0FC4A7;
+}
+
+.btn-primary {
+    background: #0FC4A7;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary:hover {
+    background: #0D9488;
+    transform: translateY(-1px);
+}
+
+/* ==================== ONGLETS ==================== */
+.tabs-container {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid #F3F4F6;
+    margin-bottom: 32px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: #6B7280;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    color: #0FC4A7;
+}
+
+.tab-btn.active {
+    color: #0FC4A7;
+    border-bottom-color: #0FC4A7;
+}
+
+/* ==================== CHIPS / PILLS ==================== */
+.chip {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1px solid #E5E7EB;
+    color: #6B7280;
+    transition: all 0.15s;
+    user-select: none;
+    cursor: pointer;
+}
+
+.chip:hover {
+    border-color: #0FC4A7;
+    color: #0FC4A7;
+}
+
+.chip-active {
+    background: #0FC4A7;
+    color: #fff;
+    border-color: #0FC4A7;
+}
+
+/* ==================== STATUT OPTIONS ==================== */
+.statut-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 2px solid #E5E7EB;
+    background: #fff;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: all 0.15s;
+}
+
+.statut-option.active {
+    border-color: #BBF7D0;
+    background: #F0FDF4;
+}
+
+.statut-option.active .statut-label {
+    color: #166534;
+}
+
+.statut-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.statut-dot.disponible {
+    background: #22C55E;
+}
+
+.statut-dot.occupe {
+    background: #F59E0B;
+}
+
+.statut-dot.inactif {
+    background: #EF4444;
+}
+
+.statut-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}

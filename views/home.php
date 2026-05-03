@@ -5,197 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= APP_NAME ?> - Apprentissage peer-to-peer entre étudiants</title>
     <meta name="description" content="Plateforme de mentorat entre étudiants. Apprenez et enseignez en toute confiance avec PeerLearn.">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Ressources locales -->
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/tailwind.css">
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/home.css">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { font-family: 'Inter', sans-serif; }
-        
-        /* ==================== ANIMATIONS ==================== */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
-        
-        .animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
-        .animate-slideInLeft { animation: slideInLeft 0.8s ease-out forwards; }
-        .animate-slideInRight { animation: slideInRight 0.8s ease-out forwards; }
-        .animate-float { animation: float 4s ease-in-out infinite; }
-        
-        /* ==================== CARROUSEL AVIS INFINI ==================== */
-        .reviews-section {
-            padding: 100px 0;
-            background: linear-gradient(180deg, transparent, rgba(26, 7, 235, 0.04), transparent);
-            overflow: hidden;
-        }
-        .reviews-header {
-            max-width: 1200px; margin: 0 auto 60px;
-            padding: 0 24px;
-        }
-        .track-wrapper { overflow: hidden; position: relative; }
-        .track-wrapper::before,
-        .track-wrapper::after {
-            content: '';
-            position: absolute; top: 0; bottom: 0; width: 180px;
-            z-index: 2; pointer-events: none;
-        }
-        .track-wrapper::before { left: 0; background: linear-gradient(90deg, #F9FAFB, transparent); }
-        .track-wrapper::after  { right: 0; background: linear-gradient(-90deg, #F9FAFB, transparent); }
-        .dark .track-wrapper::before { background: linear-gradient(90deg, #111827, transparent); }
-        .dark .track-wrapper::after  { background: linear-gradient(-90deg, #111827, transparent); }
-        
-        .track {
-            display: flex; gap: 20px;
-            width: max-content;
-            animation: scroll-left 35s linear infinite;
-        }
-        .track:hover { animation-play-state: paused; }
-        .track-2 {
-            display: flex; gap: 20px;
-            width: max-content;
-            animation: scroll-right 42s linear infinite;
-            margin-top: 20px;
-        }
-        .track-2:hover { animation-play-state: paused; }
-        
-        @keyframes scroll-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        @keyframes scroll-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-        
-        .review-card {
-            width: 340px; flex-shrink: 0;
-            padding: 28px;
-            border-radius: 20px;
-            border: 1px solid #E5E7EB;
-            background: #FFFFFF;
-            transition: all .3s ease;
-        }
-        .dark .review-card { background: #1F2937; border-color: #374151; }
-        .review-card:hover {
-            border-color: rgba(91,79,232,.4);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(91,79,232,.12);
-        }
-        .review-stars { display: flex; gap: 3px; margin-bottom: 16px; color: #F5A623; font-size: 17px; }
-        .review-text { font-size: 14px; color: #4B5563; line-height: 1.75; margin-bottom: 20px; font-style: italic; }
-        .dark .review-text { color: #D1D5DB; }
-        .review-author { display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid #F3F4F6; }
-        .dark .review-author { border-color: #374151; }
-        .review-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; color: #fff; flex-shrink: 0; transition: transform .3s ease; }
-        .review-card:hover .review-avatar { transform: scale(1.1) rotate(5deg); }
-        .review-name { font-size: 14px; font-weight: 600; color: #111827; }
-        .dark .review-name { color: #F9FAFB; }
-        .review-role { font-size: 12px; color: #9CA3AF; margin-top: 2px; }
-        
-        /* ==================== MENTORS SECTION ==================== */
-        .mentors-section {
-            padding: 80px 0;
-            background: #FFFFFF;
-        }
-        .dark .mentors-section { background: #111827; }
-        .mentors-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
-        
-        .section-label-tag {
-            font-size: 12px; font-weight: 700;
-            color: #0FC4A7;
-            letter-spacing: .15em;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            display: block;
-        }
-        .section-heading {
-            font-size: clamp(28px, 4vw, 42px);
-            font-weight: 800; line-height: 1.1;
-            letter-spacing: -1px;
-            color: #111827;
-            margin-bottom: 12px;
-        }
-        .dark .section-heading { color: #F9FAFB; }
-        .section-sub-text {
-            font-size: 16px; color: #6B7280;
-            line-height: 1.7; max-width: 520px;
-            margin-bottom: 48px;
-        }
-        
-        .mentors-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-        @media (max-width: 900px) { .mentors-grid { grid-template-columns: repeat(2,1fr); } }
-        @media (max-width: 500px) { .mentors-grid { grid-template-columns: 1fr; } }
-        
-        .mentor-card {
-            padding: 32px 24px;
-            border-radius: 20px;
-            border: 1px solid #E5E7EB;
-            background: #fff;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-            transition: all .35s ease;
-            position: relative; overflow: hidden;
-        }
-        .dark .mentor-card { background: #1F2937; border-color: #374151; }
-        .mentor-card::before {
-            content: '';
-            position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: linear-gradient(90deg, #5B4FE8, #0FC4A7);
-            transform: scaleX(0); transform-origin: left;
-            transition: transform .35s ease;
-        }
-        .mentor-card:hover {
-            border-color: rgba(91,79,232,.35);
-            transform: translateY(-10px);
-            box-shadow: 0 30px 70px rgba(91,79,232,.15);
-        }
-        .mentor-card:hover::before { transform: scaleX(1); }
-        .mentor-avatar {
-            width: 72px; height: 72px; border-radius: 18px;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 800; font-size: 26px; color: #fff;
-            margin: 0 auto 16px;
-            transition: transform .3s ease, box-shadow .3s ease;
-        }
-        .mentor-card:hover .mentor-avatar { transform: scale(1.1); box-shadow: 0 10px 28px rgba(0,0,0,.2); }
-        .mentor-name { font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 4px; }
-        .dark .mentor-name { color: #F9FAFB; }
-        .mentor-subject { font-size: 13px; font-weight: 600; color: #0FC4A7; margin-bottom: 14px; }
-        .mentor-stars { display: flex; justify-content: center; gap: 2px; color: #F5A623; font-size: 15px; margin-bottom: 6px; }
-        .mentor-stats { font-size: 12px; color: #9CA3AF; font-weight: 500; }
-        
-        .btn-voir-mentors {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 14px 40px; border-radius: 14px;
-            background: linear-gradient(135deg, #5B4FE8, #8B5CF6);
-            color: #fff; font-size: 15px; font-weight: 700;
-            text-decoration: none;
-            transition: all .25s;
-            box-shadow: 0 4px 20px rgba(91,79,232,.3);
-            margin-top: 48px;
-        }
-        .btn-voir-mentors:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(91,79,232,.45); }
-        
-        /* ==================== AUTRES STYLES ==================== */
-        .gradient-text {
-            background: linear-gradient(135deg, #5B4FE8 0%, #8B5CF6 50%, #EC4899 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .glass {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-        }
-        .dark .glass { background: rgba(17, 24, 39, 0.95); }
-        
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #5B4FE8, #8B5CF6); border-radius: 10px; }
-    </style>
 </head>
 <body class="bg-white dark:bg-gray-900">
 
@@ -242,7 +57,6 @@
         <div class="grid lg:grid-cols-2 gap-12 items-center">
             <div class="animate-slideInLeft">
                 <div class="inline-flex items-center px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 text-sm mb-6">
-                   
                     La révolution de l'apprentissage
                 </div>
                 <h1 class="text-5xl lg:text-7xl font-bold leading-tight mb-6">
@@ -292,7 +106,7 @@
 
 <!-- ==================== STATISTIQUES ==================== -->
 <section class="py-16 bg-gradient-to-r from-purple-600 to-blue-600">
-   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div class="text-center text-white">
                 <div class="text-4xl md:text-5xl font-bold mb-2">
@@ -320,17 +134,43 @@
             </div>
         </div>
     </div>
-    
 </section>
 
 <!-- ==================== FONCTIONNALITÉS ==================== -->
 <section id="features" class="py-20 bg-gray-50 dark:bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Pourquoi choisir <span class="gradient-text">PeerLearn</span> ?</h2><p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">Une plateforme conçue pour faciliter l'apprentissage collaboratif entre étudiants</p></div>
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Pourquoi choisir <span class="gradient-text">PeerLearn</span> ?</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">Une plateforme conçue pour faciliter l'apprentissage collaboratif entre étudiants</p>
+        </div>
         <div class="grid md:grid-cols-3 gap-8">
-            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition"><div class="w-14 h-14 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-6"><svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></div><h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Ressources illimitées</h3><p class="text-gray-600 dark:text-gray-400">Accédez à une bibliothèque de ressources partagées par la communauté et créez vos propres contenus.</p></div>
-            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition transform hover:-translate-y-1"><div class="w-14 h-14 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-6"><svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg></div><h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Mentorat personnalisé</h3><p class="text-gray-600 dark:text-gray-400">Trouvez le mentor parfait pour vous aider dans vos études et progressez à votre rythme.</p></div>
-            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition"><div class="w-14 h-14 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-6"><svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Sessions flexibles</h3><p class="text-gray-600 dark:text-gray-400">Choisissez entre des sessions en ligne ou en présentiel, selon vos disponibilités et préférences.</p></div>
+            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
+                <div class="w-14 h-14 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-6">
+                    <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Ressources illimitées</h3>
+                <p class="text-gray-600 dark:text-gray-400">Accédez à une bibliothèque de ressources partagées par la communauté et créez vos propres contenus.</p>
+            </div>
+            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
+                <div class="w-14 h-14 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-6">
+                    <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Mentorat personnalisé</h3>
+                <p class="text-gray-600 dark:text-gray-400">Trouvez le mentor parfait pour vous aider dans vos études et progressez à votre rythme.</p>
+            </div>
+            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
+                <div class="w-14 h-14 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-6">
+                    <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Sessions flexibles</h3>
+                <p class="text-gray-600 dark:text-gray-400">Choisissez entre des sessions en ligne ou en présentiel, selon vos disponibilités et préférences.</p>
+            </div>
         </div>
     </div>
 </section>
@@ -338,11 +178,32 @@
 <!-- ==================== COMMENT ÇA MARCHE ==================== -->
 <section id="how-it-works" class="py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Comment <span class="gradient-text">ça marche</span> ?</h2><p class="text-xl text-gray-600 dark:text-gray-300">Trois étapes simples pour commencer votre apprentissage</p></div>
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Comment <span class="gradient-text">ça marche</span> ?</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-300">Trois étapes simples pour commencer votre apprentissage</p>
+        </div>
         <div class="grid md:grid-cols-3 gap-8">
-            <div class="text-center"><div class="w-20 h-20 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mx-auto mb-4 relative"><span class="text-2xl font-bold text-purple-600">1</span></div><h3 class="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Inscription gratuite</h3><p class="text-gray-600 dark:text-gray-400">Créez votre compte gratuitement en quelques minutes</p></div>
-            <div class="text-center"><div class="w-20 h-20 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mx-auto mb-4 relative"><span class="text-2xl font-bold text-purple-600">2</span></div><h3 class="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Trouvez un mentor</h3><p class="text-gray-600 dark:text-gray-400">Recherchez par matière, disponibilité et note</p></div>
-            <div class="text-center"><div class="w-20 h-20 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-bold text-purple-600">3</span></div><h3 class="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Commencez à apprendre</h3><p class="text-gray-600 dark:text-gray-400">Réservez une session et progressez ensemble</p></div>
+            <div class="text-center">
+                <div class="w-20 h-20 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mx-auto mb-4 relative">
+                    <span class="text-2xl font-bold text-purple-600">1</span>
+                </div>
+                <h3 class="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Inscription gratuite</h3>
+                <p class="text-gray-600 dark:text-gray-400">Créez votre compte gratuitement en quelques minutes</p>
+            </div>
+            <div class="text-center">
+                <div class="w-20 h-20 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mx-auto mb-4 relative">
+                    <span class="text-2xl font-bold text-purple-600">2</span>
+                </div>
+                <h3 class="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Trouvez un mentor</h3>
+                <p class="text-gray-600 dark:text-gray-400">Recherchez par matière, disponibilité et note</p>
+            </div>
+            <div class="text-center">
+                <div class="w-20 h-20 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold text-purple-600">3</span>
+                </div>
+                <h3 class="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Commencez à apprendre</h3>
+                <p class="text-gray-600 dark:text-gray-400">Réservez une session et progressez ensemble</p>
+            </div>
         </div>
     </div>
 </section>
@@ -446,10 +307,41 @@
 <footer class="bg-gray-900 text-white py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-4 gap-8">
-            <div><div class="flex items-center space-x-2 mb-4"><div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 flex items-center justify-center"><span class="text-white font-bold">P</span></div><span class="text-xl font-bold">PeerLearn</span></div><p class="text-gray-400 text-sm">Apprentissage collaboratif entre étudiants. La plateforme qui révolutionne le mentorat.</p></div>
-            <div><h4 class="font-semibold mb-4">Liens rapides</h4><ul class="space-y-2 text-gray-400 text-sm"><li><a href="#features" class="hover:text-white transition">Fonctionnalités</a></li><li><a href="#how-it-works" class="hover:text-white transition">Comment ça marche</a></li><li><a href="#testimonials" class="hover:text-white transition">Témoignages</a></li><li><a href="#mentors" class="hover:text-white transition">Mentors</a></li></ul></div>
-            <div><h4 class="font-semibold mb-4">Ressources</h4><ul class="space-y-2 text-gray-400 text-sm"><li><a href="#" class="hover:text-white transition">Centre d'aide</a></li><li><a href="#" class="hover:text-white transition">Blog</a></li><li><a href="#" class="hover:text-white transition">Conditions d'utilisation</a></li></ul></div>
-            <div><h4 class="font-semibold mb-4">Suivez-nous</h4><div class="flex space-x-4"><a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fab fa-facebook-f"></i></a><a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fab fa-twitter"></i></a><a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fab fa-linkedin-in"></i></a><a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fab fa-instagram"></i></a></div></div>
+            <div>
+                <div class="flex items-center space-x-2 mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 flex items-center justify-center">
+                        <span class="text-white font-bold">P</span>
+                    </div>
+                    <span class="text-xl font-bold">PeerLearn</span>
+                </div>
+                <p class="text-gray-400 text-sm">Apprentissage collaboratif entre étudiants. La plateforme qui révolutionne le mentorat.</p>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Liens rapides</h4>
+                <ul class="space-y-2 text-gray-400 text-sm">
+                    <li><a href="#features" class="hover:text-white transition">Fonctionnalités</a></li>
+                    <li><a href="#how-it-works" class="hover:text-white transition">Comment ça marche</a></li>
+                    <li><a href="#testimonials" class="hover:text-white transition">Témoignages</a></li>
+                    <li><a href="#mentors" class="hover:text-white transition">Mentors</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Ressources</h4>
+                <ul class="space-y-2 text-gray-400 text-sm">
+                    <li><a href="#" class="hover:text-white transition">Centre d'aide</a></li>
+                    <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                    <li><a href="#" class="hover:text-white transition">Conditions d'utilisation</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Suivez-nous</h4>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
         </div>
         <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">&copy; <?= date('Y') ?> PeerLearn. Tous droits réservés.</div>
     </div>
@@ -465,21 +357,47 @@ function animateCounters() {
         const increment = target / 50;
         const updateCounter = () => {
             current += increment;
-            if (current < target) { counter.innerText = Math.ceil(current); requestAnimationFrame(updateCounter); }
-            else { counter.innerText = target; }
+            if (current < target) { 
+                counter.innerText = Math.ceil(current); 
+                requestAnimationFrame(updateCounter); 
+            } else { 
+                counter.innerText = target; 
+            }
         };
         updateCounter();
     };
-    const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { animateCounter(entry.target); observer.unobserve(entry.target); } }); }, { threshold: 0.5 });
+    const observer = new IntersectionObserver((entries) => { 
+        entries.forEach(entry => { 
+            if (entry.isIntersecting) { 
+                animateCounter(entry.target); 
+                observer.unobserve(entry.target); 
+            } 
+        }); 
+    }, { threshold: 0.5 });
     counters.forEach(counter => observer.observe(counter));
 }
 
 // ==================== THÈME ====================
-function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light'); }
-function initTheme() { const savedTheme = localStorage.getItem('theme'); const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches; if (savedTheme === 'dark' || (!savedTheme && prefersDark)) { document.body.classList.add('dark'); } else { document.body.classList.remove('dark'); } }
+function toggleTheme() { 
+    document.body.classList.toggle('dark'); 
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light'); 
+}
+
+function initTheme() { 
+    const savedTheme = localStorage.getItem('theme'); 
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches; 
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) { 
+        document.body.classList.add('dark'); 
+    } else { 
+        document.body.classList.remove('dark'); 
+    } 
+}
 
 // ==================== INITIALISATION ====================
-document.addEventListener('DOMContentLoaded', () => { initTheme(); animateCounters(); });
+document.addEventListener('DOMContentLoaded', () => { 
+    initTheme(); 
+    animateCounters(); 
+});
 </script>
 </body>
 </html>
