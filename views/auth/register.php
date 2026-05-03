@@ -7,7 +7,7 @@
     
     <!-- Ressources locales -->
     <link rel="stylesheet" href="<?= APP_URL ?>/css/tailwind.css">
-    <link rel="stylesheet" href="<?= APP_URL ?>/css/auth.css">
+    <link rel="stylesheet" href="<?= APP_URL ?>/css/auth/register.css">
     
     <?php require_once BASE_PATH . '/views/layouts/footer.php'; ?>
 </head>
