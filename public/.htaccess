@@ -1,0 +1,9 @@
+﻿Options -Indexes
+RewriteEngine On
+
+# Laisse passer les fichiers et dossiers qui existent vraiment (CSS, JS, images)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirige tout vers index.php avec l URL en parametre
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]

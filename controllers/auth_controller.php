@@ -1,0 +1,2 @@
+﻿<?php
+// Inscription, connexion, deconnexion

@@ -1,0 +1,1 @@
+﻿<?php // Menu lateral administrateur ?>
