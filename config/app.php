@@ -3,8 +3,7 @@
 //  config/app.php — Lit les constantes depuis .env
 // ============================================================
 
-// Les variables .env sont déjà chargées par database.php
-// (loadEnv appelé en premier dans index.php)
+// Le .env est déjà chargé par database.php (inclus AVANT app.php dans index.php)
 
 define('APP_NAME',   getenv('APP_NAME') ?: 'PeerLearn');
 define('APP_URL',    rtrim(getenv('APP_URL') ?: 'http://localhost', '/'));

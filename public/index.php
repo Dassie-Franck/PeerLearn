@@ -1,25 +1,39 @@
 ﻿<?php
 // ============================================================
-//  public/index.php — Point d entree unique
+//  public/index.php — Point d'entrée unique
 // ============================================================
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+// ============================================================
+//  1. D'ABORD charger database.php (qui charge le .env)
+// ============================================================
+require_once '../config/database.php';
+
+// ============================================================
+//  2. ENSUITE charger app.php (qui utilise getenv())
+// ============================================================
 require_once '../config/app.php';
 
-// Demarrage session securise
+// ============================================================
+//  3. Démarrer la session
+// ============================================================
 if (session_status() === PHP_SESSION_NONE) {
+    $is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on');
     session_set_cookie_params([
         'lifetime' => 0,
         'path'     => '/',
-        'secure'   => false,
+        'secure'   => $is_https,    // true en production, false en local
         'httponly' => true,
         'samesite' => 'Strict',
     ]);
     session_start();
 }
 
-require_once '../config/database.php';
+// ============================================================
+//  4. Charger les autres dépendances
+// ============================================================
 require_once BASE_PATH . '/includes/helpers.php';
 require_once BASE_PATH . '/config/session.php';
 
