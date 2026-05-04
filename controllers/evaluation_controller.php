@@ -1,2 +1,2 @@
-﻿<?php
+<?php
 // Notes post-session

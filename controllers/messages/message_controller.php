@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // ============================================================
 //  message_controller.php
 //  Chemin : controllers/message_controller.php

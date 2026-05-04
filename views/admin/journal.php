@@ -1,1 +1,1 @@
-﻿<?php // Journal admin ?>
+<?php // Journal admin ?>

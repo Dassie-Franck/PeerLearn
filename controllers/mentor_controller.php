@@ -1,2 +1,2 @@
-﻿<?php
+<?php
 // Dashboard mentor, profil public

@@ -1,4 +1,4 @@
-﻿<?php // views/layouts/footer.php — styles CSS globaux ?>
+<?php // views/layouts/footer.php — styles CSS globaux ?>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 body       { font-family: 'DM Sans', sans-serif; }

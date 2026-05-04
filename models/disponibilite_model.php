@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // models/disponibilite_model.php
 
 function creer_disponibilite(int $mentor_id, int $matiere_id, string $date,

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // ============================================================
 //  models/message_model.php
 //  Toutes les requêtes pour la messagerie

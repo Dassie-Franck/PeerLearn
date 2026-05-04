@@ -1,1 +1,1 @@
-﻿<?php // Gestion matieres ?>
+<?php // Gestion matieres ?>

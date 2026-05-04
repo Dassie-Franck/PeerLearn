@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // ============================================================
 //  views/mentor/dashboard.php
 //  Dashboard mentor - Design moderne

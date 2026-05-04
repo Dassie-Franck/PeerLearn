@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // ============================================================
 //  etudiant_controller.php
 //  Gere : dashboard etudiant, profil, demande mentor

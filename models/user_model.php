@@ -3,6 +3,10 @@
 //  models/user_model.php
 // ============================================================
 
+// Cost bcrypt fixé à 10 — compatible o2switch (mutualisé)
+// PASSWORD_DEFAULT peut hériter du cost serveur (12-14) → timeout 504
+define('BCRYPT_OPTIONS', ['cost' => 10]);
+
 function creer_utilisateur(string $nom, string $prenom, string $email, string $mdp): int {
     $pdo  = get_pdo();
     $stmt = $pdo->prepare("
@@ -13,7 +17,7 @@ function creer_utilisateur(string $nom, string $prenom, string $email, string $m
         ':nom'    => $nom,
         ':prenom' => $prenom,
         ':email'  => $email,
-        ':mdp'    => password_hash($mdp, PASSWORD_DEFAULT),
+        ':mdp'    => password_hash($mdp, PASSWORD_BCRYPT, BCRYPT_OPTIONS),
     ]);
     return (int) $pdo->lastInsertId();
 }
@@ -51,8 +55,11 @@ function mettre_a_jour_profil(int $id, string $nom, string $prenom, ?string $pho
 
 function mettre_a_jour_mot_de_passe(int $id, string $nouveau_mdp): void {
     $pdo  = get_pdo();
-    $stmt = $pdo->prepare("UPDATE utilisateurs SET mot_de_passe = :mdp WHERE id = :id");
-    $stmt->execute([':mdp' => password_hash($nouveau_mdp, PASSWORD_DEFAULT), ':id' => $id]);
+    $pdo->prepare("UPDATE utilisateurs SET mot_de_passe = :mdp WHERE id = :id")
+        ->execute([
+            ':mdp' => password_hash($nouveau_mdp, PASSWORD_BCRYPT, BCRYPT_OPTIONS),
+            ':id'  => $id,
+        ]);
 }
 
 function demander_profil_mentor(int $user_id, string $bio, string $experience): void {
@@ -68,8 +75,8 @@ function demander_profil_mentor(int $user_id, string $bio, string $experience): 
 
 function changer_statut_utilisateur(int $id, string $statut): void {
     $pdo  = get_pdo();
-    $stmt = $pdo->prepare("UPDATE utilisateurs SET statut = :statut WHERE id = :id");
-    $stmt->execute([':statut' => $statut, ':id' => $id]);
+    $pdo->prepare("UPDATE utilisateurs SET statut = :statut WHERE id = :id")
+        ->execute([':statut' => $statut, ':id' => $id]);
 }
 
 function valider_mentor(int $user_id, bool $valide): void {

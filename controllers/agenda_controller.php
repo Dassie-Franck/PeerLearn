@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // ============================================================
 //  agenda_controller.php
 //  Gere : disponibilites, reservations, statuts sessions

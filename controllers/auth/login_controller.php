@@ -6,7 +6,7 @@
 
 require_once BASE_PATH . '/models/user_model.php';
 
-// Redirige si deja connecte
+// Redirige si déjà connecté
 if (is_logged_in()) {
     redirect_to(is_admin() ? 'admin' : 'dashboard');
 }
@@ -32,6 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $user = trouver_utilisateur_par_email($email);
 
+    // ── Vérification mot de passe ────────────────────────────
+    // password_verify() prend le cost depuis le hash stocké.
+    // Si un ancien compte a été hashé avec cost > 10, cette ligne
+    // peut être lente sur o2switch. Le rehash ci-dessous corrige
+    // ça immédiatement après le premier login réussi.
     if (!$user || !password_verify($mdp, $user['mot_de_passe'])) {
         set_error('Email ou mot de passe incorrect.');
         $_SESSION['old'] = ['email' => $email];
@@ -43,7 +48,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         redirect_to('login');
     }
 
-    // Ouverture de session
+    // ── Rehash automatique si cost trop élevé ───────────────
+    // Migre silencieusement les anciens hashs (cost 12/14)
+    // vers cost 10 au premier login réussi.
+    if (password_needs_rehash($user['mot_de_passe'], PASSWORD_BCRYPT, BCRYPT_OPTIONS)) {
+        $pdo = get_pdo();
+        $pdo->prepare("UPDATE utilisateurs SET mot_de_passe = :mdp WHERE id = :id")
+            ->execute([
+                ':mdp' => password_hash($mdp, PASSWORD_BCRYPT, BCRYPT_OPTIONS),
+                ':id'  => $user['id'],
+            ]);
+    }
+
+    // ── Ouverture de session ─────────────────────────────────
     session_regenerate_id(true);
     $_SESSION['user_id']       = $user['id'];
     $_SESSION['role']          = $user['role'];

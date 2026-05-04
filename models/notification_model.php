@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // ============================================================
 //  notification_model.php
 //  Requetes SQL liees aux notifications in-app

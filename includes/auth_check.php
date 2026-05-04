@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // ============================================================
 //  includes/auth_check.php
 //  A inclure en haut de chaque controller protege

@@ -1,1 +1,1 @@
-﻿<?php // Validation mentors ?>
+<?php // Validation mentors ?>

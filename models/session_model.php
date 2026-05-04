@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // ============================================================
 //  models/session_model.php
 //  Toutes les requetes SQL liees aux sessions de tutorat
