@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // ============================================================
 //  views/etudiant/dashboard.php
 //  Dashboard étudiant

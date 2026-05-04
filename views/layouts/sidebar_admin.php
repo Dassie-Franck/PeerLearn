@@ -1,1 +1,1 @@
-﻿<?php // Menu lateral administrateur ?>
+<?php // Menu lateral administrateur ?>

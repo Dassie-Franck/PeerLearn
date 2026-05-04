@@ -1,1 +1,1 @@
-﻿<?php // Liste des avis ?>
+<?php // Liste des avis ?>

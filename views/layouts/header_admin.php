@@ -1,1 +1,1 @@
-﻿<?php // En-tete espace administrateur ?>
+<?php // En-tete espace administrateur ?>

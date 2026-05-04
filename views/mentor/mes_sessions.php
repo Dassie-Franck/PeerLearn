@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // ============================================================
 //  views/etudiant/mes_sessions.php
 //  Liste des sessions de l'utilisateur avec filtres et actions

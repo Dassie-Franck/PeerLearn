@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // ============================================================
 //  views/mentor/disponibilites.php
 //  Gestion des créneaux de disponibilité du mentor

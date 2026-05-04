@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // ============================================================
 //  views/etudiant/profil.php
 //  Profil étudiant - Design moderne

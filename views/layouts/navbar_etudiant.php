@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // ============================================================
 //  views/layouts/sidebar_etudiant.php
 //  Sidebar étudiante — style moderne unifié
