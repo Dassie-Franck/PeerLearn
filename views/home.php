@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= APP_NAME ?> - Apprentissage peer-to-peer entre étudiants</title>
     <meta name="description" content="Plateforme de mentorat entre étudiants. Apprenez et enseignez en toute confiance avec PeerLearn.">
-    
+
     <!-- Ressources locales -->
     <link rel="stylesheet" href="<?= APP_URL ?>/css/tailwind.css">
     <link rel="stylesheet" href="<?= APP_URL ?>/css/home.css">
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-white dark:bg-gray-900">
@@ -26,17 +26,17 @@
                     eer<span class="text-purple-600">Learn</span>
                 </span>
             </div>
-            
+
             <div class="hidden md:flex items-center space-x-8">
                 <a href="#features" class="text-gray-600 dark:text-gray-300 hover:text-purple-600 transition">Fonctionnalités</a>
                 <a href="#how-it-works" class="text-gray-600 dark:text-gray-300 hover:text-purple-600 transition">Comment ça marche</a>
                 <a href="#testimonials" class="text-gray-600 dark:text-gray-300 hover:text-purple-600 transition">Témoignages</a>
                 <a href="#mentors" class="text-gray-600 dark:text-gray-300 hover:text-purple-600 transition">Mentors</a>
             </div>
-            
+
             <div class="flex items-center space-x-4">
-                <a href="<?= APP_URL ?>/?url=login" class="px-5 py-2 text-purple-600 border border-purple-600 rounded-xl hover:bg-purple-50 transition">Connexion</a>
-                <a href="<?= APP_URL ?>/?url=register" class="px-5 py-2 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-xl hover:shadow-lg transition">Inscription</a>
+                <a href="<?= APP_URL ?>/index.php?url=login" class="px-5 py-2 text-purple-600 border border-purple-600 rounded-xl hover:bg-purple-50 transition">Connexion</a>
+                <a href="<?= APP_URL ?>/register" class="px-5 py-2 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-xl hover:shadow-lg transition">Inscription</a>
                 <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition">
                     <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
@@ -52,7 +52,7 @@
     <div class="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800"></div>
     <div class="absolute top-20 left-10 w-64 h-64 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"></div>
     <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style="animation-delay: 2s;"></div>
-    
+
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
             <div class="animate-slideInLeft">
@@ -65,11 +65,11 @@
                     entre étudiants
                 </h1>
                 <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                    Rejoignez une communauté où chaque étudiant peut partager ses connaissances et progresser ensemble. 
+                    Rejoignez une communauté où chaque étudiant peut partager ses connaissances et progresser ensemble.
                     Mentorat peer-to-peer, sessions en ligne ou en présentiel.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="<?= APP_URL ?>/?url=register" class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-xl font-semibold hover:shadow-lg transition transform hover:scale-105">
+                    <a href="<?= APP_URL ?>/register" class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-xl font-semibold hover:shadow-lg transition transform hover:scale-105">
                         Commencer gratuitement
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -80,11 +80,11 @@
                     </a>
                 </div>
             </div>
-            
+
             <div class="relative animate-slideInRight">
                 <div class="relative lg:ml-10">
                     <div class="absolute -top-10 -left-10 w-32 h-32 bg-purple-200 rounded-full filter blur-2xl opacity-50"></div>
-                    
+
                     <div class="absolute -bottom-5 -left-5 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
@@ -273,7 +273,7 @@
             ];
             foreach ($mentors_preview as $m):
             ?>
-            <a href="<?= APP_URL ?>/?url=recherche" class="mentor-card">
+            <a href="<?= APP_URL ?>/recherche" class="mentor-card">
                 <div class="mentor-avatar" style="background:<?= $m['color'] ?>"><?= $m['initiale'] ?></div>
                 <div class="mentor-name"><?= htmlspecialchars($m['nom']) ?></div>
                 <div class="mentor-subject"><?= htmlspecialchars($m['matiere']) ?></div>
@@ -284,7 +284,7 @@
         </div>
 
         <div style="text-align:center">
-            <a href="<?= APP_URL ?>/?url=register" class="btn-voir-mentors">Voir tous les mentors →</a>
+            <a href="<?= APP_URL ?>/register" class="btn-voir-mentors">Voir tous les mentors →</a>
         </div>
     </div>
 </section>
@@ -296,7 +296,7 @@
             <h2 class="text-3xl md:text-4xl font-bold mb-4">Prêt à booster vos résultats ?</h2>
             <p class="text-lg opacity-90 mb-8">Rejoignez des milliers d'étudiants qui progressent chaque jour grâce à PeerLearn. Inscription gratuite, sans engagement.</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="<?= APP_URL ?>/?url=register" class="inline-flex items-center justify-center px-8 py-3 bg-white text-purple-600 rounded-xl font-semibold hover:shadow-lg transition transform hover:scale-105">S'inscrire gratuitement <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></a>
+                <a href="<?= APP_URL ?>/register" class="inline-flex items-center justify-center px-8 py-3 bg-white text-purple-600 rounded-xl font-semibold hover:shadow-lg transition transform hover:scale-105">S'inscrire gratuitement <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></a>
                 <a href="#features" class="inline-flex items-center justify-center px-8 py-3 border-2 border-white rounded-xl font-semibold hover:bg-white hover:text-purple-600 transition">En savoir plus</a>
             </div>
         </div>
@@ -357,46 +357,46 @@ function animateCounters() {
         const increment = target / 50;
         const updateCounter = () => {
             current += increment;
-            if (current < target) { 
-                counter.innerText = Math.ceil(current); 
-                requestAnimationFrame(updateCounter); 
-            } else { 
-                counter.innerText = target; 
+            if (current < target) {
+                counter.innerText = Math.ceil(current);
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.innerText = target;
             }
         };
         updateCounter();
     };
-    const observer = new IntersectionObserver((entries) => { 
-        entries.forEach(entry => { 
-            if (entry.isIntersecting) { 
-                animateCounter(entry.target); 
-                observer.unobserve(entry.target); 
-            } 
-        }); 
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
     }, { threshold: 0.5 });
     counters.forEach(counter => observer.observe(counter));
 }
 
 // ==================== THÈME ====================
-function toggleTheme() { 
-    document.body.classList.toggle('dark'); 
-    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light'); 
+function toggleTheme() {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
 }
 
-function initTheme() { 
-    const savedTheme = localStorage.getItem('theme'); 
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches; 
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) { 
-        document.body.classList.add('dark'); 
-    } else { 
-        document.body.classList.remove('dark'); 
-    } 
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.body.classList.add('dark');
+    } else {
+        document.body.classList.remove('dark');
+    }
 }
 
 // ==================== INITIALISATION ====================
-document.addEventListener('DOMContentLoaded', () => { 
-    initTheme(); 
-    animateCounters(); 
+document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+    animateCounters();
 });
 </script>
 </body>

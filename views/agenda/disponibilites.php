@@ -154,7 +154,7 @@
 
         <!-- Body modal -->
         <div class="px-6 py-5">
-            <form method="POST" action="<?= APP_URL ?>/?url=ajouter-dispo" id="form-dispo">
+            <form method="POST" action="<?= APP_URL ?>/ajouter-dispo" id="form-dispo">
                 <?= csrf_field() ?>
 
                 <!-- Matiere -->
@@ -175,7 +175,7 @@
                         <i class="fa-solid fa-triangle-exclamation mt-0.5 flex-shrink-0"></i>
                         <span>
                             Aucune matiere trouvee.
-                            <a href="<?= APP_URL ?>/?url=mentor-profil"
+                            <a href="<?= APP_URL ?>/mentor-profil"
                                class="font-semibold underline">Ajoute-en dans ton profil →</a>
                         </span>
                     </div>
@@ -406,7 +406,7 @@
                         <span class="badge-success flex-shrink-0">
                             <i class="fa-solid fa-circle-check mr-1 text-xs"></i>Libre
                         </span>
-                        <form method="POST" action="<?= APP_URL ?>/?url=suppr-dispo"
+                        <form method="POST" action="<?= APP_URL ?>/suppr-dispo"
                               onsubmit="return confirm('Supprimer ce creneau ?')">
                             <?= csrf_field() ?>
                             <input type="hidden" name="dispo_id" value="<?= $c['id'] ?>">

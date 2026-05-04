@@ -14,7 +14,7 @@ function h($str) {
 
 // Redirection sécurisée
 function redirect_to($page) {
-    header('Location: ' . APP_URL . '/?url=' . ltrim($page, '/'));
+    header('Location: ' . APP_URL . '/' . ltrim($page, '/'));
     exit;
 }
 
@@ -24,7 +24,7 @@ function redirect($page) {
     } elseif (strpos($page, '/') === 0) {
         $location = APP_URL . $page;
     } else {
-        $location = APP_URL . '/?url=' . ltrim($page, '/');
+        $location = APP_URL . '/' . ltrim($page, '/');
     }
     header('Location: ' . $location);
     exit;

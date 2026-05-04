@@ -64,7 +64,7 @@ $page_active = 'profil';
     <!-- ==================== TAB 1 : INFORMATIONS ==================== -->
     <div id="tab-infos" class="animate-slideInRight">
         <div class="profile-card">
-            <form method="POST" action="<?= APP_URL ?>/?url=profil" enctype="multipart/form-data" class="p-7">
+            <form method="POST" action="<?= APP_URL ?>/profil" enctype="multipart/form-data" class="p-7">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="update_infos">
                 
@@ -145,7 +145,7 @@ $page_active = 'profil';
                             Deviens mentor et aide tes camarades à réussir
                         </p>
                     </div>
-                    <a href="<?= APP_URL ?>/?url=demande-mentor" class="btn-mentor">
+                    <a href="<?= APP_URL ?>/demande-mentor" class="btn-mentor">
                         Devenir mentor <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>
@@ -168,7 +168,7 @@ $page_active = 'profil';
                             ✓ Vous êtes mentor validé sur PeerLearn
                         </p>
                     </div>
-                    <a href="<?= APP_URL ?>/?url=mentor" class="text-sm text-green-800 no-underline font-semibold">
+                    <a href="<?= APP_URL ?>/mentor" class="text-sm text-green-800 no-underline font-semibold">
                         Espace mentor <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>
@@ -180,7 +180,7 @@ $page_active = 'profil';
     <!-- ==================== TAB 2 : MATIÈRES ==================== -->
     <div id="tab-matieres" style="display: none;" class="animate-slideInRight">
         <div class="profile-card">
-            <form method="POST" action="<?= APP_URL ?>/?url=profil" class="p-7">
+            <form method="POST" action="<?= APP_URL ?>/profil" class="p-7">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="update_matieres">
                 
@@ -225,7 +225,7 @@ $page_active = 'profil';
     <!-- ==================== TAB 3 : SÉCURITÉ ==================== -->
     <div id="tab-securite" style="display: none;" class="animate-slideInRight">
         <div class="profile-card">
-            <form method="POST" action="<?= APP_URL ?>/?url=profil" class="p-7">
+            <form method="POST" action="<?= APP_URL ?>/profil" class="p-7">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="update_mdp">
                 

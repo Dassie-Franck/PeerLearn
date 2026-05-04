@@ -39,12 +39,12 @@ switch ($action) {
     // ----------------------------------------------------------
     case 'reserver':
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect('/?url=recherche');
+            redirect('/recherche');
         }
 
         if (!csrf_verify()) {
             $_SESSION['erreur'] = "Requete invalide.";
-            redirect('/?url=recherche');
+            redirect('/recherche');
         }
 
         $apprenant_id    = $_SESSION['user_id'];
@@ -54,7 +54,7 @@ switch ($action) {
         $dispo = get_disponibilite_by_id($disponibilite_id);
         if (!$dispo || $dispo['est_reservee']) {
             $_SESSION['erreur'] = "Ce creneau n est plus disponible.";
-            redirect('/?url=recherche');
+            redirect('/recherche');
         }
 
         $mentor_id = $dispo['mentor_id'];
@@ -62,7 +62,7 @@ switch ($action) {
         // Regle metier : un etudiant ne peut pas reserver avec lui-meme
         if ($mentor_id == $apprenant_id) {
             $_SESSION['erreur'] = "Vous ne pouvez pas reserver une session avec vous-meme.";
-            redirect('/?url=etudiant/fiche-mentor&id=' . $mentor_id);
+            redirect('/etudiant/fiche-mentor&id=' . $mentor_id);
         }
 
         // Cree la session
@@ -79,7 +79,7 @@ switch ($action) {
 
         if (isset($resultat['erreur'])) {
             $_SESSION['erreur'] = $resultat['erreur'];
-            redirect('/?url=etudiant/fiche-mentor&id=' . $mentor_id);
+            redirect('/etudiant/fiche-mentor&id=' . $mentor_id);
         }
 
         // Notifie le mentor
@@ -91,11 +91,11 @@ switch ($action) {
             $apprenant['prenom'] . ' ' . $apprenant['nom'] .
             ' souhaite une session de ' . $dispo['matiere_nom'] .
             ' le ' . date('d/m/Y', strtotime($dispo['date_dispo'])),
-            '/?url=mentor/demandes'
+            '/mentor/demandes'
         );
 
         $_SESSION['succes'] = "Demande envoyee ! Le mentor va confirmer ta session.";
-        redirect('/?url=agenda/mes-sessions');
+        redirect('/agenda/mes-sessions');
         break;
 
 
@@ -105,7 +105,7 @@ switch ($action) {
     case 'confirmer':
         if (!csrf_verify()) {
             $_SESSION['erreur'] = "Requete invalide.";
-            redirect('/?url=mentor/demandes');
+            redirect('/mentor/demandes');
         }
 
         require_role('etudiant'); // mentors ont aussi le role etudiant
@@ -118,12 +118,12 @@ switch ($action) {
         $session = get_session_par_id($session_id);
         if (!$session) {
             $_SESSION['erreur'] = "Session introuvable.";
-            redirect('/?url=mentor/demandes');
+            redirect('/mentor/demandes');
         }
 
         if ($session['mode_session'] === 'en_ligne' && empty($lien)) {
             $_SESSION['erreur'] = "Un lien de visioconference est obligatoire pour une session en ligne.";
-            redirect('/?url=mentor/demandes');
+            redirect('/mentor/demandes');
         }
 
         confirmer_session($session_id, $mentor_id, $lien ?: null);
@@ -135,11 +135,11 @@ switch ($action) {
             'Session confirmee !',
             'Votre session de ' . $session['matiere_nom'] .
             ' le ' . date('d/m/Y', strtotime($session['date_session'])) . ' est confirmee.',
-            '/?url=agenda/mes-sessions'
+            '/agenda/mes-sessions'
         );
 
         $_SESSION['succes'] = "Session confirmee avec succes.";
-        redirect('/?url=mentor/demandes');
+        redirect('/mentor/demandes');
         break;
 
 
@@ -149,7 +149,7 @@ switch ($action) {
     case 'annuler':
         if (!csrf_verify()) {
             $_SESSION['erreur'] = "Requete invalide.";
-            redirect('/?url=agenda/mes-sessions');
+            redirect('/agenda/mes-sessions');
         }
 
         $session_id = (int)($_POST['session_id'] ?? 0);
@@ -159,14 +159,14 @@ switch ($action) {
         $session = get_session_par_id($session_id);
         if (!$session) {
             $_SESSION['erreur'] = "Session introuvable.";
-            redirect('/?url=agenda/mes-sessions');
+            redirect('/agenda/mes-sessions');
         }
 
         $ok = annuler_session($session_id, $user_id, $motif);
 
         if (!$ok) {
             $_SESSION['erreur'] = "Impossible d annuler cette session.";
-            redirect('/?url=agenda/mes-sessions');
+            redirect('/agenda/mes-sessions');
         }
 
         // Notifie l autre partie
@@ -182,11 +182,11 @@ switch ($action) {
             $annuleur['prenom'] . ' ' . $annuleur['nom'] .
             ' a annule la session du ' .
             date('d/m/Y', strtotime($session['date_session'])),
-            '/?url=agenda/mes-sessions'
+            '/agenda/mes-sessions'
         );
 
         $_SESSION['succes'] = "Session annulee.";
-        redirect('/?url=agenda/mes-sessions');
+        redirect('/agenda/mes-sessions');
         break;
 
 
@@ -196,7 +196,7 @@ switch ($action) {
     case 'disponibilites':
         if (!$_SESSION['est_mentor'] || !$_SESSION['mentor_valide']) {
             $_SESSION['erreur'] = "Acces reserve aux mentors valides.";
-            redirect('/?url=etudiant/dashboard');
+            redirect('/etudiant/dashboard');
         }
 
         $mentor_id = $_SESSION['user_id'];
@@ -206,7 +206,7 @@ switch ($action) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!csrf_verify()) {
                 $_SESSION['erreur'] = "Requete invalide.";
-                redirect('/?url=agenda/disponibilites');
+                redirect('/agenda/disponibilites');
             }
 
             $action_post = $_POST['action'] ?? '';
@@ -229,7 +229,7 @@ switch ($action) {
 
                 if (!empty($erreurs)) {
                     $_SESSION['erreurs'] = $erreurs;
-                    redirect('/?url=agenda/disponibilites');
+                    redirect('/agenda/disponibilites');
                 }
 
                 $res = creer_disponibilite(
@@ -242,7 +242,7 @@ switch ($action) {
                 } else {
                     $_SESSION['succes'] = "Creneau ajoute avec succes.";
                 }
-                redirect('/?url=agenda/disponibilites');
+                redirect('/agenda/disponibilites');
             }
 
             // --- Supprimer un creneau ---
@@ -252,7 +252,7 @@ switch ($action) {
                 $_SESSION[$ok ? 'succes' : 'erreur'] = $ok
                     ? "Creneau supprime."
                     : "Impossible de supprimer ce creneau (deja reserve).";
-                redirect('/?url=agenda/disponibilites');
+                redirect('/agenda/disponibilites');
             }
         }
 

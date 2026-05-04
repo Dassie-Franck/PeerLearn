@@ -79,7 +79,7 @@ if ($apprenant_id) {
     ");
     $notif->execute([
         ':uid'       => $apprenant_id,
-        ':lien_notif' => '/?url=mes-sessions',
+        ':lien_notif' => '/mes-sessions',
     ]);
 }
 

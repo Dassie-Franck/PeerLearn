@@ -183,12 +183,12 @@ $page_active = $page_active ?? '';
     </div>
     
     <nav class="sidebar-nav">
-        <a href="<?= APP_URL ?>/?url=mentor" class="nav-item <?= $page_active === 'dashboard' ? 'active' : '' ?>">
+        <a href="<?= APP_URL ?>/mentor" class="nav-item <?= $page_active === 'dashboard' ? 'active' : '' ?>">
             <i class="fa-solid fa-gauge-high"></i>
             <span>Tableau de bord</span>
         </a>
         
-        <a href="<?= APP_URL ?>/?url=demandes" class="nav-item <?= $page_active === 'demandes' ? 'active' : '' ?>">
+        <a href="<?= APP_URL ?>/demandes" class="nav-item <?= $page_active === 'demandes' ? 'active' : '' ?>">
             <i class="fa-solid fa-clock"></i>
             <span>Demandes reçues</span>
             <?php if (!empty($demandes_en_attente) && $demandes_en_attente > 0): ?>
@@ -196,22 +196,22 @@ $page_active = $page_active ?? '';
             <?php endif; ?>
         </a>
         
-        <a href="<?= APP_URL ?>/?url=disponibilites" class="nav-item <?= $page_active === 'disponibilites' ? 'active' : '' ?>">
+        <a href="<?= APP_URL ?>/disponibilites" class="nav-item <?= $page_active === 'disponibilites' ? 'active' : '' ?>">
             <i class="fa-solid fa-calendar-plus"></i>
             <span>Disponibilités</span>
         </a>
         
-        <a href="<?= APP_URL ?>/?url=mes-sessions" class="nav-item <?= $page_active === 'sessions' ? 'active' : '' ?>">
+        <a href="<?= APP_URL ?>/mes-sessions" class="nav-item <?= $page_active === 'sessions' ? 'active' : '' ?>">
             <i class="fa-solid fa-chalkboard-user"></i>
             <span>Mes sessions</span>
         </a>
         
-        <a href="<?= APP_URL ?>/?url=mentor-profil" class="nav-item <?= $page_active === 'profil' ? 'active' : '' ?>">
+        <a href="<?= APP_URL ?>/mentor-profil" class="nav-item <?= $page_active === 'profil' ? 'active' : '' ?>">
             <i class="fa-solid fa-user"></i>
             <span>Mon profil mentor</span>
         </a>
         
-        <a href="<?= APP_URL ?>/?url=messages" class="nav-item <?= $page_active === 'messages' ? 'active' : '' ?>">
+        <a href="<?= APP_URL ?>/messages" class="nav-item <?= $page_active === 'messages' ? 'active' : '' ?>">
             <i class="fa-solid fa-message"></i>
             <span>Messages</span>
             <?php if (!empty($nb_non_lus) && $nb_non_lus > 0): ?>
@@ -224,7 +224,7 @@ $page_active = $page_active ?? '';
         
         <div class="nav-section-title">Espace Étudiant</div>
         
-        <a href="<?= APP_URL ?>/?url=dashboard" class="nav-item <?= $page_active === 'student-dashboard' ? 'active' : '' ?>">
+        <a href="<?= APP_URL ?>/dashboard" class="nav-item <?= $page_active === 'student-dashboard' ? 'active' : '' ?>">
             <i class="fa-solid fa-graduation-cap"></i>
             <span>Dashboard étudiant</span>
         </a>
@@ -252,7 +252,7 @@ $page_active = $page_active ?? '';
         </div>
        
         
-        <a href="<?= APP_URL ?>/?url=logout" class="nav-item" style="color: #EF4444;">
+        <a href="<?= APP_URL ?>/logout" class="nav-item" style="color: #EF4444;">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Déconnexion</span>
         </a>

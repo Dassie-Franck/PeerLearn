@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'nouvelle_reservation',
         'Nouvelle demande de session',
         $prenom_etudiant . ' souhaite réserver un créneau avec vous.',
-        '/?url=demandes'
+        '/demandes'
     );
 
     setToast('Demande envoyée ! Le mentor va confirmer votre session.', 'success');

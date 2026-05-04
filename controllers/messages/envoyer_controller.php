@@ -91,7 +91,7 @@ if (!$deja_notif) {
         ':uid'     => $destinataire_id,
         ':titre'   => 'Nouveau message de ' . $envoyeur_nom,
         ':contenu' => mb_substr($contenu, 0, 100) . (mb_strlen($contenu) > 100 ? '…' : ''),
-        ':lien'    => '/?url=conversation&avec=' . $envoyeur_id,
+        ':lien'    => '/conversation&avec=' . $envoyeur_id,
     ]);
 }
 

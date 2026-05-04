@@ -133,7 +133,7 @@ if (function_exists('compter_messages_non_lus')) {
                 <i class="fa-solid fa-calendar-days" style="color: #5B4FE8;"></i>
                 Prochaines sessions
             </h2>
-            <a href="<?= APP_URL ?>/?url=mes-sessions" style="font-size: 13px; color: #5B4FE8; text-decoration: none; font-weight: 500;">
+            <a href="<?= APP_URL ?>/mes-sessions" style="font-size: 13px; color: #5B4FE8; text-decoration: none; font-weight: 500;">
                 Voir tout <i class="fa-solid fa-arrow-right"></i>
             </a>
         </div>
@@ -145,7 +145,7 @@ if (function_exists('compter_messages_non_lus')) {
             </div>
             <p style="color: #64748B; font-size: 14px; margin-bottom: 8px;">Aucune session à venir</p>
             <p style="color: #94A3B8; font-size: 13px;">Trouvez un mentor pour commencer votre apprentissage</p>
-            <a href="<?= APP_URL ?>/?url=recherche" class="btn-message" style="display: inline-flex; margin-top: 20px; background: #5B4FE8; color: #fff;">
+            <a href="<?= APP_URL ?>/recherche" class="btn-message" style="display: inline-flex; margin-top: 20px; background: #5B4FE8; color: #fff;">
                 <i class="fa-solid fa-magnifying-glass"></i> Trouver un mentor
             </a>
         </div>
@@ -188,7 +188,7 @@ if (function_exists('compter_messages_non_lus')) {
                 
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <?php if ($sess['statut'] === 'confirmee'): ?>
-                        <a href="/?url=conversation&user_id=<?= $sess['mentor_id'] ?>" class="btn-message tooltip">
+                        <a href="/conversation&user_id=<?= $sess['mentor_id'] ?>" class="btn-message tooltip">
                             <i class="fa-regular fa-message"></i>
                             <span class="tooltip-text">Envoyer un message</span>
                         </a>

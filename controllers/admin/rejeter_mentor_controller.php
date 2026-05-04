@@ -32,7 +32,7 @@ if (function_exists('creer_notification')) {
         $user_id, 'refus',
         "Votre demande de mentor n'a pas été acceptée",
         $motif ?: 'Votre dossier ne remplit pas les critères requis.',
-        '/?url=profil'
+        '/profil'
     );
 }
 

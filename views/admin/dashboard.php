@@ -34,37 +34,37 @@
         </div>
         
         <nav class="sidebar-nav">
-            <a href="<?= APP_URL ?>/?url=admin" class="nav-item active">
+            <a href="<?= APP_URL ?>/admin" class="nav-item active">
                 <i class="fa-solid fa-gauge-high"></i>
                 <span>Tableau de bord</span>
             </a>
-            <a href="<?= APP_URL ?>/?url=admin-users" class="nav-item">
+            <a href="<?= APP_URL ?>/admin-users" class="nav-item">
                 <i class="fa-solid fa-users"></i>
                 <span>Utilisateurs</span>
             </a>
-            <a href="<?= APP_URL ?>/?url=admin-sessions" class="nav-item">
+            <a href="<?= APP_URL ?>/admin-sessions" class="nav-item">
                 <i class="fa-solid fa-calendar"></i>
                 <span>Sessions</span>
             </a>
-            <a href="<?= APP_URL ?>/?url=admin-signalements" class="nav-item">
+            <a href="<?= APP_URL ?>/admin-signalements" class="nav-item">
                 <i class="fa-solid fa-flag"></i>
                 <span>Signalements</span>
                 <?php if ($nb_signalements > 0): ?>
                 <span class="badge-error" style="background:#EF4444; color:white; font-size:10px; margin-left:auto; padding:2px 8px;"><?= $nb_signalements ?></span>
                 <?php endif; ?>
             </a>
-            <a href="<?= APP_URL ?>/?url=admin-matières" class="nav-item">
+            <a href="<?= APP_URL ?>/admin-matières" class="nav-item">
                 <i class="fa-solid fa-book"></i>
                 <span>Matières</span>
             </a>
-            <a href="<?= APP_URL ?>/?url=admin-settings" class="nav-item">
+            <a href="<?= APP_URL ?>/admin-settings" class="nav-item">
                 <i class="fa-solid fa-gear"></i>
                 <span>Paramètres</span>
             </a>
         </nav>
         
         <div style="position: absolute; bottom: 20px; left: 0; right: 0; padding: 16px;">
-            <a href="<?= APP_URL ?>/?url=logout" class="nav-item" style="color: #EF4444;">
+            <a href="<?= APP_URL ?>/logout" class="nav-item" style="color: #EF4444;">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span>Déconnexion</span>
             </a>
@@ -102,7 +102,7 @@
         
         <!-- ==================== STATS CARDS ==================== -->
         <div class="grid-4 animate-fadeInUp" style="margin-bottom: 28px;">
-            <a href="<?= APP_URL ?>/?url=admin-users" class="stat-card">
+            <a href="<?= APP_URL ?>/admin-users" class="stat-card">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span class="stat-label">Utilisateurs</span>
                     <div class="stat-icon" style="background: rgba(91,79,232,0.1); color: #5B4FE8;">
@@ -115,7 +115,7 @@
                 </div>
             </a>
             
-            <a href="<?= APP_URL ?>/?url=admin-users&filtre=mentors" class="stat-card">
+            <a href="<?= APP_URL ?>/admin-users&filtre=mentors" class="stat-card">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span class="stat-label">Mentors actifs</span>
                     <div class="stat-icon" style="background: rgba(15,196,167,0.1); color: #0FC4A7;">
@@ -128,7 +128,7 @@
                 </div>
             </a>
             
-            <a href="<?= APP_URL ?>/?url=admin-users&filtre=mentors_en_attente" class="stat-card">
+            <a href="<?= APP_URL ?>/admin-users&filtre=mentors_en_attente" class="stat-card">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span class="stat-label">Demandes mentor</span>
                     <div class="stat-icon" style="background: rgba(245,158,11,0.1); color: #F59E0B;">
@@ -143,7 +143,7 @@
                 <?php endif; ?>
             </a>
             
-            <a href="<?= APP_URL ?>/?url=admin-users&filtre=suspendus" class="stat-card">
+            <a href="<?= APP_URL ?>/admin-users&filtre=suspendus" class="stat-card">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span class="stat-label">Comptes suspendus</span>
                     <div class="stat-icon" style="background: rgba(239,68,68,0.1); color: #EF4444;">
@@ -210,7 +210,7 @@
                         <i class="fa-solid fa-user-clock" style="color: #F59E0B;"></i>
                         Demandes mentor
                     </h2>
-                    <a href="<?= APP_URL ?>/?url=admin-users&filtre=mentors_en_attente" class="card-link">
+                    <a href="<?= APP_URL ?>/admin-users&filtre=mentors_en_attente" class="card-link">
                         Voir tout <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>
@@ -235,14 +235,14 @@
                             <p style="font-size: 12px; color: #64748B;"><?= e($d['email']) ?></p>
                         </div>
                         <div style="display: flex; gap: 8px;">
-                            <form method="POST" action="<?= APP_URL ?>/?url=admin-valider" style="display: inline;">
+                            <form method="POST" action="<?= APP_URL ?>/admin-valider" style="display: inline;">
                                 <?= csrf_field() ?>
                                 <input type="hidden" name="user_id" value="<?= $d['id'] ?>">
                                 <button type="submit" class="btn-validate">
                                     <i class="fa-solid fa-check"></i> Valider
                                 </button>
                             </form>
-                            <form method="POST" action="<?= APP_URL ?>/?url=admin-rejeter" style="display: inline;">
+                            <form method="POST" action="<?= APP_URL ?>/admin-rejeter" style="display: inline;">
                                 <?= csrf_field() ?>
                                 <input type="hidden" name="user_id" value="<?= $d['id'] ?>">
                                 <button type="submit" class="btn-reject">
@@ -263,7 +263,7 @@
                         <i class="fa-solid fa-user-plus" style="color: #5B4FE8;"></i>
                         Derniers inscrits
                     </h2>
-                    <a href="<?= APP_URL ?>/?url=admin-users" class="card-link">
+                    <a href="<?= APP_URL ?>/admin-users" class="card-link">
                         Voir tout <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>

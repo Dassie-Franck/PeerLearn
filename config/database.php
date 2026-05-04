@@ -1,6 +1,6 @@
-﻿<?php
+<?php
 // ============================================================
-//  config/database.php — Chargement .env + connexion PDO
+//  config/database.php � Chargement .env + connexion PDO
 // ============================================================
 
 function loadEnv(string $path): void {
@@ -17,7 +17,7 @@ function loadEnv(string $path): void {
         $key   = trim($parts[0]);
         $value = trim($parts[1]);
 
-        // Supprimer les guillemets enveloppants si présents
+        // Supprimer les guillemets enveloppants si pr�sents
         if (preg_match('/^(["\']).*\1$/', $value)) {
             $value = substr($value, 1, -1);
         }
@@ -28,10 +28,10 @@ function loadEnv(string $path): void {
     }
 }
 
-// ── Charger le .env ──────────────────────────────────────────
+// -- Charger le .env ------------------------------------------
 loadEnv(dirname(__DIR__) . '/.env');
 
-// ── Connexion PDO ─────────────────────────────────────────────
+// -- Connexion PDO ---------------------------------------------
 function get_pdo(): PDO {
     static $pdo = null;
     if ($pdo !== null) return $pdo;
@@ -53,12 +53,12 @@ function get_pdo(): PDO {
             ]
         );
     } catch (PDOException $e) {
-        // Affiche le détail en local, message générique en prod
+        // Affiche le d�tail en local, message g�n�rique en prod
         $debug = getenv('APP_DEBUG') === 'true';
         if ($debug) {
-            die('<pre>❌ Erreur BDD : ' . $e->getMessage() . '</pre>');
+            die('<pre>? Erreur BDD : ' . $e->getMessage() . '</pre>');
         }
-        die('Une erreur est survenue. Veuillez réessayer plus tard.');
+        die('Une erreur est survenue. Veuillez r�essayer plus tard.');
     }
 
     return $pdo;

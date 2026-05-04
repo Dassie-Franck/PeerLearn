@@ -44,7 +44,7 @@ $page_active = 'demandes';
             </button>
         </div>
         <div class="px-6 py-5">
-            <form method="POST" action="<?= APP_URL ?>/?url=refuser" id="form-refus">
+            <form method="POST" action="<?= APP_URL ?>/refuser" id="form-refus">
                 <?= csrf_field() ?>
                 <input type="hidden" name="session_id" id="refus-session-id">
                 <div class="mb-5">
@@ -73,7 +73,7 @@ $page_active = 'demandes';
             </button>
         </div>
         <div class="px-6 py-5">
-            <form method="POST" action="<?= APP_URL ?>/?url=confirmer" id="form-lien">
+            <form method="POST" action="<?= APP_URL ?>/confirmer" id="form-lien">
                 <?= csrf_field() ?>
                 <input type="hidden" name="session_id" id="lien-session-id">
                 <div class="mb-5">
@@ -134,7 +134,7 @@ $page_active = 'demandes';
         </div>
         <p class="text-base font-semibold text-gray-900 mb-2">Aucune demande reçue</p>
         <p class="text-gray-500 text-sm mb-6">Les étudiants qui réservent tes créneaux apparaîtront ici.</p>
-        <a href="<?= APP_URL ?>/?url=disponibilites" class="btn-confirm inline-flex items-center gap-2">
+        <a href="<?= APP_URL ?>/disponibilites" class="btn-confirm inline-flex items-center gap-2">
             <i class="fa-solid fa-calendar-plus"></i> Gérer mes disponibilités
         </a>
     </div>
@@ -190,7 +190,7 @@ $page_active = 'demandes';
                     
                     <!-- Actions -->
                     <div class="flex gap-2.5 flex-shrink-0">
-                        <a href="<?= APP_URL ?>/?url=conversation&user_id=<?= $d['apprenant_id'] ?? 0 ?>" class="btn-message w-10 h-10 flex items-center justify-center tooltip">
+                        <a href="<?= APP_URL ?>/conversation&user_id=<?= $d['apprenant_id'] ?? 0 ?>" class="btn-message w-10 h-10 flex items-center justify-center tooltip">
                             <i class="fa-regular fa-message"></i>
                             <span class="tooltip-text">Envoyer un message</span>
                         </a>
@@ -200,7 +200,7 @@ $page_active = 'demandes';
                             <i class="fa-solid fa-check-circle"></i> Confirmer
                         </button>
                         <?php else: ?>
-                        <form method="POST" action="<?= APP_URL ?>/?url=confirmer" class="m-0">
+                        <form method="POST" action="<?= APP_URL ?>/confirmer" class="m-0">
                             <?= csrf_field() ?>
                             <input type="hidden" name="session_id" value="<?= $d['id'] ?? 0 ?>">
                             <input type="hidden" name="lien_session" value="">
@@ -271,7 +271,7 @@ $page_active = 'demandes';
                     
                     <!-- Actions -->
                     <div class="flex items-center gap-3">
-                        <a href="<?= APP_URL ?>/?url=conversation&user_id=<?= $d['apprenant_id'] ?? 0 ?>" class="btn-message w-9 h-9 flex items-center justify-center tooltip">
+                        <a href="<?= APP_URL ?>/conversation&user_id=<?= $d['apprenant_id'] ?? 0 ?>" class="btn-message w-9 h-9 flex items-center justify-center tooltip">
                             <i class="fa-regular fa-message"></i>
                             <span class="tooltip-text">Envoyer un message</span>
                         </a>

@@ -265,7 +265,7 @@ function confirmer_session($session_id, $mentor_id, $lien_session = null) {
         'session_confirmee',
         '✅ Session confirmée',
         'Votre session a été confirmée par ' . $mentor['prenom'] . ' ! Vous pouvez maintenant discuter.',
-        '/?url=message/conversation&user_id=' . $mentor_id
+        '/message/conversation&user_id=' . $mentor_id
     );
     
     creer_notification(
@@ -273,7 +273,7 @@ function confirmer_session($session_id, $mentor_id, $lien_session = null) {
         'session_confirmee',
         '✅ Session confirmée',
         'Vous avez confirmé la session. Vous pouvez maintenant discuter avec votre étudiant.',
-        '/?url=message/conversation&user_id=' . $apprenant_id
+        '/message/conversation&user_id=' . $apprenant_id
     );
     
     return true;

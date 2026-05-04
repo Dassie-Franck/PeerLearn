@@ -32,9 +32,9 @@
             <p class="text-xs text-gray-400 mt-2 logo-text">Admin Dashboard</p>
         </div>
         <nav class="sidebar-nav">
-            <a href="<?= APP_URL ?>/?url=admin"              class="nav-item"><i class="fa-solid fa-gauge-high"></i><span>Tableau de bord</span></a>
-            <a href="<?= APP_URL ?>/?url=admin-users"        class="nav-item"><i class="fa-solid fa-users"></i><span>Utilisateurs</span></a>
-            <a href="<?= APP_URL ?>/?url=admin-signalements" class="nav-item active">
+            <a href="<?= APP_URL ?>/admin"              class="nav-item"><i class="fa-solid fa-gauge-high"></i><span>Tableau de bord</span></a>
+            <a href="<?= APP_URL ?>/admin-users"        class="nav-item"><i class="fa-solid fa-users"></i><span>Utilisateurs</span></a>
+            <a href="<?= APP_URL ?>/admin-signalements" class="nav-item active">
                 <i class="fa-solid fa-flag"></i><span>Signalements</span>
                 <?php if (($compteurs['en_attente'] ?? 0) > 0): ?>
                 <span style="background:#EF4444;color:#fff;font-size:10px;padding:2px 7px;border-radius:20px;margin-left:auto">
@@ -42,11 +42,11 @@
                 </span>
                 <?php endif; ?>
             </a>
-            <a href="<?= APP_URL ?>/?url=admin-matieres"     class="nav-item"><i class="fa-solid fa-book"></i><span>Matières</span></a>
-            <a href="<?= APP_URL ?>/?url=admin-journal"      class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i><span>Journal</span></a>
+            <a href="<?= APP_URL ?>/admin-matieres"     class="nav-item"><i class="fa-solid fa-book"></i><span>Matières</span></a>
+            <a href="<?= APP_URL ?>/admin-journal"      class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i><span>Journal</span></a>
         </nav>
         <div style="position:absolute;bottom:20px;left:0;right:0;padding:16px">
-            <a href="<?= APP_URL ?>/?url=logout" class="nav-item" style="color:#EF4444">
+            <a href="<?= APP_URL ?>/logout" class="nav-item" style="color:#EF4444">
                 <i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span>
             </a>
         </div>
@@ -77,7 +77,7 @@
             ];
             foreach ($tabs as $t):
             ?>
-            <a href="<?= APP_URL ?>/?url=admin-signalements&filtre=<?= $t['slug'] ?>"
+            <a href="<?= APP_URL ?>/admin-signalements&filtre=<?= $t['slug'] ?>"
                class="filter-tab <?= $filtre === $t['slug'] ? 'active' : '' ?>">
                 <?= $t['label'] ?><span class="cnt"><?= (int)$t['count'] ?></span>
             </a>
@@ -157,7 +157,7 @@
                 <!-- Actions -->
                 <?php if ($s['statut'] === 'en_attente'): ?>
                 <div style="display:flex;gap:8px;flex-shrink:0;align-items:center">
-                    <form method="POST" action="<?= APP_URL ?>/?url=admin-signalements&filtre=<?= $filtre ?>">
+                    <form method="POST" action="<?= APP_URL ?>/admin-signalements&filtre=<?= $filtre ?>">
                         <?= csrfField() ?>
                         <input type="hidden" name="sig_id" value="<?= $s['id'] ?>">
                         <input type="hidden" name="action" value="traiter">
@@ -165,7 +165,7 @@
                             <i class="fa-solid fa-check"></i> Traiter
                         </button>
                     </form>
-                    <form method="POST" action="<?= APP_URL ?>/?url=admin-signalements&filtre=<?= $filtre ?>">
+                    <form method="POST" action="<?= APP_URL ?>/admin-signalements&filtre=<?= $filtre ?>">
                         <?= csrfField() ?>
                         <input type="hidden" name="sig_id" value="<?= $s['id'] ?>">
                         <input type="hidden" name="action" value="rejeter">

@@ -140,7 +140,7 @@
                             $tris = ['note' => 'Mieux notés', 'sessions' => 'Plus actifs', 'nom' => 'Nom A→Z'];
                             foreach ($tris as $val => $label):
                             ?>
-                            <a href="<?= APP_URL ?>/?url=recherche&<?= http_build_query(array_merge($filtres ?? [], ['tri' => $val])) ?>"
+                            <a href="<?= APP_URL ?>/recherche&<?= http_build_query(array_merge($filtres ?? [], ['tri' => $val])) ?>"
                                class="sort-btn <?= ($filtres['tri'] ?? '') === $val ? 'sort-btn-active' : 'sort-btn-inactive' ?>">
                                 <?= $label ?>
                             </a>
@@ -151,7 +151,7 @@
                             $filtres_non_vides = array_filter($filtres ?? [], fn($v) => $v !== '' && $v !== 'note');
                             if (!empty($filtres_non_vides)): 
                             ?>
-                            <a href="<?= APP_URL ?>/?url=recherche" class="btn-reset">
+                            <a href="<?= APP_URL ?>/recherche" class="btn-reset">
                                 <i class="fa-solid fa-rotate-left"></i> Réinitialiser
                             </a>
                             <?php endif; ?>
@@ -172,7 +172,7 @@
             </div>
             <p class="text-base font-semibold text-gray-900 mb-2">Aucun mentor trouvé</p>
             <p class="text-gray-500 text-sm mb-6">Essayez d'élargir vos critères de recherche.</p>
-            <a href="<?= APP_URL ?>/?url=recherche" class="btn-view-profile inline-flex">
+            <a href="<?= APP_URL ?>/recherche" class="btn-view-profile inline-flex">
                 <i class="fa-solid fa-eye"></i> Voir tous les mentors
             </a>
         </div>
@@ -268,7 +268,7 @@
                             <span class="font-semibold text-gray-900"><?= (int)($m['total_sessions'] ?? 0) ?></span> session<?= ((int)($m['total_sessions'] ?? 0) > 1) ? 's' : '' ?>
                         </span>
                     </div>
-                    <a href="<?= APP_URL ?>/?url=fiche-mentor&id=<?= $m['id'] ?>" class="btn-view-profile">
+                    <a href="<?= APP_URL ?>/fiche-mentor&id=<?= $m['id'] ?>" class="btn-view-profile">
                         Voir le profil <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>

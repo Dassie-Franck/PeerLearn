@@ -193,22 +193,22 @@ $nb_non_lus = $nb_non_lus ?? 0;
     </div>
     
     <nav class="sidebar-nav">
-        <a href="<?= APP_URL ?>/?url=dashboard" class="nav-item <?= $page_active === 'dashboard' ? 'active' : '' ?>">
+        <a href="<?= APP_URL ?>/dashboard" class="nav-item <?= $page_active === 'dashboard' ? 'active' : '' ?>">
             <i class="fa-solid fa-gauge-high"></i>
             <span>Tableau de bord</span>
         </a>
         
-        <a href="<?= APP_URL ?>/?url=recherche" class="nav-item <?= $page_active === 'recherche' ? 'active' : '' ?>">
+        <a href="<?= APP_URL ?>/recherche" class="nav-item <?= $page_active === 'recherche' ? 'active' : '' ?>">
             <i class="fa-solid fa-magnifying-glass"></i>
             <span>Trouver un mentor</span>
         </a>
         
-        <a href="<?= APP_URL ?>/?url=mes-sessions" class="nav-item <?= $page_active === 'sessions' ? 'active' : '' ?>">
+        <a href="<?= APP_URL ?>/mes-sessions" class="nav-item <?= $page_active === 'sessions' ? 'active' : '' ?>">
             <i class="fa-solid fa-calendar"></i>
             <span>Mes sessions</span>
         </a>
         
-        <a href="<?= APP_URL ?>/?url=messages" class="nav-item <?= $page_active === 'messages' ? 'active' : '' ?>">
+        <a href="<?= APP_URL ?>/messages" class="nav-item <?= $page_active === 'messages' ? 'active' : '' ?>">
             <i class="fa-solid fa-message"></i>
             <span>Messages</span>
             <?php if (!empty($nb_non_lus) && $nb_non_lus > 0): ?>
@@ -216,7 +216,7 @@ $nb_non_lus = $nb_non_lus ?? 0;
             <?php endif; ?>
         </a>
         
-        <a href="<?= APP_URL ?>/?url=profil" class="nav-item <?= $page_active === 'profil' ? 'active' : '' ?>">
+        <a href="<?= APP_URL ?>/profil" class="nav-item <?= $page_active === 'profil' ? 'active' : '' ?>">
             <i class="fa-solid fa-user"></i>
             <span>Mon profil</span>
         </a>
@@ -224,7 +224,7 @@ $nb_non_lus = $nb_non_lus ?? 0;
         <!-- Espace Mentor (si l'utilisateur est mentor) -->
         <?php if (!empty($utilisateur['est_mentor'])): ?>
         <div style="margin: 16px 0 8px; border-top: 1px solid rgba(255,255,255,0.1);"></div>
-        <a href="<?= APP_URL ?>/?url=mentor" class="nav-item <?= $page_active === 'mentor-dashboard' ? 'active' : '' ?>">
+        <a href="<?= APP_URL ?>/mentor" class="nav-item <?= $page_active === 'mentor-dashboard' ? 'active' : '' ?>">
             <i class="fa-solid fa-chalkboard-user"></i>
             <span>Espace Mentor</span>
             <i class="fa-solid fa-arrow-right" style="font-size: 12px; margin-left: auto;"></i>
@@ -234,11 +234,11 @@ $nb_non_lus = $nb_non_lus ?? 0;
     
     <!-- Footer sidebar avec aide et déconnexion -->
     <div style="position: absolute; bottom: 20px; left: 0; right: 0; padding: 16px;">
-        <a href="<?= APP_URL ?>/?url=aide" class="nav-item" style="margin-bottom: 8px;">
+        <a href="<?= APP_URL ?>/aide" class="nav-item" style="margin-bottom: 8px;">
             <i class="fa-solid fa-circle-question"></i>
             <span>Aide</span>
         </a>
-        <a href="<?= APP_URL ?>/?url=logout" class="nav-item" style="color: #EF4444;">
+        <a href="<?= APP_URL ?>/logout" class="nav-item" style="color: #EF4444;">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Déconnexion</span>
         </a>

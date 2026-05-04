@@ -45,7 +45,7 @@ $filtre_actif = $_GET['statut'] ?? '';
                 </h1>
                 <p class="text-gray-500 text-sm">Consultez et gérez toutes vos sessions de mentorat.</p>
             </div>
-            <a href="<?= APP_URL ?>/?url=recherche" class="btn-evaluate inline-flex items-center gap-2 px-6 py-2.5">
+            <a href="<?= APP_URL ?>/recherche" class="btn-evaluate inline-flex items-center gap-2 px-6 py-2.5">
                 <i class="fa-solid fa-plus"></i> Réserver une session
             </a>
         </div>
@@ -78,7 +78,7 @@ $filtre_actif = $_GET['statut'] ?? '';
         ];
         foreach ($filtres as $val => $info):
         ?>
-        <a href="<?= APP_URL ?>/?url=mes-sessions<?= $val ? '&statut=' . $val : '' ?>"
+        <a href="<?= APP_URL ?>/mes-sessions<?= $val ? '&statut=' . $val : '' ?>"
            class="filter-btn <?= $filtre_actif === $val ? 'active' : '' ?>">
             <i class="fa-regular <?= $info['icon'] ?>"></i> <?= $info['label'] ?>
         </a>
@@ -93,7 +93,7 @@ $filtre_actif = $_GET['statut'] ?? '';
         </div>
         <p class="text-base font-semibold text-gray-900 mb-2">Aucune session trouvée</p>
         <p class="text-gray-500 text-sm mb-6">Réservez votre première session avec un mentor.</p>
-        <a href="<?= APP_URL ?>/?url=recherche" class="btn-evaluate inline-flex items-center gap-2">
+        <a href="<?= APP_URL ?>/recherche" class="btn-evaluate inline-flex items-center gap-2">
             <i class="fa-solid fa-magnifying-glass"></i> Trouver un mentor
         </a>
     </div>
@@ -171,7 +171,7 @@ $filtre_actif = $_GET['statut'] ?? '';
                 <div class="flex flex-col gap-2 min-w-[100px]">
                     <!-- Évaluer (session terminée, étudiant, pas encore évalué) -->
                     <?php if ($s['statut'] === 'terminee' && !$est_mentor && empty($s['deja_evalue'])): ?>
-                    <a href="<?= APP_URL ?>/?url=evaluation/formulaire&session_id=<?= $s['id'] ?>" class="btn-evaluate text-center">
+                    <a href="<?= APP_URL ?>/evaluation/formulaire&session_id=<?= $s['id'] ?>" class="btn-evaluate text-center">
                         <i class="fa-regular fa-star"></i> Évaluer
                     </a>
                     <?php endif; ?>
@@ -184,7 +184,7 @@ $filtre_actif = $_GET['statut'] ?? '';
                     <?php endif; ?>
                     
                     <!-- Message -->
-                    <a href="<?= APP_URL ?>/?url=conversation&user_id=<?= $est_mentor ? ($s['apprenant_id'] ?? 0) : ($s['mentor_id'] ?? 0) ?>" class="btn-message">
+                    <a href="<?= APP_URL ?>/conversation&user_id=<?= $est_mentor ? ($s['apprenant_id'] ?? 0) : ($s['mentor_id'] ?? 0) ?>" class="btn-message">
                         <i class="fa-regular fa-message"></i> Message
                     </a>
                 </div>
@@ -209,7 +209,7 @@ $filtre_actif = $_GET['statut'] ?? '';
             </button>
         </div>
         <div class="px-6 py-5">
-            <form method="POST" action="<?= APP_URL ?>/?url=annuler-session">
+            <form method="POST" action="<?= APP_URL ?>/annuler-session">
                 <?= csrf_field() ?>
                 <input type="hidden" name="session_id" id="modal-session-id">
                 <div class="mb-5">

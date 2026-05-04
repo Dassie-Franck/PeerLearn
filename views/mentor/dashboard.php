@@ -46,7 +46,7 @@ $page_active = 'dashboard';
             </p>
             
             <!-- Statut dispo rapide -->
-            <form method="POST" action="<?= APP_URL ?>/?url=mentor-profil" class="status-selector">
+            <form method="POST" action="<?= APP_URL ?>/mentor-profil" class="status-selector">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="update_statut">
                 <button type="submit" name="statut_dispo" value="disponible" 
@@ -137,7 +137,7 @@ $page_active = 'dashboard';
                     <i class="fa-solid fa-clock" style="color: #F59E0B;"></i>
                     Demandes en attente
                 </h2>
-                <a href="<?= APP_URL ?>/?url=demandes" class="card-link">
+                <a href="<?= APP_URL ?>/demandes" class="card-link">
                     Voir tout <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
@@ -170,7 +170,7 @@ $page_active = 'dashboard';
                             </span>
                         </div>
                     </div>
-                    <a href="<?= APP_URL ?>/?url=demandes" class="btn-view-demand">
+                    <a href="<?= APP_URL ?>/demandes" class="btn-view-demand">
                         <i class="fa-solid fa-eye"></i> Voir
                     </a>
                 </div>
@@ -186,7 +186,7 @@ $page_active = 'dashboard';
                     <i class="fa-solid fa-calendar-days" style="color: #0FC4A7;"></i>
                     Prochaines sessions
                 </h2>
-                <a href="<?= APP_URL ?>/?url=mes-sessions" class="card-link">
+                <a href="<?= APP_URL ?>/mes-sessions" class="card-link">
                     Voir tout <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
@@ -198,7 +198,7 @@ $page_active = 'dashboard';
                 </div>
                 <p class="text-gray-500 text-sm mb-2">Aucune session à venir</p>
                 <p class="text-gray-400 text-sm mb-5">Créez des disponibilités pour recevoir des demandes</p>
-                <a href="<?= APP_URL ?>/?url=disponibilites" class="btn-add-slot">
+                <a href="<?= APP_URL ?>/disponibilites" class="btn-add-slot">
                     <i class="fa-solid fa-plus"></i> Ajouter des créneaux
                 </a>
             </div>

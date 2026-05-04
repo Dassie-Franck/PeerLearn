@@ -1,1 +1,1 @@
-﻿<?php // 404 Page introuvable ?>
+<?php // 404 Page introuvable ?>

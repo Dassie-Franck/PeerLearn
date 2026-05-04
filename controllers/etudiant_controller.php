@@ -14,7 +14,7 @@ require_once APP_ROOT . '/includes/auth_check.php';
 
 // Seuls les etudiants et mentors peuvent acceder a cet espace
 if ($_SESSION['role'] !== 'etudiant') {
-    redirect('/?url=admin/dashboard');
+    redirect('/admin/dashboard');
 }
 
 $parts  = explode('/', trim($_GET['url'] ?? '', '/'));
@@ -69,7 +69,7 @@ switch ($action) {
 
             if (!csrf_verify()) {
                 $_SESSION['erreur'] = "Requete invalide.";
-                redirect('/?url=etudiant/profil');
+                redirect('/etudiant/profil');
             }
 
             $action_post = $_POST['action'] ?? '';
@@ -104,7 +104,7 @@ switch ($action) {
 
                 if (!empty($erreurs)) {
                     $_SESSION['erreurs'] = $erreurs;
-                    redirect('/?url=etudiant/profil');
+                    redirect('/etudiant/profil');
                 }
 
                 mettre_a_jour_profil($user_id, $nom, $prenom, $photo);
@@ -112,7 +112,7 @@ switch ($action) {
                 // Met a jour le nom en session
                 $_SESSION['nom'] = $prenom . ' ' . $nom;
                 $_SESSION['succes'] = "Profil mis a jour avec succes.";
-                redirect('/?url=etudiant/profil');
+                redirect('/etudiant/profil');
             }
 
             // --- Mise a jour des matieres ---
@@ -120,7 +120,7 @@ switch ($action) {
                 $matiere_ids = $_POST['matieres'] ?? [];
                 mettre_a_jour_matieres_etudiant($user_id, $matiere_ids);
                 $_SESSION['succes'] = "Matieres mises a jour.";
-                redirect('/?url=etudiant/profil');
+                redirect('/etudiant/profil');
             }
 
             // --- Demande d activation du profil mentor ---
@@ -136,7 +136,7 @@ switch ($action) {
 
                 if (!empty($erreurs)) {
                     $_SESSION['erreurs'] = $erreurs;
-                    redirect('/?url=etudiant/profil');
+                    redirect('/etudiant/profil');
                 }
 
                 demander_profil_mentor($user_id, $bio, $experience);
@@ -144,7 +144,7 @@ switch ($action) {
 
                 $_SESSION['succes'] = "Ta demande de profil mentor a ete envoyee. L administrateur va l examiner.";
                 $_SESSION['est_mentor'] = 1;
-                redirect('/?url=etudiant/profil');
+                redirect('/etudiant/profil');
             }
 
             // --- Changement de mot de passe ---
@@ -168,12 +168,12 @@ switch ($action) {
 
                 if (!empty($erreurs)) {
                     $_SESSION['erreurs'] = $erreurs;
-                    redirect('/?url=etudiant/profil');
+                    redirect('/etudiant/profil');
                 }
 
                 mettre_a_jour_mot_de_passe($user_id, $nouveau);
                 $_SESSION['succes'] = "Mot de passe modifie avec succes.";
-                redirect('/?url=etudiant/profil');
+                redirect('/etudiant/profil');
             }
         }
 

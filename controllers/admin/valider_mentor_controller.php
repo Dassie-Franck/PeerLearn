@@ -31,7 +31,7 @@ if (function_exists('creer_notification')) {
         $user_id, 'validation',
         'Votre profil mentor a été validé !',
         'Félicitations, vous pouvez maintenant proposer des sessions.',
-        '/?url=mentor'
+        '/mentor'
     );
 }
 

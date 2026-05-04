@@ -34,7 +34,7 @@
                 <p class="text-xs text-gray-400" id="annuler-subtitle">—</p>
             </div>
         </div>
-        <form method="POST" action="<?= APP_URL ?>/?url=annuler">
+        <form method="POST" action="<?= APP_URL ?>/annuler">
             <?= csrfField() ?>
             <input type="hidden" name="session_id" id="annuler-session-id">
             <div class="mb-5">
@@ -75,7 +75,7 @@
             </p>
         </div>
         <?php if (!$est_mentor): ?>
-        <a href="<?= APP_URL ?>/?url=recherche"
+        <a href="<?= APP_URL ?>/recherche"
            class="btn-primary text-sm px-4 py-2">
             + Trouver un mentor
         </a>
@@ -94,7 +94,7 @@
         <p class="text-gray-600 font-medium mb-1">Aucune session pour le moment</p>
         <?php if (!$est_mentor): ?>
         <p class="text-gray-400 text-sm mb-5">Trouvez un mentor et réservez votre première session.</p>
-        <a href="<?= APP_URL ?>/?url=recherche" class="btn-primary">Trouver un mentor</a>
+        <a href="<?= APP_URL ?>/recherche" class="btn-primary">Trouver un mentor</a>
         <?php endif; ?>
     </div>
 
@@ -187,7 +187,7 @@
 
             <!-- Bouton Évaluer -->
             <?php if ($peut_evaluer): ?>
-            <a href="<?= APP_URL ?>/?url=evaluer&session_id=<?= $sess['id'] ?>"
+            <a href="<?= APP_URL ?>/evaluer&session_id=<?= $sess['id'] ?>"
                class="inline-flex items-center gap-1 px-3 py-1.5 bg-amber-50
                       text-amber-700 text-xs font-medium rounded-lg
                       hover:bg-amber-100 transition-colors">

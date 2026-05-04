@@ -16,9 +16,9 @@
 
     <!-- Fil d'ariane -->
     <div class="flex items-center gap-2 text-sm text-gray-400 mb-6">
-        <a href="<?= APP_URL ?>/?url=recherche" class="hover:text-violet transition-colors">Mentors</a>
+        <a href="<?= APP_URL ?>/recherche" class="hover:text-violet transition-colors">Mentors</a>
         <span>›</span>
-        <a href="<?= APP_URL ?>/?url=fiche-mentor&id=<?= $mentor['id'] ?>"
+        <a href="<?= APP_URL ?>/fiche-mentor&id=<?= $mentor['id'] ?>"
            class="hover:text-violet transition-colors">
             <?= e($mentor['prenom']) ?> <?= e($mentor['nom']) ?>
         </a>
@@ -154,11 +154,11 @@
 
         <!-- ── Formulaire de confirmation ── -->
         <form method="POST"
-              action="<?= APP_URL ?>/?url=reserver&dispo_id=<?= $dispo['id'] ?>&mentor_id=<?= $mentor['id'] ?>">
+              action="<?= APP_URL ?>/reserver&dispo_id=<?= $dispo['id'] ?>&mentor_id=<?= $mentor['id'] ?>">
             <?= csrfField() ?>
 
             <div class="flex gap-3">
-                <a href="<?= APP_URL ?>/?url=fiche-mentor&id=<?= $mentor['id'] ?>"
+                <a href="<?= APP_URL ?>/fiche-mentor&id=<?= $mentor['id'] ?>"
                    class="flex-1 px-5 py-3 rounded-xl border border-gray-200 text-sm
                           text-gray-600 font-medium text-center hover:bg-gray-50 transition-colors">
                     ← Retour

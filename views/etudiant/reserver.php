@@ -1,1 +1,1 @@
-﻿<?php // Formulaire de reservation ?>
+<?php // Formulaire de reservation ?>

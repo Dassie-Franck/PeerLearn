@@ -1,4 +1,4 @@
-ï»¿<?php
+<?php
 // ============================================================
 //  views/etudiant/mes_sessions.php
 //  Liste des sessions de l'utilisateur avec filtres et actions
@@ -13,7 +13,7 @@ $filtre_actif = $_GET['statut'] ?? '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes sessions â€” <?= APP_NAME ?></title>
+    <title>Mes sessions — <?= APP_NAME ?></title>
     
     <!-- Ressources locales -->
     <link rel="stylesheet" href="<?= APP_URL ?>/css/tailwind.css">
@@ -35,7 +35,7 @@ $filtre_actif = $_GET['statut'] ?? '';
 <!-- ==================== CONTENU PRINCIPAL ==================== -->
 <main class="flex-1 p-8">
     
-    <!-- En-tÃªte -->
+    <!-- En-tête -->
     <div class="animate-fadeInUp mb-7">
         <div class="flex items-center justify-between flex-wrap gap-4">
             <div>
@@ -43,10 +43,10 @@ $filtre_actif = $_GET['statut'] ?? '';
                     <i class="fa-solid fa-calendar-days" style="color: #5B4FE8; margin-right: 12px;"></i>
                     Mes sessions
                 </h1>
-                <p class="text-gray-500 text-sm">Consultez et gÃ©rez toutes vos sessions de mentorat.</p>
+                <p class="text-gray-500 text-sm">Consultez et gérez toutes vos sessions de mentorat.</p>
             </div>
-            <a href="<?= APP_URL ?>/?url=recherche" class="btn-evaluate inline-flex items-center gap-2 px-6 py-2.5">
-                <i class="fa-solid fa-plus"></i> RÃ©server une session
+            <a href="<?= APP_URL ?>/recherche" class="btn-evaluate inline-flex items-center gap-2 px-6 py-2.5">
+                <i class="fa-solid fa-plus"></i> Réserver une session
             </a>
         </div>
     </div>
@@ -72,13 +72,13 @@ $filtre_actif = $_GET['statut'] ?? '';
         $filtres = [
             ''          => ['label' => 'Toutes', 'icon' => 'fa-list'],
             'en_attente'=> ['label' => 'En attente', 'icon' => 'fa-clock'],
-            'confirmee' => ['label' => 'ConfirmÃ©es', 'icon' => 'fa-check-circle'],
-            'terminee'  => ['label' => 'TerminÃ©es', 'icon' => 'fa-circle-check'],
-            'annulee'   => ['label' => 'AnnulÃ©es', 'icon' => 'fa-ban'],
+            'confirmee' => ['label' => 'Confirmées', 'icon' => 'fa-check-circle'],
+            'terminee'  => ['label' => 'Terminées', 'icon' => 'fa-circle-check'],
+            'annulee'   => ['label' => 'Annulées', 'icon' => 'fa-ban'],
         ];
         foreach ($filtres as $val => $info):
         ?>
-        <a href="<?= APP_URL ?>/?url=mes-sessions<?= $val ? '&statut=' . $val : '' ?>"
+        <a href="<?= APP_URL ?>/mes-sessions<?= $val ? '&statut=' . $val : '' ?>"
            class="filter-btn <?= $filtre_actif === $val ? 'active' : '' ?>">
             <i class="fa-regular <?= $info['icon'] ?>"></i> <?= $info['label'] ?>
         </a>
@@ -91,9 +91,9 @@ $filtre_actif = $_GET['statut'] ?? '';
         <div class="empty-icon">
             <i class="fa-regular fa-calendar-xmark text-3xl text-gray-400"></i>
         </div>
-        <p class="text-base font-semibold text-gray-900 mb-2">Aucune session trouvÃ©e</p>
-        <p class="text-gray-500 text-sm mb-6">RÃ©servez votre premiÃ¨re session avec un mentor.</p>
-        <a href="<?= APP_URL ?>/?url=recherche" class="btn-evaluate inline-flex items-center gap-2">
+        <p class="text-base font-semibold text-gray-900 mb-2">Aucune session trouvée</p>
+        <p class="text-gray-500 text-sm mb-6">Réservez votre première session avec un mentor.</p>
+        <a href="<?= APP_URL ?>/recherche" class="btn-evaluate inline-flex items-center gap-2">
             <i class="fa-solid fa-magnifying-glass"></i> Trouver un mentor
         </a>
     </div>
@@ -108,9 +108,9 @@ $filtre_actif = $_GET['statut'] ?? '';
             
             $badge = match($s['statut']) {
                 'en_attente' => ['class' => 'badge-pending', 'icon' => 'fa-clock', 'text' => 'En attente'],
-                'confirmee'  => ['class' => 'badge-confirmed', 'icon' => 'fa-check-circle', 'text' => 'ConfirmÃ©e'],
-                'terminee'   => ['class' => 'badge-completed', 'icon' => 'fa-circle-check', 'text' => 'TerminÃ©e'],
-                'annulee'    => ['class' => 'badge-cancelled', 'icon' => 'fa-ban', 'text' => 'AnnulÃ©e'],
+                'confirmee'  => ['class' => 'badge-confirmed', 'icon' => 'fa-check-circle', 'text' => 'Confirmée'],
+                'terminee'   => ['class' => 'badge-completed', 'icon' => 'fa-circle-check', 'text' => 'Terminée'],
+                'annulee'    => ['class' => 'badge-cancelled', 'icon' => 'fa-ban', 'text' => 'Annulée'],
                 default      => ['class' => 'badge-pending', 'icon' => 'fa-question', 'text' => $s['statut']],
             };
         ?>
@@ -151,15 +151,15 @@ $filtre_actif = $_GET['statut'] ?? '';
                     <div class="flex items-center gap-4 flex-wrap">
                         <p class="text-sm text-gray-500">
                             <i class="fa-regular fa-clock"></i>
-                            <?= date('H:i', strtotime($s['heure_debut'])) ?> â€” <?= date('H:i', strtotime($s['heure_fin'])) ?>
+                            <?= date('H:i', strtotime($s['heure_debut'])) ?> — <?= date('H:i', strtotime($s['heure_fin'])) ?>
                         </p>
                         <p class="text-sm <?= $s['mode_session'] === 'en_ligne' ? 'text-teal-600' : 'text-amber-600' ?>">
                             <i class="fa-solid fa-<?= $s['mode_session'] === 'en_ligne' ? 'video' : 'building' ?>"></i>
-                            <?= $s['mode_session'] === 'en_ligne' ? 'En ligne' : 'PrÃ©sentiel' ?>
+                            <?= $s['mode_session'] === 'en_ligne' ? 'En ligne' : 'Présentiel' ?>
                         </p>
                     </div>
                     
-                    <!-- Lien visio si confirmÃ©e en ligne -->
+                    <!-- Lien visio si confirmée en ligne -->
                     <?php if ($s['statut'] === 'confirmee' && $s['mode_session'] === 'en_ligne' && !empty($s['lien_session'])): ?>
                     <a href="<?= e($s['lien_session']) ?>" target="_blank" class="inline-flex items-center gap-1.5 mt-3 text-sm text-teal-600 hover:text-teal-700 no-underline">
                         <i class="fa-solid fa-link"></i> Rejoindre la session
@@ -169,10 +169,10 @@ $filtre_actif = $_GET['statut'] ?? '';
                 
                 <!-- Actions -->
                 <div class="flex flex-col gap-2 min-w-[100px]">
-                    <!-- Ã‰valuer (session terminÃ©e, Ã©tudiant, pas encore Ã©valuÃ©) -->
+                    <!-- Évaluer (session terminée, étudiant, pas encore évalué) -->
                     <?php if ($s['statut'] === 'terminee' && !$est_mentor && empty($s['deja_evalue'])): ?>
-                    <a href="<?= APP_URL ?>/?url=evaluation/formulaire&session_id=<?= $s['id'] ?>" class="btn-evaluate text-center">
-                        <i class="fa-regular fa-star"></i> Ã‰valuer
+                    <a href="<?= APP_URL ?>/evaluation/formulaire&session_id=<?= $s['id'] ?>" class="btn-evaluate text-center">
+                        <i class="fa-regular fa-star"></i> Évaluer
                     </a>
                     <?php endif; ?>
                     
@@ -184,7 +184,7 @@ $filtre_actif = $_GET['statut'] ?? '';
                     <?php endif; ?>
                     
                     <!-- Message -->
-                    <a href="<?= APP_URL ?>/?url=conversation&user_id=<?= $est_mentor ? ($s['apprenant_id'] ?? 0) : ($s['mentor_id'] ?? 0) ?>" class="btn-message">
+                    <a href="<?= APP_URL ?>/conversation&user_id=<?= $est_mentor ? ($s['apprenant_id'] ?? 0) : ($s['mentor_id'] ?? 0) ?>" class="btn-message">
                         <i class="fa-regular fa-message"></i> Message
                     </a>
                 </div>
@@ -202,14 +202,14 @@ $filtre_actif = $_GET['statut'] ?? '';
         <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
             <div>
                 <h2 class="text-lg font-bold text-gray-900">Annuler la session</h2>
-                <p class="text-xs text-gray-500 mt-0.5">Si l'annulation a lieu moins de 2h avant la session, elle sera considÃ©rÃ©e comme tardive.</p>
+                <p class="text-xs text-gray-500 mt-0.5">Si l'annulation a lieu moins de 2h avant la session, elle sera considérée comme tardive.</p>
             </div>
             <button onclick="fermerModal()" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition">
                 <i class="fa-solid fa-times"></i>
             </button>
         </div>
         <div class="px-6 py-5">
-            <form method="POST" action="<?= APP_URL ?>/?url=annuler-session">
+            <form method="POST" action="<?= APP_URL ?>/annuler-session">
                 <?= csrf_field() ?>
                 <input type="hidden" name="session_id" id="modal-session-id">
                 <div class="mb-5">
@@ -238,7 +238,7 @@ function fermerModal() {
     document.body.style.overflow = '';
 }
 
-// Fermer en cliquant Ã  l'extÃ©rieur
+// Fermer en cliquant à l'extérieur
 document.getElementById('modal-annulation').addEventListener('click', function(e) {
     if (e.target === this) fermerModal();
 });

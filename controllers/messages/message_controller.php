@@ -23,13 +23,13 @@ switch ($action) {
     case 'conversation':
         $user_id          = $_SESSION['user_id'];
         $interlocuteur_id = (int)($_GET['user_id'] ?? 0);
-        if (!$interlocuteur_id) redirect('/?url=messages/inbox');
+        if (!$interlocuteur_id) redirect('/messages/inbox');
 
         $interlocuteur = trouver_utilisateur_par_id($interlocuteur_id);
-        if (!$interlocuteur) { $_SESSION['erreur'] = "Utilisateur introuvable."; redirect('/?url=messages/inbox'); }
+        if (!$interlocuteur) { $_SESSION['erreur'] = "Utilisateur introuvable."; redirect('/messages/inbox'); }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!csrf_verify()) redirect('/?url=message/conversation&user_id=' . $interlocuteur_id);
+            if (!csrf_verify()) redirect('/message/conversation&user_id=' . $interlocuteur_id);
 
             $contenu       = trim($_POST['contenu'] ?? '');
             $fichier_joint = null;
@@ -49,9 +49,9 @@ switch ($action) {
                 envoyer_message($user_id, $interlocuteur_id, $contenu ?: '📎 Fichier joint', $fichier_joint);
                 creer_notification($interlocuteur_id, 'nouveau_message', 'Nouveau message',
                     $_SESSION['nom'] . ' vous a envoye un message.',
-                    '/?url=message/conversation&user_id=' . $user_id);
+                    '/message/conversation&user_id=' . $user_id);
             }
-            redirect('/?url=messages/conversation&user_id=' . $interlocuteur_id);
+            redirect('/messages/conversation&user_id=' . $interlocuteur_id);
         }
 
         marquer_messages_lus($user_id, $interlocuteur_id);
@@ -103,12 +103,12 @@ switch ($action) {
         exit;
 
     case 'signaler':
-        if (!csrf_verify()) redirect('/?url=messages/inbox');
+        if (!csrf_verify()) redirect('/messages/inbox');
         $message_id = (int)($_POST['message_id'] ?? 0);
         $motif      = trim($_POST['motif'] ?? 'Contenu abusif');
         if ($message_id) { signaler_message($message_id, $_SESSION['user_id'], $motif); }
         $_SESSION['succes'] = "Message signale.";
-        redirect('/?url=messages/inbox');
+        redirect('/messages/inbox');
         break;
 
     default:

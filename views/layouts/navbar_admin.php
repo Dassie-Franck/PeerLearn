@@ -6,7 +6,7 @@ $page_active = $page_active ?? '';
 
 <aside class="sidebar">
     <div class="sidebar-logo">
-        <a href="<?= APP_URL ?>/?url=admin" style="text-decoration:none">
+        <a href="<?= APP_URL ?>/admin" style="text-decoration:none">
             Peer<span style="color:#EF4444">Learn</span>
         </a>
         <div class="sidebar-badge" style="color:#EF4444">Administration</div>
@@ -14,19 +14,19 @@ $page_active = $page_active ?? '';
 
     <nav class="sidebar-nav">
 
-        <a href="<?= APP_URL ?>/?url=admin"
+        <a href="<?= APP_URL ?>/admin"
            class="nav-link <?= $page_active === 'admin' ? 'active-red' : '' ?>">
             <i class="fa-solid fa-gauge-high"></i> Dashboard
         </a>
 
         <p class="sidebar-section">Utilisateurs</p>
 
-        <a href="<?= APP_URL ?>/?url=admin-users"
+        <a href="<?= APP_URL ?>/admin-users"
            class="nav-link <?= $page_active === 'admin-users' ? 'active-red' : '' ?>">
             <i class="fa-solid fa-users"></i> Tous les comptes
         </a>
 
-        <a href="<?= APP_URL ?>/?url=admin-users&filtre=mentors_en_attente"
+        <a href="<?= APP_URL ?>/admin-users&filtre=mentors_en_attente"
            class="nav-link <?= $page_active === 'admin-mentors' ? 'active-red' : '' ?>">
             <i class="fa-solid fa-user-clock"></i> Demandes mentor
             <?php
@@ -48,7 +48,7 @@ $page_active = $page_active ?? '';
 
         <p class="sidebar-section">Contenu</p>
 
-        <a href="<?= APP_URL ?>/?url=admin-signalements"
+        <a href="<?= APP_URL ?>/admin-signalements"
            class="nav-link <?= $page_active === 'admin-signalements' ? 'active-red' : '' ?>">
             <i class="fa-solid fa-flag"></i> Signalements
             <?php
@@ -65,14 +65,14 @@ $page_active = $page_active ?? '';
             <?php endif; ?>
         </a>
 
-        <a href="<?= APP_URL ?>/?url=admin-matieres"
+        <a href="<?= APP_URL ?>/admin-matieres"
            class="nav-link <?= $page_active === 'admin-matieres' ? 'active-red' : '' ?>">
             <i class="fa-solid fa-book"></i> Matieres
         </a>
 
         <p class="sidebar-section">Systeme</p>
 
-        <a href="<?= APP_URL ?>/?url=admin-journal"
+        <a href="<?= APP_URL ?>/admin-journal"
            class="nav-link <?= $page_active === 'admin-journal' ? 'active-red' : '' ?>">
             <i class="fa-solid fa-scroll"></i> Journal d activite
         </a>
@@ -91,7 +91,7 @@ $page_active = $page_active ?? '';
                 </div>
             </div>
         </div>
-        <a href="<?= APP_URL ?>/?url=logout" class="logout-link">
+        <a href="<?= APP_URL ?>/logout" class="logout-link">
             <i class="fa-solid fa-right-from-bracket"></i> Deconnexion
         </a>
     </div>

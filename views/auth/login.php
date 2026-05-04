@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion — <?= APP_NAME ?></title>
-    
+
     <!-- Ressources locales -->
     <link rel="stylesheet" href="<?= APP_URL ?>/css/tailwind.css">
     <link rel="stylesheet" href="<?= APP_URL ?>/css/auth/login.css">
-    
+
     <?php require_once BASE_PATH . '/views/layouts/footer.php'; ?>
 </head>
 <body class="auth-container">
@@ -17,7 +17,7 @@
 
 <!-- Panneau gauche -->
 <div class="auth-left">
-    <a href="<?= APP_URL ?>/?url=login">
+    <a href="<?= APP_URL ?>/login">
         <span class="font-syne text-2xl font-bold text-white">Peer<span style="color:#5B4FE8">Learn</span></span>
     </a>
     <div>
@@ -58,7 +58,7 @@
         <h2 class="font-syne text-2xl font-bold text-gray-900 mb-2">Bon retour !</h2>
         <p class="text-gray-500 text-sm mb-8">Connecte-toi pour accéder à ta plateforme.</p>
 
-        <form method="POST" action="<?= APP_URL ?>/?url=login" novalidate>
+        <form method="POST" action="<?= APP_URL ?>/login" novalidate>
             <?= csrf_field() ?>
 
             <div class="mb-5">
@@ -88,7 +88,7 @@
             </div>
 
             <div class="text-right mb-6">
-                <a href="<?= APP_URL ?>/?url=forgot" class="text-sm" style="color:#5B4FE8">
+                <a href="<?= APP_URL ?>/forgot" class="text-sm" style="color:#5B4FE8">
                     Mot de passe oublié ?
                 </a>
             </div>
@@ -98,7 +98,7 @@
 
         <p class="text-center text-sm text-gray-500 mt-6">
             Pas encore de compte ?
-            <a href="<?= APP_URL ?>/?url=register" class="font-medium" style="color:#5B4FE8">
+            <a href="<?= APP_URL ?>/register" class="font-medium" style="color:#5B4FE8">
                 Créer un compte
             </a>
         </p>

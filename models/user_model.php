@@ -1,10 +1,10 @@
-ï»¿<?php
+<?php
 // ============================================================
 //  models/user_model.php
 // ============================================================
 
-// Cost bcrypt fixÃ© Ã  10 â€” compatible o2switch (mutualisÃ©)
-// PASSWORD_DEFAULT peut hÃ©riter du cost serveur (12-14) â†’ timeout 504
+// Cost bcrypt fixé à 10 — compatible o2switch (mutualisé)
+// PASSWORD_DEFAULT peut hériter du cost serveur (12-14) ? timeout 504
 define('BCRYPT_OPTIONS', ['cost' => 10]);
 
 function creer_utilisateur(string $nom, string $prenom, string $email, string $mdp): int {

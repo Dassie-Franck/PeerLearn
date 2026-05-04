@@ -21,7 +21,7 @@
 
     <!-- Fil d'ariane -->
     <div class="flex items-center gap-2 text-sm text-gray-400 mb-6">
-        <a href="<?= APP_URL ?>/?url=recherche" class="hover:text-violet transition-colors">
+        <a href="<?= APP_URL ?>/recherche" class="hover:text-violet transition-colors">
             ← Retour à la recherche
         </a>
     </div>
@@ -80,7 +80,7 @@
 
                 <!-- ── BOUTONS ACTION ──────────────────────── -->
                 <div class="flex gap-2 mt-5">
-                    <a href="<?= APP_URL ?>/?url=conversation&avec=<?= $mentor['id'] ?>"
+                    <a href="<?= APP_URL ?>/conversation&avec=<?= $mentor['id'] ?>"
                        class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5
                               rounded-xl border border-gray-200 hover:border-violet-300
                               hover:bg-violet-50 text-sm font-semibold text-gray-700
@@ -179,7 +179,7 @@
                     <p class="text-gray-400 text-sm mb-4">
                         Aucun créneau disponible pour le moment.
                     </p>
-                    <a href="<?= APP_URL ?>/?url=conversation&avec=<?= $mentor['id'] ?>"
+                    <a href="<?= APP_URL ?>/conversation&avec=<?= $mentor['id'] ?>"
                        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl
                               bg-violet-600 hover:bg-violet-700 text-white text-sm
                               font-semibold transition-colors">
@@ -222,7 +222,7 @@
                         </p>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             <?php foreach ($creneaux as $d): ?>
-                            <a href="<?= APP_URL ?>/?url=reserver&dispo_id=<?= $d['id'] ?>&mentor_id=<?= $mentor['id'] ?>"
+                            <a href="<?= APP_URL ?>/reserver&dispo_id=<?= $d['id'] ?>&mentor_id=<?= $mentor['id'] ?>"
                                class="creneau-card">
                                 <div>
                                     <p class="font-medium text-gray-900 text-sm">

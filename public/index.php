@@ -1,6 +1,6 @@
-ï»¿<?php
+<?php
 // ============================================================
-//  public/index.php â€” Point d'entrÃ©e unique
+//  public/index.php — Point d'entrée unique
 // ============================================================
 
 ini_set('display_errors', 1);
@@ -17,7 +17,7 @@ require_once '../config/database.php';
 require_once '../config/app.php';
 
 // ============================================================
-//  3. DÃ©marrer la session
+//  3. Démarrer la session
 // ============================================================
 if (session_status() === PHP_SESSION_NONE) {
     $is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on');
@@ -32,13 +32,13 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // ============================================================
-//  4. Charger les autres dÃ©pendances
+//  4. Charger les autres dépendances
 // ============================================================
 require_once BASE_PATH . '/includes/helpers.php';
 require_once BASE_PATH . '/config/session.php';
 
 // ============================================================
-//  ROUTES â€” url => controller
+//  ROUTES — url => controller
 // ============================================================
 $routes = [
 

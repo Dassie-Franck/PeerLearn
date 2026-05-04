@@ -1,20 +1,24 @@
 <?php
 // ============================================================
-//  includes/helpers.php
+//  includes/helpers.php — VERSION URLS PROPRES
 // ============================================================
 
 // --- Protection XSS ---
 function e(string $str): string {
     return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
-
 function h(string $str): string {
     return e($str);
 }
 
-// --- Redirection ---
+// --- Redirection (URLs propres sans ?url=) ---
 function redirect_to(string $page): void {
-    header('Location: ' . APP_URL . '/?url=' . ltrim($page, '/'));
+    $page = ltrim($page, '/');
+    if (empty($page)) {
+        header('Location: ' . APP_URL . '/');
+    } else {
+        header('Location: ' . APP_URL . '/' . $page);
+    }
     exit;
 }
 
@@ -22,11 +26,9 @@ function redirect_to(string $page): void {
 function is_logged_in(): bool {
     return !empty($_SESSION['user_id']);
 }
-
 function is_admin(): bool {
     return ($_SESSION['role'] ?? '') === 'admin';
 }
-
 function is_mentor(): bool {
     return ($_SESSION['est_mentor']    ?? 0) == 1
         && ($_SESSION['mentor_valide'] ?? 0) == 1;
@@ -39,7 +41,6 @@ function require_logged_in(): void {
         redirect_to('login');
     }
 }
-
 function require_admin(): void {
     require_logged_in();
     if (!is_admin()) {
@@ -47,7 +48,6 @@ function require_admin(): void {
         redirect_to('dashboard');
     }
 }
-
 function require_mentor(): void {
     require_logged_in();
     if (!is_mentor()) {
@@ -60,24 +60,17 @@ function require_mentor(): void {
 function set_success(string $msg): void {
     $_SESSION['toast'] = ['type' => 'success', 'message' => $msg];
 }
-
 function set_error(string $msg): void {
     $_SESSION['toast'] = ['type' => 'error', 'message' => $msg];
 }
-
 function set_warning(string $msg): void {
     $_SESSION['toast'] = ['type' => 'warning', 'message' => $msg];
 }
-
 function set_info(string $msg): void {
     $_SESSION['toast'] = ['type' => 'info', 'message' => $msg];
 }
-
 function setToast(string $message, string $type = 'info'): void {
-    $_SESSION['toast'] = [
-        'message' => $message,
-        'type'    => $type,
-    ];
+    $_SESSION['toast'] = ['message' => $message, 'type' => $type];
 }
 
 // --- CSRF ---
@@ -87,14 +80,12 @@ function csrf_generate(): string {
     }
     return $_SESSION['csrf_token'];
 }
-
 function csrf_verify(): bool {
     if (!isset($_POST['csrf_token'], $_SESSION['csrf_token'])) {
         return false;
     }
     return hash_equals($_SESSION['csrf_token'], $_POST['csrf_token']);
 }
-
 function csrf_field(): string {
     return '<input type="hidden" name="csrf_token" value="' . csrf_generate() . '">';
 }

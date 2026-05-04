@@ -1,1 +1,1 @@
-﻿<?php // 403 Acces interdit ?>
+<?php // 403 Acces interdit ?>

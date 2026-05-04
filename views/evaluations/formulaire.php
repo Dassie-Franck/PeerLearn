@@ -16,7 +16,7 @@
 
     <!-- Fil d'ariane -->
     <div class="flex items-center gap-2 text-sm text-gray-400 mb-6">
-        <a href="<?= APP_URL ?>/?url=mes-sessions"
+        <a href="<?= APP_URL ?>/mes-sessions"
            class="hover:text-violet transition-colors">← Mes sessions</a>
     </div>
 
@@ -64,7 +64,7 @@
 
             <!-- Formulaire -->
             <form method="POST"
-                  action="<?= APP_URL ?>/?url=evaluer&session_id=<?= $session['id'] ?>">
+                  action="<?= APP_URL ?>/evaluer&session_id=<?= $session['id'] ?>">
                 <?= csrfField() ?>
 
                 <!-- ── Étoiles ── -->
@@ -114,7 +114,7 @@
 
                 <!-- ── Boutons ── -->
                 <div class="flex gap-3">
-                    <a href="<?= APP_URL ?>/?url=mes-sessions"
+                    <a href="<?= APP_URL ?>/mes-sessions"
                        class="flex-1 px-5 py-3 rounded-xl border border-gray-200
                               text-sm text-gray-600 font-medium text-center
                               hover:bg-gray-50 transition-colors">

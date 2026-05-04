@@ -27,7 +27,7 @@
 
     <!-- ==================== HEADER ==================== -->
     <div class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 px-4 py-3 flex items-center gap-3 flex-shrink-0 shadow-sm">
-        <a href="<?= APP_URL ?>/?url=messages" 
+        <a href="<?= APP_URL ?>/messages" 
            class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center transition">
             <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -268,7 +268,7 @@ messageInput.addEventListener('input', () => {
 
 // Indicateur de saisie
 function sendTypingIndicator() {
-    fetch(`${APP_URL}/?url=typing&user_id=${INTERLOCUTEUR_ID}`, { method: 'POST' });
+    fetch(`${APP_URL}/typing&user_id=${INTERLOCUTEUR_ID}`, { method: 'POST' });
 }
 
 // ==================== Envoi de message ====================
@@ -287,7 +287,7 @@ async function sendMessage() {
     }
     
     try {
-        const response = await fetch(`${APP_URL}/?url=envoyer-msg`, {
+        const response = await fetch(`${APP_URL}/envoyer-msg`, {
             method: 'POST',
             body: formData
         });
@@ -398,7 +398,7 @@ let pollingActive = true;
 async function pollMessages() {
     if (!pollingActive) return;
     try {
-        const response = await fetch(`${APP_URL}/?url=poll&user_id=${INTERLOCUTEUR_ID}&dernier_id=${LAST_MESSAGE_ID}`);
+        const response = await fetch(`${APP_URL}/poll&user_id=${INTERLOCUTEUR_ID}&dernier_id=${LAST_MESSAGE_ID}`);
         const data = await response.json();
         
         if (data.messages && data.messages.length > 0) {
@@ -485,7 +485,7 @@ async function reportMessage(messageId) {
         formData.append('message_id', messageId);
         formData.append('csrf_token', '<?= generateCsrfToken() ?>');
         
-        const response = await fetch(`${APP_URL}/?url=signaler-msg`, {
+        const response = await fetch(`${APP_URL}/signaler-msg`, {
             method: 'POST',
             body: formData
         });
@@ -510,7 +510,7 @@ async function deleteMessage(messageId, isMine) {
         formData.append('message_id', messageId);
         formData.append('csrf_token', '<?= generateCsrfToken() ?>');
         
-        const response = await fetch(`${APP_URL}/?url=supprimer-msg`, {
+        const response = await fetch(`${APP_URL}/supprimer-msg`, {
             method: 'POST',
             body: formData
         });

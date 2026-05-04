@@ -32,14 +32,14 @@
             <p class="text-xs text-gray-400 mt-2 logo-text">Admin Dashboard</p>
         </div>
         <nav class="sidebar-nav">
-            <a href="<?= APP_URL ?>/?url=admin"              class="nav-item"><i class="fa-solid fa-gauge-high"></i><span>Tableau de bord</span></a>
-            <a href="<?= APP_URL ?>/?url=admin-users"        class="nav-item active"><i class="fa-solid fa-users"></i><span>Utilisateurs</span></a>
-            <a href="<?= APP_URL ?>/?url=admin-signalements" class="nav-item"><i class="fa-solid fa-flag"></i><span>Signalements</span></a>
-            <a href="<?= APP_URL ?>/?url=admin-matieres"     class="nav-item"><i class="fa-solid fa-book"></i><span>Matières</span></a>
-            <a href="<?= APP_URL ?>/?url=admin-journal"      class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i><span>Journal</span></a>
+            <a href="<?= APP_URL ?>/admin"              class="nav-item"><i class="fa-solid fa-gauge-high"></i><span>Tableau de bord</span></a>
+            <a href="<?= APP_URL ?>/admin-users"        class="nav-item active"><i class="fa-solid fa-users"></i><span>Utilisateurs</span></a>
+            <a href="<?= APP_URL ?>/admin-signalements" class="nav-item"><i class="fa-solid fa-flag"></i><span>Signalements</span></a>
+            <a href="<?= APP_URL ?>/admin-matieres"     class="nav-item"><i class="fa-solid fa-book"></i><span>Matières</span></a>
+            <a href="<?= APP_URL ?>/admin-journal"      class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i><span>Journal</span></a>
         </nav>
         <div style="position:absolute;bottom:20px;left:0;right:0;padding:16px">
-            <a href="<?= APP_URL ?>/?url=logout" class="nav-item" style="color:#EF4444">
+            <a href="<?= APP_URL ?>/logout" class="nav-item" style="color:#EF4444">
                 <i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span>
             </a>
         </div>
@@ -67,7 +67,7 @@
                     <input type="text" name="search" value="<?= e($search) ?>"
                            placeholder="Rechercher par nom, prénom, email…">
                     <?php if ($search): ?>
-                    <a href="<?= APP_URL ?>/?url=admin-users&filtre=<?= $filtre ?>"
+                    <a href="<?= APP_URL ?>/admin-users&filtre=<?= $filtre ?>"
                        style="color:#94A3B8;text-decoration:none;font-size:13px">✕</a>
                     <?php endif; ?>
                 </div>
@@ -83,7 +83,7 @@
                     ['slug'=>'suspendus',          'label'=>'Suspendus',    'count'=>$compteurs['suspendus']],
                 ];
                 foreach ($tabs as $t):
-                    $url = APP_URL . '/?url=admin-users&filtre=' . $t['slug'] . ($search ? '&search=' . urlencode($search) : '');
+                    $url = APP_URL . '/admin-users&filtre=' . $t['slug'] . ($search ? '&search=' . urlencode($search) : '');
                 ?>
                 <a href="<?= $url ?>" class="filter-tab <?= $filtre === $t['slug'] ? 'active' : '' ?>">
                     <?= $t['label'] ?>
@@ -167,7 +167,7 @@
 
                                     <?php if ($u['est_mentor'] && !$u['mentor_valide']): ?>
                                     <!-- Valider mentor -->
-                                    <form method="POST" action="<?= APP_URL ?>/?url=admin-valider">
+                                    <form method="POST" action="<?= APP_URL ?>/admin-valider">
                                         <?= csrfField() ?>
                                         <input type="hidden" name="user_id" value="<?= $u['id'] ?>">
                                         <button type="submit" class="btn-sm btn-validate">
@@ -183,7 +183,7 @@
 
                                     <!-- Suspendre / Réactiver -->
                                     <?php if ($u['statut'] === 'suspendu'): ?>
-                                    <form method="POST" action="<?= APP_URL ?>/?url=admin-toggle-user">
+                                    <form method="POST" action="<?= APP_URL ?>/admin-toggle-user">
                                         <?= csrfField() ?>
                                         <input type="hidden" name="user_id" value="<?= $u['id'] ?>">
                                         <input type="hidden" name="action" value="reactiver">
@@ -227,7 +227,7 @@
         <p style="font-size:14px;color:#64748B;margin-bottom:20px;line-height:1.6">
             L'utilisateur ne pourra plus se connecter ni utiliser la plateforme jusqu'à réactivation.
         </p>
-        <form method="POST" action="<?= APP_URL ?>/?url=admin-toggle-user">
+        <form method="POST" action="<?= APP_URL ?>/admin-toggle-user">
             <?= csrfField() ?>
             <input type="hidden" name="user_id" id="suspendre-id">
             <input type="hidden" name="action" value="suspendre">
@@ -257,7 +257,7 @@
                 <p style="font-size:13px;color:#64748B" id="rejeter-nom">—</p>
             </div>
         </div>
-        <form method="POST" action="<?= APP_URL ?>/?url=admin-rejeter">
+        <form method="POST" action="<?= APP_URL ?>/admin-rejeter">
             <?= csrfField() ?>
             <input type="hidden" name="user_id" id="rejeter-id">
             <div style="margin-bottom:16px">

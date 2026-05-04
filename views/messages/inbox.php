@@ -114,7 +114,7 @@
                     <?php else: ?>
                     <div id="default-list">
                         <?php foreach ($mentors_dispo as $m): ?>
-                        <a href="<?= APP_URL ?>/?url=conversation&avec=<?= $m['id'] ?>"
+                        <a href="<?= APP_URL ?>/conversation&avec=<?= $m['id'] ?>"
                            class="user-result flex items-center gap-3 px-2 py-2.5 rounded-xl
                                   hover:bg-violet-50 transition-colors">
                             <?php if (!empty($m['photo'])): ?>
@@ -170,7 +170,7 @@
             <?php foreach ($conversations as $conv):
                 $est_moi = ((int)$conv['envoyeur_id'] === getUserId());
             ?>
-            <a href="<?= APP_URL ?>/?url=conversation&avec=<?= $conv['interlocuteur_id'] ?>"
+            <a href="<?= APP_URL ?>/conversation&avec=<?= $conv['interlocuteur_id'] ?>"
                class="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors
                       <?= (int)$conv['non_lus'] > 0 ? 'bg-violet-50/40' : '' ?>">
 
@@ -263,7 +263,7 @@ function rechercherUtilisateur(q) {
 
     timer = setTimeout(async () => {
         const resp = await fetch(
-            `${APP_URL}/?url=search-user&q=${encodeURIComponent(q)}`
+            `${APP_URL}/search-user&q=${encodeURIComponent(q)}`
         );
         const data = await resp.json();
 
@@ -279,7 +279,7 @@ function rechercherUtilisateur(q) {
         }
 
         dyn.innerHTML = data.map(u => `
-            <a href="${APP_URL}/?url=conversation&avec=${u.id}"
+            <a href="${APP_URL}/conversation&avec=${u.id}"
                class="flex items-center gap-3 px-2 py-2.5 rounded-xl
                       hover:bg-violet-50 transition-colors">
                 <div class="w-9 h-9 rounded-full bg-gradient-to-br from-violet-100 to-indigo-100 

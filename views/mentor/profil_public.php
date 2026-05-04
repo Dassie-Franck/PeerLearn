@@ -33,7 +33,7 @@
     <!-- ===== BIO & EXPERIENCE ===== -->
     <div id="panel-bio" class="tab-panel">
         <div class="card">
-            <form method="POST" action="<?= APP_URL ?>/?url=mentor-profil">
+            <form method="POST" action="<?= APP_URL ?>/mentor-profil">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="update_profil">
 
@@ -66,7 +66,7 @@
             <p class="text-sm text-gray-500 mb-5">
                 Sélectionne les matières que tu enseignes.
             </p>
-            <form method="POST" action="<?= APP_URL ?>/?url=mentor-profil">
+            <form method="POST" action="<?= APP_URL ?>/mentor-profil">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="update_matieres">
 
@@ -105,7 +105,7 @@
             <p class="text-sm text-gray-500 mb-5">
                 Indique ton statut de disponibilité général.
             </p>
-            <form method="POST" action="<?= APP_URL ?>/?url=mentor-profil">
+            <form method="POST" action="<?= APP_URL ?>/mentor-profil">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="update_statut">
 

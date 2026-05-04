@@ -88,7 +88,7 @@ $page_active = 'disponibilites';
                         Ajouter un créneau
                     </h2>
                     
-                    <form method="POST" action="<?= APP_URL ?>/?url=disponibilites">
+                    <form method="POST" action="<?= APP_URL ?>/disponibilites">
                         <?= csrf_field() ?>
                         <input type="hidden" name="action" value="ajouter">
                         
@@ -217,7 +217,7 @@ $page_active = 'disponibilites';
                                     </div>
                                     
                                     <?php if (!$c['est_reservee']): ?>
-                                    <form method="POST" action="<?= APP_URL ?>/?url=disponibilites" onsubmit="return confirm('Supprimer ce créneau ?')">
+                                    <form method="POST" action="<?= APP_URL ?>/disponibilites" onsubmit="return confirm('Supprimer ce créneau ?')">
                                         <?= csrf_field() ?>
                                         <input type="hidden" name="action" value="supprimer">
                                         <input type="hidden" name="dispo_id" value="<?= $c['id'] ?>">

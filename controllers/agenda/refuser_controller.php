@@ -81,7 +81,7 @@ if ($session['apprenant_id']) {
     $notif = $pdo->prepare("
         INSERT INTO notifications (utilisateur_id, type, titre, contenu, lien, lu, created_at)
         VALUES (:uid, 'reservation_annulee', 'Demande refusée',
-                :contenu, '/?url=mes-sessions', 0, NOW())
+                :contenu, '/mes-sessions', 0, NOW())
     ");
     $notif->execute([
         ':uid'     => $session['apprenant_id'],

@@ -20,7 +20,7 @@
 
     <!-- En-tête -->
     <div class="mb-8">
-        <a href="<?= APP_URL ?>/?url=profil"
+        <a href="<?= APP_URL ?>/profil"
            class="text-gray-500 text-sm inline-flex items-center gap-1.5 mb-4 hover:text-gray-700 transition">
             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -62,7 +62,7 @@
 
     <!-- Formulaire -->
     <div class="card">
-        <form method="POST" action="<?= APP_URL ?>/?url=demande-mentor">
+        <form method="POST" action="<?= APP_URL ?>/demande-mentor">
             <?= csrf_field() ?>
 
             <!-- Bio -->
@@ -115,7 +115,7 @@
                 <button type="submit" class="btn-primary">
                     Envoyer ma demande
                 </button>
-                <a href="<?= APP_URL ?>/?url=profil" class="btn-secondary">
+                <a href="<?= APP_URL ?>/profil" class="btn-secondary">
                     Annuler
                 </a>
             </div>

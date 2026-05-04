@@ -17,7 +17,7 @@
 
 <!-- Panneau gauche -->
 <div class="auth-left">
-    <a href="<?= APP_URL ?>/?url=login">
+    <a href="<?= APP_URL ?>/login">
         <span class="font-syne text-2xl font-bold text-white">Peer<span style="color:#5B4FE8">Learn</span></span>
     </a>
     <div>
@@ -58,7 +58,7 @@
         <h2 class="font-syne text-2xl font-bold text-gray-900 mb-2">Créer un compte</h2>
         <p class="text-gray-500 text-sm mb-8">Remplis le formulaire pour commencer.</p>
 
-        <form method="POST" action="<?= APP_URL ?>/?url=register" novalidate>
+        <form method="POST" action="<?= APP_URL ?>/register" novalidate>
             <?= csrf_field() ?>
 
             <!-- Prénom + Nom -->
@@ -135,7 +135,7 @@
 
         <p class="text-center text-sm text-gray-500 mt-6">
             Déjà un compte ?
-            <a href="<?= APP_URL ?>/?url=login" class="font-medium" style="color:#5B4FE8">
+            <a href="<?= APP_URL ?>/login" class="font-medium" style="color:#5B4FE8">
                 Se connecter
             </a>
         </p>

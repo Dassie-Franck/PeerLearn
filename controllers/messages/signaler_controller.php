@@ -59,7 +59,7 @@ $notif  = $pdo->prepare("
         (:uid, 'nouveau_message',
          'Message signalé',
          :contenu,
-         '/?url=admin-signalements',
+         '/admin-signalements',
          0, NOW())
 ");
 foreach ($admins as $admin) {
