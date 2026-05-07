@@ -1,3 +1,13 @@
+<?php
+// ============================================================
+//  views/agenda/mes_sessions.php
+//  Liste des sessions de l'utilisateur avec filtres et actions
+// ============================================================
+
+$page_active = 'sessions';
+$filtre_actif = $_GET['statut'] ?? '';
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,302 +15,306 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes sessions — <?= APP_NAME ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <?php require_once BASE_PATH . '/views/layouts/footer.php'; ?>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+
+        .animate-fadeInUp { animation: fadeInUp 0.5s ease-out forwards; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid #E2E8F0;
+            background: #fff;
+            color: #64748B;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .filter-btn:hover { border-color: #5B4FE8; color: #5B4FE8; }
+        .filter-btn.active { background: #5B4FE8; border-color: #5B4FE8; color: #fff; }
+
+        .session-card {
+            background: #fff;
+            border-radius: 20px;
+            border: 1px solid #E2E8F0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        .session-card:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+
+        .session-date-box {
+            background: #F8FAFC;
+            border-radius: 16px;
+            padding: 12px 16px;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .badge-pending { background: #FEF3C7; color: #D97706; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+        .badge-confirmed { background: #E8F5E9; color: #2E7D32; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+        .badge-completed { background: #E3F2FD; color: #1565C0; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+        .badge-cancelled { background: #FFEBEE; color: #C62828; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+
+        .btn-evaluate { background: linear-gradient(135deg, #5B4FE8, #7C3AED); color: #fff; padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; text-align: center; }
+        .btn-evaluate:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(91,79,232,0.3); }
+
+        .btn-cancel { background: #FEF2F2; color: #EF4444; border: 1px solid #FEE2E2; padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; width: 100%; }
+        .btn-cancel:hover { background: #FEE2E2; transform: translateY(-2px); }
+
+        .btn-message { background: #F1F5F9; color: #64748B; padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: 600; text-decoration: none; text-align: center; display: block; }
+        .btn-message:hover { background: #E2E8F0; color: #1E293B; }
+
+        .empty-state { text-align: center; padding: 60px 20px; background: #fff; border-radius: 24px; border: 1px solid #E2E8F0; }
+        .empty-icon { width: 80px; height: 80px; background: #F1F5F9; border-radius: 30px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+
+        .flash-success { background: #F0FDF4; border: 1px solid #BBF7D0; color: #166534; padding: 14px 18px; border-radius: 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .flash-error { background: #FEF2F2; border: 1px solid #FEE2E2; color: #991B1B; padding: 14px 18px; border-radius: 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+
+        .modal { position: fixed; inset: 0; background: rgba(17,24,39,0.7); backdrop-filter: blur(6px); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+        .modal.open { opacity: 1; pointer-events: all; }
+        .modal-box { background: #fff; border-radius: 24px; width: 100%; max-width: 440px; margin: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); transform: translateY(12px) scale(0.98); transition: transform 0.2s ease; overflow: hidden; }
+        .open .modal-box { transform: translateY(0) scale(1); }
+        .form-label { display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 6px; }
+        .form-textarea { width: 100%; padding: 12px; border-radius: 14px; border: 1px solid #E2E8F0; font-size: 14px; resize: vertical; }
+        .form-textarea:focus { outline: none; border-color: #5B4FE8; box-shadow: 0 0 0 3px rgba(91,79,232,0.1); }
+
+        .role-badge { background: #F1F5F9; color: #64748B; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; }
+    </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex">
+<body>
 
 <?php require_once BASE_PATH . '/views/layouts/toast.php'; ?>
+<?php require_once BASE_PATH . '/views/layouts/navbar_etudiant.php'; ?>
 
-<?php if ($est_mentor): ?>
-    <?php require_once BASE_PATH . '/views/layouts/navbar_mentor.php'; ?>
-<?php else: ?>
-    <?php require_once BASE_PATH . '/views/layouts/navbar_etudiant.php'; ?>
-<?php endif; ?>
-
-<!-- MODALE ANNULATION -->
-<div id="modal-annuler" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"
-         onclick="fermerModal()"></div>
-    <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-md p-6 z-10">
-        <div class="flex items-center gap-3 mb-5">
-            <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
-                <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </div>
-            <div>
-                <h3 class="font-syne font-bold text-gray-900">Annuler la session</h3>
-                <p class="text-xs text-gray-400" id="annuler-subtitle">—</p>
-            </div>
-        </div>
-        <form method="POST" action="<?= APP_URL ?>/annuler">
-            <?= csrfField() ?>
-            <input type="hidden" name="session_id" id="annuler-session-id">
-            <div class="mb-5">
-                <label class="block text-xs font-medium text-gray-600 mb-1.5 uppercase tracking-wide">
-                    Motif (optionnel)
-                </label>
-                <textarea name="motif" rows="3"
-                          placeholder="Raison de l'annulation..."
-                          class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm
-                                 focus:outline-none focus:border-red-300 focus:ring-2
-                                 focus:ring-red-50 transition-colors resize-none"></textarea>
-            </div>
-            <div class="flex gap-3">
-                <button type="button" onclick="fermerModal()"
-                        class="flex-1 px-4 py-2.5 rounded-xl border border-gray-200
-                               text-sm text-gray-600 hover:bg-gray-50 transition-colors">
-                    Retour
-                </button>
-                <button type="submit"
-                        class="flex-1 px-4 py-2.5 rounded-xl bg-red-500 text-white
-                               text-sm font-medium hover:bg-red-600 transition-colors">
-                    Confirmer l'annulation
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- CONTENU -->
+<!-- CONTENU PRINCIPAL -->
 <main class="flex-1 p-8">
 
     <!-- En-tête -->
-    <div class="flex items-center justify-between mb-8">
-        <div>
-            <h1 class="font-syne text-2xl font-bold text-gray-900">Mes sessions</h1>
-            <p class="text-gray-500 text-sm mt-1">
-                <?= count($sessions) ?> session<?= count($sessions) > 1 ? 's' : '' ?> au total
-            </p>
+    <div class="animate-fadeInUp mb-7">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+            <div>
+                <h1 class="text-3xl font-extrabold text-gray-900 mb-2">
+                    <i class="fa-solid fa-calendar-days" style="color: #5B4FE8; margin-right: 12px;"></i>
+                    Mes sessions
+                </h1>
+                <p class="text-gray-500 text-sm">Consultez et gérez toutes vos sessions de mentorat.</p>
+            </div>
+            <a href="<?= APP_URL ?>/?url=recherche" class="btn-evaluate inline-flex items-center gap-2 px-6 py-2.5">
+                <i class="fa-solid fa-plus"></i> Réserver une session
+            </a>
         </div>
-        <?php if (!$est_mentor): ?>
-        <a href="<?= APP_URL ?>/recherche"
-           class="btn-primary text-sm px-4 py-2">
-            + Trouver un mentor
-        </a>
-        <?php endif; ?>
     </div>
 
+    <!-- Messages flash -->
+    <?php if (!empty($succes)): ?>
+    <div class="animate-fadeInUp flash-success">
+        <i class="fa-solid fa-check-circle"></i>
+        <p class="m-0 text-sm"><?= e($succes) ?></p>
+    </div>
+    <?php endif; ?>
+
+    <?php if (!empty($erreur)): ?>
+    <div class="animate-fadeInUp flash-error">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <p class="m-0 text-sm"><?= e($erreur) ?></p>
+    </div>
+    <?php endif; ?>
+
+    <!-- Filtres par statut -->
+    <div class="animate-fadeInUp flex flex-wrap gap-2.5 mb-6">
+        <?php
+        $filtres = [
+            ''          => ['label' => 'Toutes', 'icon' => 'fa-star'],
+            'en_attente'=> ['label' => 'En attente', 'icon' => 'fa-clock'],
+            'confirmee' => ['label' => 'Confirmées', 'icon' => 'fa-check-circle'],
+            'terminee'  => ['label' => 'Terminées', 'icon' => 'fa-circle-check'],
+            'annulee'   => ['label' => 'Annulées', 'icon' => 'fa-ban'],
+        ];
+        foreach ($filtres as $val => $info):
+        ?>
+        <a href="<?= APP_URL ?>/?url=mes-sessions<?= $val ? '&statut=' . $val : '' ?>"
+           class="filter-btn <?= $filtre_actif === $val ? 'active' : '' ?>">
+            <i class="fa-regular <?= $info['icon'] ?>"></i> <?= $info['label'] ?>
+        </a>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- LISTE DES SESSIONS -->
     <?php if (empty($sessions)): ?>
-    <!-- État vide -->
-    <div class="card text-center py-16">
-        <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-            </svg>
+    <div class="animate-fadeInUp empty-state">
+        <div class="empty-icon">
+            <i class="fa-regular fa-calendar-xmark text-3xl text-gray-400"></i>
         </div>
-        <p class="text-gray-600 font-medium mb-1">Aucune session pour le moment</p>
-        <?php if (!$est_mentor): ?>
-        <p class="text-gray-400 text-sm mb-5">Trouvez un mentor et réservez votre première session.</p>
-        <a href="<?= APP_URL ?>/recherche" class="btn-primary">Trouver un mentor</a>
-        <?php endif; ?>
+        <p class="text-base font-semibold text-gray-900 mb-2">Aucune session trouvée</p>
+        <p class="text-gray-500 text-sm mb-6">Réservez votre première session avec un mentor.</p>
+        <a href="<?= APP_URL ?>/?url=recherche" class="btn-evaluate inline-flex items-center gap-2">
+            <i class="fa-solid fa-magnifying-glass"></i> Trouver un mentor
+        </a>
     </div>
 
     <?php else: ?>
+    <div class="flex flex-col gap-4">
+        <?php foreach ($sessions as $s):
+            $user_id = $_SESSION['user_id'];
+            $est_mentor = ($s['mentor_id'] == $user_id);
+            $autre_nom = $est_mentor ? ($s['apprenant_nom_complet'] ?? $s['apprenant_nom'] ?? '') : ($s['mentor_nom_complet'] ?? $s['mentor_nom'] ?? '');
+            $role_label = $est_mentor ? 'Mentor' : 'Apprenant';
 
-    <?php
-    $jours_fr = ['Monday'=>'Lundi','Tuesday'=>'Mardi','Wednesday'=>'Mercredi',
-                 'Thursday'=>'Jeudi','Friday'=>'Vendredi',
-                 'Saturday'=>'Samedi','Sunday'=>'Dimanche'];
-    $mois_fr  = ['January'=>'jan','February'=>'fév','March'=>'mars',
-                 'April'=>'avr','May'=>'mai','June'=>'juin','July'=>'juil',
-                 'August'=>'août','September'=>'sep','October'=>'oct',
-                 'November'=>'nov','December'=>'déc'];
+            //  Récupérer la valeur de deja_evalue (ajoutée dans le controller)
+            $deja_evalue = $s['deja_evalue'] ?? false;
 
-    // Helper d'affichage d'une carte session
-    $afficher_carte = function(array $sess) use ($user_id, $est_mentor, $deja_evalues, $jours_fr, $mois_fr): void {
-        $ts       = strtotime($sess['date_session']);
-        $jour     = $jours_fr[date('l',$ts)] ?? date('l',$ts);
-        $mois     = $mois_fr[date('F',$ts)]  ?? date('M',$ts);
-        $debut    = date('H:i', strtotime($sess['heure_debut']));
-        $fin      = date('H:i', strtotime($sess['heure_fin']));
-        $enLigne  = $sess['mode_session'] === 'en_ligne';
+            $badge = match($s['statut']) {
+                'en_attente' => ['class' => 'badge-pending', 'icon' => 'fa-clock', 'text' => 'En attente'],
+                'confirmee'  => ['class' => 'badge-confirmed', 'icon' => 'fa-check-circle', 'text' => 'Confirmée'],
+                'terminee'   => ['class' => 'badge-completed', 'icon' => 'fa-circle-check', 'text' => 'Terminée'],
+                'annulee'    => ['class' => 'badge-cancelled', 'icon' => 'fa-ban', 'text' => 'Annulée'],
+                default      => ['class' => 'badge-pending', 'icon' => 'fa-question', 'text' => $s['statut']],
+            };
+        ?>
+        <div class="session-card">
+            <div class="flex items-start gap-5 flex-wrap">
+                <!-- Date bloc -->
+                <div class="session-date-box">
+                    <p class="text-xs font-semibold text-violet uppercase mb-1">
+                        <?= strtoupper(date('M', strtotime($s['date_session']))) ?>
+                    </p>
+                    <p class="text-3xl font-extrabold text-gray-900">
+                        <?= date('d', strtotime($s['date_session'])) ?>
+                    </p>
+                    <p class="text-[10px] text-gray-400">
+                        <?= date('Y', strtotime($s['date_session'])) ?>
+                    </p>
+                </div>
 
-        // L'interlocuteur vu par l'utilisateur courant
-        if ($est_mentor || $sess['mentor_id'] == $user_id) {
-            $interlocuteur = $sess['apprenant_nom_complet'];
-            $photo         = $sess['apprenant_photo'];
-            $role_label    = 'Apprenant';
-        } else {
-            $interlocuteur = $sess['mentor_nom_complet'];
-            $photo         = $sess['mentor_photo'];
-            $role_label    = 'Mentor';
-        }
+                <!-- Infos session -->
+                <div class="flex-1">
+                    <div class="flex items-center gap-2.5 flex-wrap mb-2">
+                        <h3 class="text-base font-bold text-gray-900">
+                            <?= e($s['matiere_nom']) ?>
+                        </h3>
+                        <span class="<?= $badge['class'] ?>">
+                            <i class="fa-regular <?= $badge['icon'] ?>"></i> <?= $badge['text'] ?>
+                        </span>
+                        <span class="role-badge">
+                            <i class="fa-solid fa-<?= $est_mentor ? 'chalkboard-user' : 'user-graduate' ?>"></i> <?= $role_label ?>
+                        </span>
+                    </div>
 
-        $peut_evaluer = !$est_mentor
-            && $sess['statut'] === 'terminee'
-            && $sess['apprenant_id'] == $user_id
-            && !in_array($sess['id'], $deja_evalues);
+                    <p class="text-sm text-gray-500 mb-1.5">
+                        <?= $est_mentor ? 'Apprenant :' : 'Mentor :' ?>
+                        <span class="font-semibold text-gray-900"><?= e($autre_nom) ?></span>
+                    </p>
 
-        $deja_evalue = !$est_mentor
-            && $sess['statut'] === 'terminee'
-            && in_array($sess['id'], $deja_evalues);
+                    <div class="flex items-center gap-4 flex-wrap">
+                        <p class="text-sm text-gray-500">
+                            <i class="fa-regular fa-clock"></i>
+                            <?= date('H:i', strtotime($s['heure_debut'])) ?> — <?= date('H:i', strtotime($s['heure_fin'])) ?>
+                        </p>
+                        <p class="text-sm <?= $s['mode_session'] === 'en_ligne' ? 'text-teal-600' : 'text-amber-600' ?>">
+                            <i class="fa-solid fa-<?= $s['mode_session'] === 'en_ligne' ? 'video' : 'building' ?>"></i>
+                            <?= $s['mode_session'] === 'en_ligne' ? 'En ligne' : 'Présentiel' ?>
+                        </p>
+                    </div>
 
-        $peut_annuler = in_array($sess['statut'], ['en_attente','confirmee']);
+                    <!-- Lien visio si confirmée en ligne -->
+                    <?php if ($s['statut'] === 'confirmee' && $s['mode_session'] === 'en_ligne' && !empty($s['lien_session'])): ?>
+                    <a href="<?= e($s['lien_session']) ?>" target="_blank" class="inline-flex items-center gap-1.5 mt-3 text-sm text-teal-600 hover:text-teal-700 no-underline">
+                        <i class="fa-solid fa-link"></i> Rejoindre la session
+                    </a>
+                    <?php endif; ?>
+                </div>
 
-        $subtitle = addslashes($sess['matiere_nom'] . ' · ' . $jour . ' ' . date('d',$ts) . ' ' . $mois);
-    ?>
-    <div class="flex items-center gap-4 p-4 rounded-xl border border-gray-100
-                hover:border-gray-200 transition-colors bg-white">
+                <!-- Actions -->
+                <div class="flex flex-col gap-2 min-w-[100px]">
+                    <!-- Évaluer (session terminée, étudiant, pas encore évalué) -->
+                    <?php if ($s['statut'] === 'terminee' && !$est_mentor && !$deja_evalue): ?>
+                    <a href="<?= APP_URL ?>/evaluer&session_id=<?= $s['id'] ?>" class="btn-evaluate text-center">
+                        <i class="fa-regular fa-star"></i> Évaluer
+                    </a>
+                    <?php endif; ?>
 
-        <!-- Date -->
-        <div class="text-center bg-gray-50 rounded-xl p-2.5 min-w-[52px] flex-shrink-0">
-            <p class="text-xs text-gray-400 uppercase font-medium leading-none">
-                <?= strtoupper(substr($mois,0,3)) ?>
-            </p>
-            <p class="font-syne font-bold text-gray-900 text-xl leading-tight">
-                <?= date('d', $ts) ?>
-            </p>
+                    <!-- Annuler (session active) -->
+                    <?php if (in_array($s['statut'], ['en_attente', 'confirmee'])): ?>
+                    <button onclick="ouvrirModalAnnulation(<?= $s['id'] ?>)" class="btn-cancel">
+                        <i class="fa-regular fa-trash-can"></i> Annuler
+                    </button>
+                    <?php endif; ?>
+
+                    <!-- Message -->
+                    <a href="<?= APP_URL ?>/conversation&user_id=<?= $est_mentor ? ($s['apprenant_id'] ?? 0) : ($s['mentor_id'] ?? 0) ?>" class="btn-message">
+                        <i class="fa-regular fa-message"></i> Message
+                    </a>
+                </div>
+            </div>
         </div>
-
-        <!-- Infos -->
-        <div class="flex-1 min-w-0">
-            <p class="font-medium text-gray-900 text-sm truncate">
-                <?= e($sess['matiere_nom']) ?>
-                <span class="text-gray-400 font-normal text-xs"> · <?= $role_label ?> :</span>
-                <?= e($interlocuteur) ?>
-            </p>
-            <p class="text-xs text-gray-400 mt-0.5">
-                <?= $jour ?> <?= date('d',$ts) ?> <?= $mois ?>
-                &nbsp;·&nbsp; <?= $debut ?> – <?= $fin ?>
-                &nbsp;·&nbsp; <?= $enLigne ? 'En ligne' : 'Présentiel' ?>
-            </p>
-
-            <!-- Lien visio -->
-            <?php if ($enLigne && !empty($sess['lien_session']) && $sess['statut'] === 'confirmee'): ?>
-            <a href="<?= e($sess['lien_session']) ?>" target="_blank" rel="noopener"
-               class="inline-flex items-center gap-1 mt-1 text-xs text-teal-600
-                      hover:text-teal-700 hover:underline font-medium">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 10l4.553-2.069A1 1 0 0121 8.868v6.264a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
-                </svg>
-                Rejoindre la visio
-            </a>
-            <?php endif; ?>
-        </div>
-
-        <!-- Actions + Statut -->
-        <div class="flex items-center gap-2 flex-shrink-0">
-
-            <!-- Bouton Évaluer -->
-            <?php if ($peut_evaluer): ?>
-            <a href="<?= APP_URL ?>/evaluer&session_id=<?= $sess['id'] ?>"
-               class="inline-flex items-center gap-1 px-3 py-1.5 bg-amber-50
-                      text-amber-700 text-xs font-medium rounded-lg
-                      hover:bg-amber-100 transition-colors">
-                <span class="text-base leading-none">★</span>
-                Évaluer
-            </a>
-            <?php elseif ($deja_evalue): ?>
-            <span class="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100
-                         text-gray-400 text-xs font-medium rounded-lg">
-                <span class="text-base leading-none">★</span>
-                Noté
-            </span>
-            <?php endif; ?>
-
-            <!-- Bouton Annuler -->
-            <?php if ($peut_annuler): ?>
-            <button onclick="ouvrirAnnuler(<?= $sess['id'] ?>, '<?= $subtitle ?>')"
-                    class="px-3 py-1.5 border border-red-200 text-red-500 text-xs
-                           font-medium rounded-lg hover:bg-red-50 transition-colors">
-                Annuler
-            </button>
-            <?php endif; ?>
-
-            <!-- Badge statut -->
-            <?php
-            $badges = [
-                'en_attente' => 'bg-amber-50 text-amber-700',
-                'confirmee'  => 'bg-teal-50 text-teal-700',
-                'terminee'   => 'bg-gray-100 text-gray-500',
-                'annulee'    => 'bg-red-50 text-red-500',
-            ];
-            $labels = [
-                'en_attente' => 'En attente',
-                'confirmee'  => 'Confirmée',
-                'terminee'   => 'Terminée',
-                'annulee'    => 'Annulée',
-            ];
-            $cls = $badges[$sess['statut']] ?? 'bg-gray-100 text-gray-500';
-            $lib = $labels[$sess['statut']] ?? ucfirst($sess['statut']);
-            ?>
-            <span class="px-3 py-1.5 rounded-lg text-xs font-medium <?= $cls ?>">
-                <?= $lib ?>
-            </span>
-
-        </div>
-    </div>
-    <?php }; // fin closure afficher_carte ?>
-
-    <!-- ── SESSIONS À VENIR ── -->
-    <?php if (!empty($a_venir)): ?>
-    <div class="mb-8">
-        <h2 class="font-syne text-base font-bold text-gray-800 mb-3 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-teal-400"></span>
-            À venir
-            <span class="text-xs font-normal text-gray-400">(<?= count($a_venir) ?>)</span>
-        </h2>
-        <div class="space-y-2">
-            <?php foreach ($a_venir as $sess) { $afficher_carte($sess); } ?>
-        </div>
+        <?php endforeach; ?>
     </div>
     <?php endif; ?>
-
-    <!-- ── SESSIONS TERMINÉES ── -->
-    <?php if (!empty($terminees)): ?>
-    <div class="mb-8">
-        <h2 class="font-syne text-base font-bold text-gray-800 mb-3 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-gray-400"></span>
-            Terminées
-            <span class="text-xs font-normal text-gray-400">(<?= count($terminees) ?>)</span>
-        </h2>
-        <div class="space-y-2">
-            <?php foreach ($terminees as $sess) { $afficher_carte($sess); } ?>
-        </div>
-    </div>
-    <?php endif; ?>
-
-    <!-- ── SESSIONS ANNULÉES ── -->
-    <?php if (!empty($annulees)): ?>
-    <details class="mb-4">
-        <summary class="font-syne text-base font-bold text-gray-400 mb-3
-                        flex items-center gap-2 cursor-pointer select-none list-none">
-            <span class="w-2 h-2 rounded-full bg-red-300"></span>
-            Annulées
-            <span class="text-xs font-normal">(<?= count($annulees) ?>)</span>
-            <svg class="w-4 h-4 ml-auto transition-transform" fill="none"
-                 stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-            </svg>
-        </summary>
-        <div class="space-y-2 mt-3">
-            <?php foreach ($annulees as $sess) { $afficher_carte($sess); } ?>
-        </div>
-    </details>
-    <?php endif; ?>
-
-    <?php endif; // fin empty($sessions) ?>
 
 </main>
+
+<!-- MODAL ANNULATION -->
+<div id="modal-annulation" class="modal">
+    <div class="modal-box">
+        <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+            <div>
+                <h2 class="text-lg font-bold text-gray-900">Annuler la session</h2>
+                <p class="text-xs text-gray-500 mt-0.5">Si l'annulation a lieu moins de 2h avant la session, elle sera considérée comme tardive.</p>
+            </div>
+            <button onclick="fermerModal()" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+        <div class="px-6 py-5">
+            <!--  CORRECTION : URL correcte pour l'annulation -->
+            <form method="POST" action="<?= APP_URL ?>/?url=annuler">
+                <?= csrf_field() ?>
+                <input type="hidden" name="session_id" id="modal-session-id">
+                <div class="mb-5">
+                    <label class="form-label">Motif (optionnel)</label>
+                    <textarea name="motif" rows="3" class="form-textarea" placeholder="Raison de l'annulation..."></textarea>
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" onclick="fermerModal()" class="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition">Retour</button>
+                    <button type="submit" class="flex-1 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white text-sm font-semibold transition">Confirmer l'annulation</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <script>
-function ouvrirAnnuler(sessionId, subtitle) {
-    document.getElementById('annuler-session-id').value = sessionId;
-    document.getElementById('annuler-subtitle').textContent = subtitle;
-    document.getElementById('modal-annuler').classList.remove('hidden');
+function ouvrirModalAnnulation(sessionId) {
+    document.getElementById('modal-session-id').value = sessionId;
+    document.getElementById('modal-annulation').classList.add('open');
+    document.body.style.overflow = 'hidden';
 }
+
 function fermerModal() {
-    document.getElementById('modal-annuler').classList.add('hidden');
+    document.getElementById('modal-annulation').classList.remove('open');
+    document.body.style.overflow = '';
 }
-document.addEventListener('keydown', e => {
+
+document.getElementById('modal-annulation').addEventListener('click', function(e) {
+    if (e.target === this) fermerModal();
+});
+
+document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') fermerModal();
 });
 </script>
 
+<?php require_once BASE_PATH . '/views/layouts/footer.php'; ?>
 </body>
 </html>

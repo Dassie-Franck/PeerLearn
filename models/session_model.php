@@ -196,15 +196,15 @@ function initier_conversation_apres_confirmation($session_id, $mentor_id, $appre
         $stmtSess->execute([':sid' => $session_id]);
         $session = $stmtSess->fetch();
         
-        $message_bienvenue = "🎉 **Votre session a été confirmée !**\n\n" .
-                             "📚 **Matière :** " . ($session['matiere_nom'] ?? 'la matiere') . "\n" .
-                             "📅 **Date :** " . date('d/m/Y', strtotime($session['date_session'])) . "\n" .
-                             "⏰ **Horaire :** " . date('H:i', strtotime($session['heure_debut'])) . " - " . date('H:i', strtotime($session['heure_fin'])) . "\n\n" .
-                             "💬 Vous pouvez utiliser ce chat pour :\n" .
+        $message_bienvenue = " **Votre session a été confirmée !**\n\n" .
+                             " **Matière :** " . ($session['matiere_nom'] ?? 'la matiere') . "\n" .
+                             " **Date :** " . date('d/m/Y', strtotime($session['date_session'])) . "\n" .
+                             " **Horaire :** " . date('H:i', strtotime($session['heure_debut'])) . " - " . date('H:i', strtotime($session['heure_fin'])) . "\n\n" .
+                             " Vous pouvez utiliser ce chat pour :\n" .
                              "• Discuter des details de la session\n" .
                              "• Partager des liens ou documents\n" .
                              "• Poser vos questions\n\n" .
-                             "Bonne preparation ! 📚";
+                             "Bonne preparation ! ";
         
         $stmt = $pdo->prepare("
             INSERT INTO messages (envoyeur_id, destinataire_id, contenu, date_envoi, est_systeme)
@@ -252,7 +252,7 @@ function confirmer_session($session_id, $mentor_id, $lien_session = null) {
         ':mid'  => $mentor_id
     ]);
     
-    // 🔥 CREER LA CONVERSATION AUTOMATIQUEMENT
+    //  CREER LA CONVERSATION AUTOMATIQUEMENT
     initier_conversation_apres_confirmation($session_id, $mentor_id, $apprenant_id);
     
     // Notifications

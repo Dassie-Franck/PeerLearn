@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-//  public/index.php — Point d'entrée unique
+//  public/index.php ï¿½ Point d'entrï¿½e unique
 // ============================================================
 
 ini_set('display_errors', 1);
@@ -17,7 +17,7 @@ require_once '../config/database.php';
 require_once '../config/app.php';
 
 // ============================================================
-//  3. Démarrer la session
+//  3. Dï¿½marrer la session
 // ============================================================
 if (session_status() === PHP_SESSION_NONE) {
     $is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on');
@@ -32,13 +32,13 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // ============================================================
-//  4. Charger les autres dépendances
+//  4. Charger les autres dï¿½pendances
 // ============================================================
 require_once BASE_PATH . '/includes/helpers.php';
 require_once BASE_PATH . '/config/session.php';
 
 // ============================================================
-//  ROUTES — url => controller
+//  ROUTES ï¿½ url => controller
 // ============================================================
 $routes = [
 
@@ -97,6 +97,11 @@ $routes = [
     ''        => 'home_controller.php',
     'home'    => 'home_controller.php',
     'accueil' => 'home_controller.php',
+
+    // NOTIFICATIONS
+'notification/marquer'        => 'notification/marquer_controller.php',
+'notification/marquer-toutes' => 'notification/marquer_toutes_controller.php',
+'notification/poll'           => 'notification/poll_controller.php',
 ];
 
 // ============================================================

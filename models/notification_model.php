@@ -1,83 +1,132 @@
 <?php
 // ============================================================
-//  notification_model.php
-//  Requetes SQL liees aux notifications in-app
-//  Chemin : models/notification_model.php
+//  models/notification_model.php
+//  Gestion des notifications
 // ============================================================
 
-// ------------------------------------------------------------
-//  Creer une notification
-// ------------------------------------------------------------
-if (!function_exists('creer_notification')) {
-    function creer_notification($utilisateur_id, $type, $titre, $contenu, $lien = null) {
-        $pdo  = get_pdo();
+/**
+ * Crée une notification pour un utilisateur
+ */
+function creer_notifications($user_id, $type, $titre, $contenu, $lien = null) {
+    // Vérifier que le type est valide
+    $types_valides = [
+        'nouvelle_reservation',
+        'reservation_confirmee',
+        'reservation_annulee',
+        'nouveau_message',
+        'nouvelle_evaluation',
+        'profil_mentor_valide',
+        'profil_mentor_rejete',
+        'profil_suspendu',
+        'rappel_session'
+    ];
+    
+    if (!in_array($type, $types_valides)) {
+        error_log("Type de notification invalide: " . $type);
+        return false;
+    }
+    
+    try {
+        $pdo = get_pdo();
         $stmt = $pdo->prepare("
-            INSERT INTO notifications (utilisateur_id, type, titre, contenu, lien)
-            VALUES (:uid, :type, :titre, :contenu, :lien)
+            INSERT INTO notifications (utilisateur_id, type, titre, contenu, lien, created_at)
+            VALUES (:user_id, :type, :titre, :contenu, :lien, NOW())
         ");
         $stmt->execute([
-            ':uid'     => $utilisateur_id,
-            ':type'    => $type,
-            ':titre'   => $titre,
+            ':user_id' => $user_id,
+            ':type' => $type,
+            ':titre' => $titre,
             ':contenu' => $contenu,
-            ':lien'    => $lien,
+            ':lien' => $lien
         ]);
+        return $pdo->lastInsertId();
+    } catch (Exception $e) {
+        error_log("Erreur création notification: " . $e->getMessage());
+        return false;
     }
 }
 
-
-// ------------------------------------------------------------
-//  Compter les notifications non lues
-// ------------------------------------------------------------
-function compter_notifications_non_lues($utilisateur_id) {
-    $pdo  = get_pdo();
-    $stmt = $pdo->prepare("
-        SELECT COUNT(*) FROM notifications
-        WHERE utilisateur_id = :uid AND lu = 0
-    ");
-    $stmt->execute([':uid' => $utilisateur_id]);
-    return (int) $stmt->fetchColumn();
-}
-
-
-// ------------------------------------------------------------
-//  Recuperer les notifications d un utilisateur
-// ------------------------------------------------------------
-function get_notifications($utilisateur_id, $limite = 20) {
-    $pdo  = get_pdo();
+/**
+ * Récupère les notifications d'un utilisateur
+ */
+function get_notifications($user_id, $limit = 15) {
+    $pdo = get_pdo();
     $stmt = $pdo->prepare("
         SELECT * FROM notifications
-        WHERE utilisateur_id = :uid
+        WHERE utilisateur_id = :user_id
         ORDER BY created_at DESC
-        LIMIT :limite
+        LIMIT :limit
     ");
-    $stmt->bindValue(':uid',    $utilisateur_id, PDO::PARAM_INT);
-    $stmt->bindValue(':limite', $limite,         PDO::PARAM_INT);
+    $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll();
 }
 
-
-// ------------------------------------------------------------
-//  Marquer une notification comme lue
-// ------------------------------------------------------------
-function marquer_notification_lue($id, $utilisateur_id) {
-    $pdo  = get_pdo();
+/**
+ * Compte les notifications non lues
+ */
+function compter_notifications_non_lues($user_id) {
+    $pdo = get_pdo();
     $stmt = $pdo->prepare("
-        UPDATE notifications SET lu = 1
-        WHERE id = :id AND utilisateur_id = :uid
+        SELECT COUNT(*) FROM notifications
+        WHERE utilisateur_id = :user_id AND lu = 0
     ");
-    $stmt->execute([':id' => $id, ':uid' => $utilisateur_id]);
+    $stmt->execute([':user_id' => $user_id]);
+    return (int)$stmt->fetchColumn();
 }
 
-
-// ------------------------------------------------------------
-//  Marquer toutes les notifications comme lues
-// ------------------------------------------------------------
-function marquer_toutes_lues($utilisateur_id) {
-    $pdo  = get_pdo();
+/**
+ * Marque une notification comme lue
+ */
+function marquer_notification_lue($notification_id, $user_id) {
+    $pdo = get_pdo();
     $stmt = $pdo->prepare("
-        UPDATE notifications SET lu = 1 WHERE utilisateur_id = :uid
+        UPDATE notifications
+        SET lu = 1
+        WHERE id = :id AND utilisateur_id = :user_id
     ");
-    $stmt->execute([':uid' => $utilisateur_id]);
+    return $stmt->execute([':id' => $notification_id, ':user_id' => $user_id]);
+}
+
+/**
+ * Marque toutes les notifications comme lues
+ */
+function marquer_toutes_notifications_lues($user_id) {
+    $pdo = get_pdo();
+    $stmt = $pdo->prepare("
+        UPDATE notifications
+        SET lu = 1
+        WHERE utilisateur_id = :user_id AND lu = 0
+    ");
+    return $stmt->execute([':user_id' => $user_id]);
+}
+
+/**
+ * Supprime une notification
+ */
+function supprimer_notification($notification_id, $user_id) {
+    $pdo = get_pdo();
+    $stmt = $pdo->prepare("
+        DELETE FROM notifications
+        WHERE id = :id AND utilisateur_id = :user_id
+    ");
+    return $stmt->execute([':id' => $notification_id, ':user_id' => $user_id]);
+}
+
+/**
+ * Récupère les dernières notifications non lues (pour polling)
+ */
+function get_dernieres_notifications_non_lues($user_id, $limit = 5) {
+    $pdo = get_pdo();
+    $stmt = $pdo->prepare("
+        SELECT * FROM notifications
+        WHERE utilisateur_id = :user_id AND lu = 0
+        ORDER BY created_at DESC
+        LIMIT :limit
+    ");
+    $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll();
 }

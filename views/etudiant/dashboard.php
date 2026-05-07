@@ -3,7 +3,7 @@
 //  views/etudiant/dashboard.php
 //  Dashboard étudiant
 // ============================================================
-
+require_once BASE_PATH . '/views/layouts/notifications.php'; 
 $page_active = 'dashboard';
 
 // Récupération des données
@@ -16,6 +16,17 @@ $nb_non_lus = 0;
 if (function_exists('compter_messages_non_lus')) {
     $nb_non_lus = compter_messages_non_lus($_SESSION['user_id']);
 }
+
+// Récupérer les notifications
+if (!isset($notifications)) {
+    if (function_exists('get_notifications')) {
+        $notifications = get_notifications($_SESSION['user_id'], 15);
+        $nb_notifications_non_lues = function_exists('compter_notifications_non_lues') ? compter_notifications_non_lues($_SESSION['user_id']) : 0;
+    } else {
+        $notifications = [];
+        $nb_notifications_non_lues = 0;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -25,17 +36,199 @@ if (function_exists('compter_messages_non_lus')) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard — <?= APP_NAME ?></title>
     
-    <!-- Ressources locales -->
-    <link rel="stylesheet" href="<?= APP_URL ?>/css/tailwind.css">
-    <link rel="stylesheet" href="<?= APP_URL ?>/css/etudiant/dashboard.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Font Awesome (CDN) -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <?php require_once BASE_PATH . '/views/layouts/footer.php'; ?>
+    
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .animate-fadeInUp { animation: fadeInUp 0.5s ease-out forwards; }
+        .animate-slideInRight { animation: slideInRight 0.4s ease-out forwards; }
+        
+        /* ==================== STAT CARDS ==================== */
+        .stat-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 20px 24px;
+            transition: all 0.3s ease;
+            border: 1px solid #E2E8F0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #5B4FE8, #0FC4A7);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+        
+        .stat-card:hover::before { transform: scaleX(1); }
+        
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: #0F172A;
+            margin-top: 12px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #64748B;
+            font-weight: 500;
+        }
+        
+        /* ==================== GRIDS ==================== */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        /* ==================== SESSION CARD ==================== */
+        .badge-success {
+            background: #E8F5E9;
+            color: #2E7D32;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .badge-warning {
+            background: #FFF3E0;
+            color: #E65100;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .btn-message {
+            background: rgba(91,79,232,0.1);
+            color: #5B4FE8;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-message:hover {
+            background: #5B4FE8;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        
+        /* ==================== EMPTY STATE ==================== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .empty-icon {
+            width: 80px;
+            height: 80px;
+            background: #F1F5F9;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        /* ==================== TOOLTIP ==================== */
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            background-color: #1E293B;
+            color: #fff;
+            text-align: center;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            position: absolute;
+            z-index: 10;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 768px) {
+            .grid-4 { grid-template-columns: 1fr; }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #F1F5F9; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+    </style>
 </head>
 <body>
 
@@ -68,7 +261,7 @@ if (function_exists('compter_messages_non_lus')) {
                 </p>
             </div>
             
-            <!-- PHOTO DE PROFIL -->
+            <!-- Photo de profil -->
             <div class="relative">
                 <?php if (!empty($utilisateur['photo'])): ?>
                     <img src="<?= APP_URL ?>/uploads/avatars/<?= e($utilisateur['photo']) ?>" 
@@ -188,7 +381,7 @@ if (function_exists('compter_messages_non_lus')) {
                 
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <?php if ($sess['statut'] === 'confirmee'): ?>
-                        <a href="/conversation&user_id=<?= $sess['mentor_id'] ?>" class="btn-message tooltip">
+                        <a href="<?= APP_URL ?>/conversation?user_id=<?= $sess['mentor_id'] ?>" class="btn-message tooltip">
                             <i class="fa-regular fa-message"></i>
                             <span class="tooltip-text">Envoyer un message</span>
                         </a>

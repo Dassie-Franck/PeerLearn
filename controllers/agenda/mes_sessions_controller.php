@@ -19,7 +19,7 @@ marquer_sessions_terminees();
 // Toutes les sessions de l'utilisateur
 $sessions = get_sessions_utilisateur($user_id);
 
-// IDs des sessions déjà évaluées (par cet apprenant)
+// Récupérer les IDs des sessions déjà évaluées par cet apprenant
 $deja_evalues = [];
 if (!$est_mentor) {
     $pdo  = get_pdo();
@@ -30,12 +30,16 @@ if (!$est_mentor) {
     $deja_evalues = $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
-// Séparer par statut
-$a_venir   = array_filter($sessions, fn($s) =>
-    in_array($s['statut'], ['en_attente','confirmee']) && $s['date_session'] >= date('Y-m-d')
-);
-$terminees  = array_filter($sessions, fn($s) => $s['statut'] === 'terminee');
-$annulees   = array_filter($sessions, fn($s) => $s['statut'] === 'annulee');
+// AJOUTER L'INFORMATION "déjà évalué" à chaque session
+foreach ($sessions as &$s) {
+    $s['deja_evalue'] = in_array($s['id'], $deja_evalues);
+}
+
+// Filtrer par statut si demandé
+$statut_filtre = $_GET['statut'] ?? '';
+if ($statut_filtre) {
+    $sessions = array_filter($sessions, fn($s) => $s['statut'] === $statut_filtre);
+}
 
 $page_active = 'sessions';
 require_once BASE_PATH . '/views/agenda/mes_sessions.php';

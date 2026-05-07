@@ -3,110 +3,115 @@
 //  models/evaluation_model.php
 // ============================================================
 
-
-// Sessions terminées qu'un étudiant peut encore évaluer
-function get_sessions_evaluables(int $apprenant_id): array {
+/**
+ * Vérifie si une session a déjà été évaluée
+ */
+function session_deja_evaluee($session_id, $apprenant_id) {
     $pdo  = get_pdo();
     $stmt = $pdo->prepare("
-        SELECT s.id, s.date_session, s.heure_debut, s.heure_fin,
-               s.mode_session, s.mentor_id,
-               CONCAT(u.prenom, ' ', u.nom) AS mentor_nom,
-               u.photo                      AS mentor_photo,
-               ma.nom                       AS matiere_nom
-        FROM sessions s
-        INNER JOIN utilisateurs u  ON u.id  = s.mentor_id
-        INNER JOIN matieres    ma  ON ma.id = s.matiere_id
-        WHERE s.apprenant_id = :aid
-          AND s.statut       = 'terminee'
-          AND NOT EXISTS (
-              SELECT 1 FROM evaluations ev
-              WHERE ev.session_id = s.id
-          )
-        ORDER BY s.date_session DESC
+        SELECT COUNT(*) FROM evaluations WHERE session_id = :sid
     ");
-    $stmt->execute([':aid' => $apprenant_id]);
-    return $stmt->fetchAll();
+    $stmt->execute([':sid' => $session_id]);
+    return (int)$stmt->fetchColumn() > 0;
 }
 
-
-// Vérifie qu'une session est bien évaluable par cet étudiant
-function get_session_evaluable(int $session_id, int $apprenant_id): array|false {
-    $pdo  = get_pdo();
-    $stmt = $pdo->prepare("
-        SELECT s.id, s.mentor_id, s.matiere_id, s.date_session,
-               CONCAT(u.prenom, ' ', u.nom) AS mentor_nom,
-               u.photo                      AS mentor_photo,
-               ma.nom                       AS matiere_nom
-        FROM sessions s
-        INNER JOIN utilisateurs u  ON u.id  = s.mentor_id
-        INNER JOIN matieres    ma  ON ma.id = s.matiere_id
-        WHERE s.id           = :sid
-          AND s.apprenant_id = :aid
-          AND s.statut       = 'terminee'
-          AND NOT EXISTS (
-              SELECT 1 FROM evaluations ev WHERE ev.session_id = s.id
-          )
-        LIMIT 1
-    ");
-    $stmt->execute([':sid' => $session_id, ':aid' => $apprenant_id]);
-    return $stmt->fetch();
-}
-
-
-// Soumet une évaluation + met à jour note_moyenne du mentor
-function soumettre_evaluation(int $session_id, int $apprenant_id, int $mentor_id,
-                               int $note, string $commentaire): bool {
+/**
+ * Crée une évaluation
+ */
+function creer_evaluation($session_id, $mentor_id, $apprenant_id, $note, $commentaire) {
     $pdo = get_pdo();
-    try {
-        $pdo->beginTransaction();
 
-        // Insère l'évaluation
-        $pdo->prepare("
+    // Sécurité anti-doublon
+    if (session_deja_evaluee($session_id, $apprenant_id)) {
+        return ['erreur' => 'Vous avez déjà évalué cette session.'];
+    }
+
+    // Sécurité anti-auto-évaluation
+    if ($mentor_id == $apprenant_id) {
+        return ['erreur' => 'Vous ne pouvez pas vous auto-évaluer.'];
+    }
+
+    if ($note < 1 || $note > 5) {
+        return ['erreur' => 'La note doit être comprise entre 1 et 5.'];
+    }
+
+    try {
+        $stmt = $pdo->prepare("
             INSERT INTO evaluations
-                (session_id, apprenant_id, mentor_id, note, commentaire, visible, created_at)
+                (session_id, mentor_id, apprenant_id, note, commentaire, visible, created_at)
             VALUES
-                (:sid, :aid, :mid, :note, :comm, 1, NOW())
-        ")->execute([
+                (:sid, :mid, :aid, :note, :comm, 1, NOW())
+        ");
+        $stmt->execute([
             ':sid'  => $session_id,
-            ':aid'  => $apprenant_id,
             ':mid'  => $mentor_id,
+            ':aid'  => $apprenant_id,
             ':note' => $note,
-            ':comm' => trim($commentaire),
+            ':comm' => $commentaire,
         ]);
 
-        // Recalcule note_moyenne et nb_evaluations dans mentors_profils
-        $pdo->prepare("
-            UPDATE mentors_profils
-            SET note_moyenne   = (
-                    SELECT ROUND(AVG(note), 2)
-                    FROM evaluations
-                    WHERE mentor_id = :mid AND visible = 1
-                ),
-                nb_evaluations = (
-                    SELECT COUNT(*)
-                    FROM evaluations
-                    WHERE mentor_id = :mid2 AND visible = 1
-                )
-            WHERE utilisateur_id = :mid3
-        ")->execute([':mid' => $mentor_id, ':mid2' => $mentor_id, ':mid3' => $mentor_id]);
+        mettre_a_jour_note_mentor($mentor_id);
 
-        $pdo->commit();
-        return true;
+        // Notification mentor
+        if (function_exists('creer_notification')) {
+            creer_notification(
+                $mentor_id,
+                'nouvelle_evaluation',
+                '⭐ Nouvelle évaluation',
+                'Un étudiant vous a noté ' . $note . '/5.',
+                '/mentor'
+            );
+        }
 
-    } catch (Exception $e) {
-        $pdo->rollBack();
-        return false;
+        return ['success' => true, 'id' => $pdo->lastInsertId()];
+
+    } catch (PDOException $e) {
+        error_log('Erreur évaluation : ' . $e->getMessage());
+        return ['erreur' => 'Erreur technique. Veuillez réessayer.'];
     }
 }
 
-
-// Évaluations visibles d'un mentor (pour sa fiche publique)
-function get_evaluations_mentor(int $mentor_id): array {
+/**
+ * Met à jour la note moyenne du mentor
+ */
+function mettre_a_jour_note_mentor($mentor_id) {
     $pdo  = get_pdo();
     $stmt = $pdo->prepare("
-        SELECT ev.note, ev.commentaire, ev.reponse_mentor, ev.created_at,
-               u.prenom, u.nom, u.photo,
-               ma.nom AS matiere_nom
+        SELECT ROUND(AVG(note), 1) AS moyenne, COUNT(*) AS total
+        FROM evaluations
+        WHERE mentor_id = :mid AND visible = 1
+    ");
+    $stmt->execute([':mid' => $mentor_id]);
+    $res = $stmt->fetch();
+
+    $pdo->prepare("
+        UPDATE mentors_profils
+        SET note_moyenne   = :note,
+            nb_evaluations = :nb
+        WHERE utilisateur_id = :mid
+    ")->execute([
+        ':note' => $res['moyenne'] ?? 0,
+        ':nb'   => $res['total']   ?? 0,
+        ':mid'  => $mentor_id,
+    ]);
+}
+
+/**
+ * Évaluations visibles d'un mentor (fiche publique)
+ */
+function get_evaluations_mentor($mentor_id) {
+    $pdo  = get_pdo();
+    $stmt = $pdo->prepare("
+        SELECT
+            ev.id,
+            ev.note,
+            ev.commentaire,
+            ev.reponse_mentor,
+            ev.created_at,
+            u.prenom,
+            u.nom,
+            u.photo,
+            ma.nom AS matiere_nom
         FROM evaluations ev
         INNER JOIN utilisateurs u  ON u.id  = ev.apprenant_id
         INNER JOIN sessions    s   ON s.id  = ev.session_id
@@ -120,11 +125,21 @@ function get_evaluations_mentor(int $mentor_id): array {
     return $stmt->fetchAll();
 }
 
-
-// Vérifie si un étudiant a déjà évalué une session
-function a_deja_evalue(int $session_id): bool {
+/**
+ * Réponse du mentor à une évaluation
+ */
+function repondre_evaluation($evaluation_id, $mentor_id, $reponse) {
     $pdo  = get_pdo();
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM evaluations WHERE session_id = :sid");
-    $stmt->execute([':sid' => $session_id]);
-    return (int)$stmt->fetchColumn() > 0;
+    $stmt = $pdo->prepare("
+        UPDATE evaluations
+        SET reponse_mentor = :reponse
+        WHERE id        = :id
+          AND mentor_id = :mid
+    ");
+    $stmt->execute([
+        ':reponse' => trim($reponse),
+        ':id'      => $evaluation_id,
+        ':mid'     => $mentor_id,
+    ]);
+    return $stmt->rowCount() > 0;
 }

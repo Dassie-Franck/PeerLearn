@@ -4,6 +4,7 @@
 
 require_once BASE_PATH . '/models/user_model.php';
 require_once BASE_PATH . '/models/session_model.php';
+require_once BASE_PATH . '/models/notification_model.php'; //  AJOUT : Modèle des notifications
 
 require_logged_in();
 
@@ -15,14 +16,19 @@ marquer_sessions_terminees();
 // Donnees pour la vue
 $utilisateur = trouver_utilisateur_par_id($user_id);
 
-//  CORRECTION : Récupérer UNIQUEMENT les sessions où l'étudiant est APPRENANT
-$sessions_a_venir_raw = get_sessions_a_venir($user_id, 10);  // On prend plus de marge
+// CORRECTION : Récupérer UNIQUEMENT les sessions où l'étudiant est APPRENANT
+$sessions_a_venir_raw = get_sessions_a_venir($user_id, 10);
 $sessions_a_venir = array_filter($sessions_a_venir_raw, function($session) use ($user_id) {
     return $session['apprenant_id'] == $user_id;
 });
-$sessions_a_venir = array_slice($sessions_a_venir, 0, 5);  // Garder seulement 5
+$sessions_a_venir = array_slice($sessions_a_venir, 0, 5);
 
-$stats       = get_stats_etudiant($user_id);
+$stats = get_stats_etudiant($user_id);
+
+//  AJOUT : Récupérer les notifications
+$notifications = get_notifications($user_id, 15);
+$nb_notifications_non_lues = compter_notifications_non_lues($user_id);
+
 $page_active = 'dashboard';
 
 require_once BASE_PATH . '/views/etudiant/dashboard.php';

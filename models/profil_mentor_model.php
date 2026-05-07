@@ -143,7 +143,7 @@ function get_disponibilite_par_id(int $dispo_id, int $mentor_id): array|false {
 // ------------------------------------------------------------
 //  Liste des mentors validés (pour la recherche)
 // ------------------------------------------------------------
-function get_mentors_valides(?int $matiere_id = null, ?float $note_min = null, ?string $recherche = null): array {
+function get_mentors_valides(?int $matiere_id = null, ?float $note_min = null, ?string $recherche = null, ?int $exclude_user_id = null): array {
     $pdo    = get_pdo();
     $params = [];
     $where  = [];
@@ -165,6 +165,12 @@ function get_mentors_valides(?int $matiere_id = null, ?float $note_min = null, ?
           AND u.mentor_valide = 1
           AND u.statut        = 'actif'
     ";
+
+    //  Exclure l'utilisateur connecté (pour éviter l'auto-affichage)
+    if (!empty($exclude_user_id)) {
+        $where[] = "u.id != :exclude_user_id";
+        $params[':exclude_user_id'] = $exclude_user_id;
+    }
 
     if (!empty($matiere_id)) {
         $where[] = "u.id IN (
@@ -194,12 +200,11 @@ function get_mentors_valides(?int $matiere_id = null, ?float $note_min = null, ?
     return $stmt->fetchAll();
 }
 
-
 // ------------------------------------------------------------
 //  Recherche de mentors avec filtres avancés
 //  Utilisée par recherche_controller
 // ------------------------------------------------------------
-function rechercher_mentors(array $filtres = []): array {
+function rechercher_mentors(array $filtres = [], ?int $exclude_user_id = null): array {
     $pdo    = get_pdo();
     $params = [];
 
@@ -226,6 +231,12 @@ function rechercher_mentors(array $filtres = []): array {
           AND u.mentor_valide = 1
           AND u.statut        = 'actif'
     ";
+
+    //  EXCLURE L'UTILISATEUR CONNECTÉ
+    if ($exclude_user_id) {
+        $sql .= " AND u.id != :exclude_user_id";
+        $params[':exclude_user_id'] = $exclude_user_id;
+    }
 
     if ($matiere !== '') {
         $sql .= " AND ma.nom LIKE :matiere";

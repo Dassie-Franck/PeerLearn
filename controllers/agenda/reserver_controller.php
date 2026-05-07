@@ -21,6 +21,12 @@ if ($dispo_id <= 0 || $mentor_id <= 0) {
     redirect_to('recherche');
 }
 
+//  EMPÊCHER L'AUTO-RÉSERVATION - Un étudiant ne peut pas se réserver lui-même
+if ($apprenant_id == $mentor_id) {
+    setToast('Vous ne pouvez pas réserver une session avec vous-même.', 'error');
+    redirect_to('recherche');
+}
+
 // ── Récupère le créneau ──────────────────────────────────────
 $dispo = get_disponibilite_par_id($dispo_id, $mentor_id);
 
@@ -39,6 +45,12 @@ if (!$mentor) {
 // ── Traitement du formulaire POST ────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     requireCsrf();
+
+    //  Vérification supplémentaire pour l'auto-réservation (sécurité, au cas où)
+    if ($apprenant_id == $mentor_id) {
+        setToast('Action invalide : vous ne pouvez pas vous réserver vous-même.', 'error');
+        redirect_to('recherche');
+    }
 
     // Re-vérifier que le créneau est encore libre (race condition)
     $dispo = get_disponibilite_par_id($dispo_id, $mentor_id);
